@@ -8,26 +8,6 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * Task Model
- *
- * @property \App\Model\Table\EmployeeTable&\Cake\ORM\Association\BelongsTo $Employee
- * @property \App\Model\Table\TaskAssignmentTable&\Cake\ORM\Association\HasMany $TaskAssignment
- *
- * @method \App\Model\Entity\Task newEmptyEntity()
- * @method \App\Model\Entity\Task newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Task[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Task get($primaryKey, $options = [])
- * @method \App\Model\Entity\Task findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\Task patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Task[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Task|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Task saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Task[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Task[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Task[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Task[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- */
 class TaskTable extends Table
 {
     /**
@@ -43,14 +23,6 @@ class TaskTable extends Table
         $this->setTable('task');
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
-
-        $this->belongsTo('Employee', [
-            'foreignKey' => 'employee_id',
-            'joinType' => 'INNER',
-        ]);
-        $this->hasMany('TaskAssignment', [
-            'foreignKey' => 'task_id',
-        ]);
     }
 
     /**
@@ -67,51 +39,44 @@ class TaskTable extends Table
 
         $validator
             ->scalar('title')
-            ->maxLength('title', 200)
+            ->maxLength('title', 100, 'The title is too long', 'update')
             ->requirePresence('title', 'create')
             ->notEmptyString('title');
 
         $validator
-            ->scalar('description')
-            ->maxLength('description', 1000)
+            ->decimal('description')
             ->requirePresence('description', 'create')
-            ->notEmptyString('description');
+            ->notEmptyString('description')
+            ->maxLength('description', 100)
+            ->notAlphaNumeric('description', 'description can not be negative', 'update');
 
         $validator
-            ->date('start_date')
-            ->requirePresence('start_date', 'create')
-            ->notEmptyDate('start_date');
+            ->scalar('start_date')
+            ->requirePresence('start_date', 'create');
 
         $validator
-            ->date('due_date')
+            ->scalar('due_date')
+            ->maxLength('due_date', 25, 'due_date is too long', 'update')
             ->requirePresence('due_date', 'create')
-            ->notEmptyDate('due_date');
+            ->notEmptyString('due_date');
 
         $validator
-            ->boolean('recurring')
+            ->scalar('employee_id ')
+            ->maxLength('employee_id ', 100)
+            ->requirePresence('employee_id ', 'create')
+            ->notEmptyString('employee_id ');
+
+        $validator
+            ->scalar('recurring')
+            ->maxLength('recurring', 255)
             ->requirePresence('recurring', 'create')
-            ->notEmptyString('recurring');
+            ->notEmptyFile('recurring');
 
         $validator
             ->scalar('role_type')
             ->maxLength('role_type', 100)
             ->requirePresence('role_type', 'create')
-            ->notEmptyString('role_type');
-
+            ->notEmptyFile('role_type');
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['employee_id'], 'Employee'), ['errorField' => 'employee_id']);
-
-        return $rules;
     }
 }

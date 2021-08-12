@@ -32,6 +32,7 @@ class Task extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => true,
         'title' => true,
         'description' => true,
         'start_date' => true,
@@ -39,7 +40,7 @@ class Task extends Entity
         'employee_id' => true,
         'recurring' => true,
         'role_type' => true,
-        'employee' => true,
-        'task_assignment' => true,
+//        'employee' => true,
+//        'task_assignment' => true,
     ];
 }
