@@ -69,6 +69,16 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
+<?php foreach (Task as $tsk): ?>
+    <li class="drag-item">
+        <div class="id">testId: <?php echo $tsk->id ?></div>
+        <div class="title">title: <?php echo $tsk->title ?></div>
+        <div class="title">description: <?php echo $tsk->description ?></div>
+        <div class="title">start date: <?php echo $tsk->start_date ?></div>
+        <div class="title">due date: <?php echo $tsk->due_date ?></div>
+        <!-- copy this code -->
+    </li>
+<?php endforeach; ?>
     <header>
         <div class="container text-center">
             <a href="https://cakephp.org/" target="_blank" rel="noopener">
@@ -196,6 +206,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                         <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/tutorials-and-examples/cms/installation.html">The 20 min CMS Tutorial</a>
                     </div>
                 </div>
+
                 <hr>
                 <div class="row">
                     <div class="column links">
