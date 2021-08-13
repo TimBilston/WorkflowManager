@@ -110,7 +110,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                         ]);
 
                     ?>
-                    <?php  $query = TableRegistry::getTableLocator()->get('Tasks')->find();
+                    <?php  $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['']);
 
                     foreach ($query as $task) {?>
                     <li class="drag-item">
