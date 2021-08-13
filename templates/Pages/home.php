@@ -48,187 +48,169 @@ if (!Configure::read('debug')) :
 endif;
 
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <?= $this->Html->charset() ?>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
-
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
-
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', 'home']) ?>
-
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
-<body>
-    <header>
-        <div class="container text-center">
-            <a href="https://cakephp.org/" target="_blank" rel="noopener">
-                <img alt="CakePHP" src="https://cakephp.org/v2/img/logos/CakePHP_Logo.svg" width="350" />
-            </a>
-            <h1>
-                Welcome to CakePHP <?= Configure::version() ?> Strawberry (🍓)
-            </h1>
-        </div>
-    </header>
-    <main class="main">
-        <div class="container">
-            <div class="content">
-                <div class="row">
-                    <div class="column">
-                        <div class="message default text-center">
-                            <small>Please be aware that this page will not be shown if you turn off debug mode unless you replace templates/Pages/home.php with your own version.</small>
-                        </div>
-                        <!-- <div id="url-rewriting-warning" class="alert url-rewriting">
-                            <ul>
-                                <li class="bullet problem">
-                                    URL rewriting is not properly configured on your server.<br />
-                                    1) <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/installation.html#url-rewriting">Help me configure it</a><br />
-                                    2) <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/development/configuration.html#general-configuration">I don't / can't use URL rewriting</a>
-                                </li>
-                            </ul>
-                        </div> -->
-                        <?php Debugger::checkSecurityKeys(); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="column">
-                        <h4>Environment</h4>
-                        <ul>
-                        <?php if (version_compare(PHP_VERSION, '7.2.0', '>=')) : ?>
-                            <li class="bullet success">Your version of PHP is 7.2.0 or higher (detected <?= PHP_VERSION ?>).</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP is too low. You need PHP 7.2.0 or higher to use CakePHP (detected <?= PHP_VERSION ?>).</li>
-                        <?php endif; ?>
+<link rel="stylesheet" href="webroot/css/kanban.css">
 
-                        <?php if (extension_loaded('mbstring')) : ?>
-                            <li class="bullet success">Your version of PHP has the mbstring extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the mbstring extension loaded.</li>
-                        <?php endif; ?>
+    <section class="section">
+        <h1>Kanban</h1>
+         </section>
 
-                        <?php if (extension_loaded('openssl')) : ?>
-                            <li class="bullet success">Your version of PHP has the openssl extension loaded.</li>
-                        <?php elseif (extension_loaded('mcrypt')) : ?>
-                            <li class="bullet success">Your version of PHP has the mcrypt extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>
-                        <?php endif; ?>
+    <div class="drag-container">
+        <ul class="drag-list">
+            <li class="drag-column drag-column-on-hold">
+                <span class="drag-column-header">
+                    <h2>On Hold</h2>
+                    <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                </span>
 
-                        <?php if (extension_loaded('intl')) : ?>
-                            <li class="bullet success">Your version of PHP has the intl extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the intl extension loaded.</li>
-                        <?php endif; ?>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h4>Filesystem</h4>
-                        <ul>
-                        <?php if (is_writable(TMP)) : ?>
-                            <li class="bullet success">Your tmp directory is writable.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your tmp directory is NOT writable.</li>
-                        <?php endif; ?>
+                <div class="drag-options" id="options1"></div>
 
-                        <?php if (is_writable(LOGS)) : ?>
-                            <li class="bullet success">Your logs directory is writable.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your logs directory is NOT writable.</li>
-                        <?php endif; ?>
+                <ul class="drag-inner-list" id="1">
 
-                        <?php $settings = Cache::getConfig('_cake_core_'); ?>
-                        <?php if (!empty($settings)) : ?>
-                            <li class="bullet success">The <em><?= $settings['className'] ?>Engine</em> is being used for core caching. To change the config edit config/app.php</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your cache is NOT working. Please check the settings in config/app.php</li>
-                        <?php endif; ?>
-                        </ul>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column">
-                        <h4>Database</h4>
-                        <?php
-                        $result = $checkConnection('default');
-                        ?>
-                        <ul>
-                        <?php if ($result['connected']) : ?>
-                            <li class="bullet success">CakePHP is able to connect to the database.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">CakePHP is NOT able to connect to the database.<br /><?= $result['error'] ?></li>
-                        <?php endif; ?>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h4>DebugKit</h4>
-                        <ul>
-                        <?php if (Plugin::isLoaded('DebugKit')) : ?>
-                            <li class="bullet success">DebugKit is loaded.</li>
-                            <?php
-                            $result = $checkConnection('debug_kit');
-                            ?>
-                            <?php if ($result['connected']) : ?>
-                                <li class="bullet success">DebugKit can connect to the database.</li>
-                            <?php else : ?>
-                                <li class="bullet problem">DebugKit is <strong>not</strong> able to connect to the database.<br /><?= $result['error'] ?></li>
-                            <?php endif; ?>
-                        <?php else : ?>
-                            <li class="bullet problem">DebugKit is <strong>not</strong> loaded.</li>
-                        <?php endif; ?>
-                        </ul>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column links">
-                        <h3>Getting Started</h3>
-                        <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/">CakePHP Documentation</a>
-                        <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/tutorials-and-examples/cms/installation.html">The 20 min CMS Tutorial</a>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column links">
-                        <h3>Help and Bug Reports</h3>
-                        <a target="_blank" rel="noopener" href="irc://irc.freenode.net/cakephp">irc.freenode.net #cakephp</a>
-                        <a target="_blank" rel="noopener" href="http://cakesf.herokuapp.com/">Slack</a>
-                        <a target="_blank" rel="noopener" href="https://github.com/cakephp/cakephp/issues">CakePHP Issues</a>
-                        <a target="_blank" rel="noopener" href="http://discourse.cakephp.org/">CakePHP Forum</a>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column links">
-                        <h3>Docs and Downloads</h3>
-                        <a target="_blank" rel="noopener" href="https://api.cakephp.org/">CakePHP API</a>
-                        <a target="_blank" rel="noopener" href="https://bakery.cakephp.org">The Bakery</a>
-                        <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/en/">CakePHP Documentation</a>
-                        <a target="_blank" rel="noopener" href="https://plugins.cakephp.org">CakePHP plugins repo</a>
-                        <a target="_blank" rel="noopener" href="https://github.com/cakephp/">CakePHP Code</a>
-                        <a target="_blank" rel="noopener" href="https://github.com/FriendsOfCake/awesome-cakephp">CakePHP Awesome List</a>
-                        <a target="_blank" rel="noopener" href="https://www.cakephp.org">CakePHP</a>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="column links">
-                        <h3>Training and Certification</h3>
-                        <a target="_blank" rel="noopener" href="https://cakefoundation.org/">Cake Software Foundation</a>
-                        <a target="_blank" rel="noopener" href="https://training.cakephp.org/">CakePHP Training</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-</body>
+                </ul>
+            </li>
+            <li class="drag-column drag-column-in-progress">
+                <span class="drag-column-header">
+                    <h2>In Progress</h2>
+                    <svg class="drag-header-more" data-target="options2" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                </span>
+                <div class="drag-options" id="options2"></div>
+                <ul class="drag-inner-list" id="2">
+
+                </ul>
+            </li>
+            <li class="drag-column drag-column-needs-review">
+                <span class="drag-column-header">
+                    <h2>Needs Review</h2>
+                    <svg data-target="options3" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                </span>
+                <div class="drag-options" id="options3"></div>
+                <ul class="drag-inner-list" id="3">
+                    <li class="drag-item">
+                        <p>I am a card</p>
+                    </li>
+
+                    <li class="drag-item"></li>
+                    <li class="drag-item"></li>
+                    <li class="drag-item"></li>
+                    <li class="drag-item"></li>
+                    <li class="drag-item"></li>
+                    <li class="drag-item"></li>
+                    <li class="drag-item"></li>
+                    <li class="drag-item"></li>
+                </ul>
+            </li>
+            <li class="drag-column drag-column-approved">
+                <span class="drag-column-header">
+                    <h2>Approved</h2>
+                    <svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                </span>
+                <div class="drag-options" id="options4"></div>
+                <ul class="drag-inner-list" id="4">
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+
 </html>
+<script src="js/jquery-1.4.1.js"></script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js" > </script>
+
+<script type="text/javascript">
+    //Kanban board script
+
+    dragula([
+        document.getElementById('1'),
+        document.getElementById('2'),
+        document.getElementById('3'),
+        document.getElementById('4'),
+        document.getElementById('5')
+    ])
+
+        .on('drag', function(el) {
+
+            // add 'is-moving' class to element being dragged
+            el.classList.add('is-moving');
+        })
+        .on('dragend', function(el) {
+
+            // remove 'is-moving' class from element after dragging has stopped
+            el.classList.remove('is-moving');
+
+            // add the 'is-moved' class for 600ms then remove it
+            window.setTimeout(function() {
+                el.classList.add('is-moved');
+                window.setTimeout(function() {
+                    el.classList.remove('is-moved');
+                }, 600);
+            }, 100);
+        });
+
+
+    var createOptions = (function() {
+        var dragOptions = document.querySelectorAll('.drag-options');
+
+        // these strings are used for the checkbox labels
+        var options = ['Research', 'Strategy', 'Inspiration', 'Execution'];
+
+        // create the checkbox and labels here, just to keep the html clean. append the <label> to '.drag-options'
+        function create() {
+            for (var i = 0; i < dragOptions.length; i++) {
+
+                options.forEach(function(item) {
+                    var checkbox = document.createElement('input');
+                    var label = document.createElement('label');
+                    var span = document.createElement('span');
+                    checkbox.setAttribute('type', 'checkbox');
+                    span.innerHTML = item;
+                    label.appendChild(span);
+                    label.insertBefore(checkbox, label.firstChild);
+                    label.classList.add('drag-options-label');
+                    dragOptions[i].appendChild(label);
+                });
+
+            }
+        }
+
+        return {
+            create: create
+        }
+
+
+    }());
+
+    var showOptions = (function () {
+
+        // the 3 dot icon
+        var more = document.querySelectorAll('.drag-header-more');
+
+        function show() {
+            // show 'drag-options' div when the more icon is clicked
+            var target = this.getAttribute('data-target');
+            var options = document.getElementById(target);
+            options.classList.toggle('active');
+        }
+
+
+        function init() {
+            for (i = 0; i < more.length; i++) {
+                more[i].addEventListener('click', show, false);
+            }
+        }
+
+        return {
+            init: init
+        }
+    }());
+
+    createOptions.create();
+    showOptions.init();
+</script>
