@@ -97,20 +97,20 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                     <li class="drag-item">
                         <p>I am a card</p>
                     </li>
-                    <?php $tasksTable = TableRegistry::getTableLocator()->get('Task')->find();
+                    <?php $tasksTable = TableRegistry::getTableLocator()->get('Tasks')->find();
 
-                    $task = new Task([
-                        'title' => 'test'
-                    ]);
-                    $task1 = new Task([
-                        'title' => 'test1'
-                    ]);
-                    $task2 = new Task([
-                        'title' => 'test2'
-                    ]);
+                        $task = new Task([
+                            'title' => 'test'
+                        ]);
+                        $task1 = new Task([
+                            'title' => 'test1'
+                        ]);
+                        $task2 = new Task([
+                            'title' => 'test2'
+                        ]);
 
                     ?>
-                    <?php  $query = TableRegistry::getTableLocator()->get('Task')->find();
+                    <?php  $query = TableRegistry::getTableLocator()->get('Tasks')->find();
 
                     foreach ($query as $task) {?>
                     <li class="drag-item">
