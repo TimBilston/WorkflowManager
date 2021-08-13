@@ -19,7 +19,8 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\Debugger;
 use Cake\Http\Exception\NotFoundException;
-
+use Cake\ORM\TableRegistry;
+use App\Model\Entity\Device;
 $this->disableAutoLayout();
 
 $checkConnection = function (string $name) {
@@ -96,7 +97,20 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                     <li class="drag-item">
                         <p>I am a card</p>
                     </li>
+                </ul>
+                <?php
+                $tasksTable = TableRegistry::getTableLocator()->get('Task');
+                $task = $tasksTable->newEntity();
 
+                $task->title = "test";
+
+                if ($tasksTable->save($task)) {
+                // The $article entity contains the id now
+                $id = $task->id;
+                }
+                ?>
+
+        </ul>
                     <li class="drag-item"></li>
                     <li class="drag-item"></li>
                     <li class="drag-item"></li>
