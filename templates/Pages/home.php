@@ -20,7 +20,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Error\Debugger;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
-use App\Model\Entity\Device;
+use App\Model\Entity\Task;
 $this->disableAutoLayout();
 
 $checkConnection = function (string $name) {
@@ -97,28 +97,29 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                     <li class="drag-item">
                         <p>I am a card</p>
                     </li>
-                </ul>
-                <?php
-                $tasksTable = TableRegistry::getTableLocator()->get('Task');
-                $task = $tasksTable->newEntity();
+                    <?php $tasksTable = TableRegistry::getTableLocator()->get('Task')->find();
 
-                $task->title = "test";
+                    $task = new Task([
+                        'title' => 'test'
+                    ]);
+                    $task1 = new Task([
+                        'title' => 'test1'
+                    ]);
+                    $task2 = new Task([
+                        'title' => 'test2'
+                    ]);
 
-                if ($tasksTable->save($task)) {
-                // The $article entity contains the id now
-                $id = $task->id;
-                }
-                ?>
+                    ?>
+                    <?php  $query = TableRegistry::getTableLocator()->get('Task')->find();
 
-        </ul>
-                    <li class="drag-item"></li>
-                    <li class="drag-item"></li>
-                    <li class="drag-item"></li>
-                    <li class="drag-item"></li>
-                    <li class="drag-item"></li>
-                    <li class="drag-item"></li>
-                    <li class="drag-item"></li>
-                    <li class="drag-item"></li>
+                    foreach ($query as $task) {?>
+                    <li class="drag-item">
+                        <p>
+                                <?php echo($task->title); ?>
+                        </p>
+                    </li>
+                    <?php } ?>
+
                 </ul>
             </li>
             <li class="drag-column drag-column-approved">
