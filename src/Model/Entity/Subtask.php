@@ -6,23 +6,20 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Task Entity
+ * Subtask Entity
  *
  * @property int $id
- * @property string $title
  * @property string $description
+ * @property string $title
  * @property \Cake\I18n\FrozenDate $start_date
  * @property \Cake\I18n\FrozenDate $due_date
- * @property int $employee_id
- * @property bool $recurring
- * @property string $role_type
+ * @property int $task_id
  * @property int $status_id
  *
- * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\Task $task
  * @property \App\Model\Entity\Status $status
- * @property \App\Model\Entity\Substask[] $substasks
  */
-class Task extends Entity
+class Subtask extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -34,16 +31,13 @@ class Task extends Entity
      * @var array
      */
     protected $_accessible = [
-        'title' => true,
         'description' => true,
+        'title' => true,
         'start_date' => true,
         'due_date' => true,
-        'employee_id' => true,
-        'recurring' => true,
-        'role_type' => true,
+        'task_id' => true,
         'status_id' => true,
-        'user' => true,
+        'task' => true,
         'status' => true,
-        'substasks' => true,
     ];
 }
