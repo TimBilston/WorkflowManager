@@ -15,7 +15,9 @@ use Cake\ORM\Entity;
  * @property string $phone
  * @property string $email
  * @property \Cake\I18n\FrozenDate $created
- * @property string $role
+ * @property int $department_id
+ *
+ * @property \App\Model\Entity\Department $department
  */
 class User extends Entity
 {
@@ -35,7 +37,8 @@ class User extends Entity
         'phone' => true,
         'email' => true,
         'created' => true,
-        'role' => true,
+        'department_id' => true,
+        'department' => true,
     ];
 
     /**

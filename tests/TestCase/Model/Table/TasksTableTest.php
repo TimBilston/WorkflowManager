@@ -26,8 +26,9 @@ class TasksTableTest extends TestCase
     protected $fixtures = [
         'app.Tasks',
         'app.Users',
+        'app.Departments',
         'app.Status',
-        'app.Substasks',
+        'app.Subtasks',
     ];
 
     /**

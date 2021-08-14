@@ -15,12 +15,13 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $due_date
  * @property int $employee_id
  * @property bool $recurring
- * @property string $role_type
+ * @property int $department_id
  * @property int $status_id
  *
  * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\Department $department
  * @property \App\Model\Entity\Status $status
- * @property \App\Model\Entity\Substask[] $substasks
+ * @property \App\Model\Entity\Subtask[] $subtasks
  */
 class Task extends Entity
 {
@@ -40,10 +41,11 @@ class Task extends Entity
         'due_date' => true,
         'employee_id' => true,
         'recurring' => true,
-        'role_type' => true,
+        'department_id' => true,
         'status_id' => true,
         'user' => true,
+        'department' => true,
         'status' => true,
-        'substasks' => true,
+        'subtasks' => true,
     ];
 }

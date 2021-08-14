@@ -12,7 +12,9 @@ use Cake\Validation\Validator;
  * Tasks Model
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\DepartmentsTable&\Cake\ORM\Association\BelongsTo $Departments
  * @property \App\Model\Table\StatusTable&\Cake\ORM\Association\BelongsTo $Status
+ * @property \App\Model\Table\SubtasksTable&\Cake\ORM\Association\HasMany $Subtasks
  *
  * @method \App\Model\Entity\Task newEmptyEntity()
  * @method \App\Model\Entity\Task newEntity(array $data, array $options = [])
@@ -46,6 +48,10 @@ class TasksTable extends Table
 
         $this->belongsTo('Users', [
             'foreignKey' => 'employee_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Departments', [
+            'foreignKey' => 'department_id',
             'joinType' => 'INNER',
         ]);
         $this->belongsTo('Status', [
@@ -96,12 +102,6 @@ class TasksTable extends Table
             ->requirePresence('recurring', 'create')
             ->notEmptyString('recurring');
 
-        $validator
-            ->scalar('role_type')
-            ->maxLength('role_type', 100)
-            ->requirePresence('role_type', 'create')
-            ->notEmptyString('role_type');
-
         return $validator;
     }
 
@@ -116,6 +116,7 @@ class TasksTable extends Table
     {
         $rules->add($rules->existsIn(['employee_id'], 'Users'), ['errorField' => 'employee_id']);
         $rules->add($rules->existsIn(['status_id'], 'Status'), ['errorField' => 'status_id']);
+        $rules->add($rules->existsIn(['department_id'], 'Departments'), ['errorField' => 'department_id']);
 
         return $rules;
     }

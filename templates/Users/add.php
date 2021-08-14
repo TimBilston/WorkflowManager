@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
+ * @var \Cake\Collection\CollectionInterface|string[] $departments
  */
 ?>
 <div class="row">
@@ -22,7 +23,7 @@
                     echo $this->Form->control('last_name');
                     echo $this->Form->control('phone');
                     echo $this->Form->control('email');
-                    echo $this->Form->control('role');
+                    echo $this->Form->control('department_id', ['options' => $departments]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
