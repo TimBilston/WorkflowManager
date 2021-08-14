@@ -18,7 +18,7 @@
                     <th><?= $this->Paginator->sort('due_date') ?></th>
                     <th><?= $this->Paginator->sort('employee_id') ?></th>
                     <th><?= $this->Paginator->sort('recurring') ?></th>
-                    <th><?= $this->Paginator->sort('role_type') ?></th>
+                    <th><?= $this->Paginator->sort('department_id') ?></th>
                     <th><?= $this->Paginator->sort('status_id') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -33,7 +33,7 @@
                     <td><?= h($task->due_date) ?></td>
                     <td><?= $task->has('user') ? $this->Html->link($task->user->name, ['controller' => 'Users', 'action' => 'view', $task->user->id]) : '' ?></td>
                     <td><?= h($task->recurring) ?></td>
-                    <td><?= h($task->role_type) ?></td>
+                    <td><?= $task->has('department') ? $this->Html->link($task->department->name, ['controller' => 'Departments', 'action' => 'view', $task->department->id]) : '' ?></td>
                     <td><?= $task->has('status') ? $this->Html->link($task->status->name, ['controller' => 'Status', 'action' => 'view', $task->status->id]) : '' ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $task->id]) ?>

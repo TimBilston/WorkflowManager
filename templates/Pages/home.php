@@ -58,6 +58,9 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <link rel="stylesheet" href="webroot/css/kanban.css">
+<link rel="stylesheet" href="webroot/css/custom.css">
+
+    <?= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>
 
     <section class="section">
         <h1>Kanban</h1>

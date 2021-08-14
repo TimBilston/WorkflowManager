@@ -39,8 +39,8 @@
                     <td><?= h($user->email) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Role') ?></th>
-                    <td><?= h($user->role) ?></td>
+                    <th><?= __('Department') ?></th>
+                    <td><?= $user->has('department') ? $this->Html->link($user->department->name, ['controller' => 'Departments', 'action' => 'view', $user->department->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
