@@ -51,6 +51,57 @@ endif;
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    var currentMonday = new Date();
+
+    window.onload = function() {
+        //gets the current Monday date and converts into a readable format
+        <!-- Outputs the Titles -->
+        currentMonday = getMonday(new Date());
+
+        changeDates(currentMonday);
+
+    }
+
+    function getMonday(d) {
+        d = new Date(d);
+        var day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        return new Date(d.setDate(diff));
+    }
+
+    function changeDates(currentMonday) {
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        var monthName = months[currentMonday.getMonth()];
+        document.getElementById('Monday').innerHTML = "Mon" + " " + currentMonday.getDate().toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+
+        document.getElementById('Tuesday').innerHTML = "Tue" + " " + (currentMonday.getDate() + 1).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+
+        document.getElementById('Wednesday').innerHTML = "Wed" + " " + (currentMonday.getDate() + 2).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+
+        document.getElementById('Thursday').innerHTML = "Thu" + " " + (currentMonday.getDate() + 3).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+
+        document.getElementById('Friday').innerHTML = "Fri" + " " + (currentMonday.getDate() + 4).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+
+        $.post('home.php',{monday:currentMonday},
+            function(data)
+            {
+                $('#result').html(data);
+        });
+
+    }
+    function nextWeek(){
+        currentMonday.setDate(currentMonday.getDate() - 7);
+        changeDates(currentMonday);
+    }
+    function prevWeek(){
+        currentMonday.setDate(currentMonday.getDate() + 7);
+        changeDates(currentMonday);
+    }
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,10 +118,18 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
          </section>
 
     <div class="drag-container">
+
+        <h2><button type="button" onclick = "nextWeek()"> < </button>
+            August 2021
+            <button type="button" onclick = "prevWeek()"> > </button> </h2>
+
+
+
         <ul class="drag-list">
+            <!-- Monday -->
             <li class="drag-column drag-column-on-hold">
                 <span class="drag-column-header">
-                    <h2>On Hold</h2>
+                    <h2 id="Monday"></h2>
                     <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
                 </span>
 
@@ -82,7 +141,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             </li>
             <li class="drag-column drag-column-in-progress">
                 <span class="drag-column-header">
-                    <h2>In Progress</h2>
+                    <h2 id = "Tuesday"></h2>
                     <svg class="drag-header-more" data-target="options2" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
                 </span>
                 <div class="drag-options" id="options2"></div>
@@ -92,7 +151,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             </li>
             <li class="drag-column drag-column-needs-review">
                 <span class="drag-column-header">
-                    <h2>Needs Review</h2>
+                    <h2 id = "Wednesday"></h2>
                     <svg data-target="options3" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
                 </span>
                 <div class="drag-options" id="options3"></div>
@@ -100,34 +159,24 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                     <li class="drag-item">
                         <p>I am a card</p>
                     </li>
-                    <?php $tasksTable = TableRegistry::getTableLocator()->get('Tasks')->find();
+                    <?php
+                    $currentMonday = $_POST['currentMonday'];
 
-                        $task = new Task([
-                            'title' => 'test'
-                        ]);
-                        $task1 = new Task([
-                            'title' => 'test1'
-                        ]);
-                        $task2 = new Task([
-                            'title' => 'test2'
-                        ]);
+                    $query = TableRegistry::getTableLocator()->get('Tasks')->find();
 
-                    ?>
-                    <?php  $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['']);
-
-                    foreach ($query as $task) {?>
-                    <li class="drag-item">
-                        <p>
+                    foreach ($query as $task) {if ($task->duedate== $currentMonday){?>
+                        <li class="drag-item">
+                            <p>
                                 <?php echo($task->title); ?>
-                        </p>
-                    </li>
-                    <?php } ?>
+                            </p>
+                        </li>
+                    <?php }} ?>
 
                 </ul>
             </li>
             <li class="drag-column drag-column-approved">
                 <span class="drag-column-header">
-                    <h2>Approved</h2>
+                    <h2 id = "Thursday"></h2>
                     <svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
                 </span>
                 <div class="drag-options" id="options4"></div>
@@ -135,11 +184,22 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
                 </ul>
             </li>
+            <li class="drag-column drag-column-approved">
+                <span class="drag-column-header">
+                    <h2 id = "Friday"></h2>
+                    <svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                </span>
+                <div class="drag-options" id="options4"></div>
+                <ul class="drag-inner-list" id="4">
+
+                </ul>
+            </li>
+
         </ul>
     </div>
 
 </html>
-<script src="js/jquery-1.4.1.js"></script>
+<script type = "text/javascript" src = "js/jquery-1.4.1.js" ></script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js" > </script>
 
 <script type="text/javascript">
