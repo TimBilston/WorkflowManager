@@ -76,6 +76,11 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         var monthName = months[currentMonday.getMonth()];
+        var Monday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate()).toString()+'/'+currentMonday.getFullYear().toString().slice(2) //get every day format
+        var Tuesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 1).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
+        var Wednesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 2).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
+        var Thursday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 3).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
+        var Friday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 4).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         document.getElementById('Monday').innerHTML = "Mon" + " " + currentMonday.getDate().toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
 
         document.getElementById('Tuesday').innerHTML = "Tue" + " " + (currentMonday.getDate() + 1).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
@@ -85,12 +90,41 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         document.getElementById('Thursday').innerHTML = "Thu" + " " + (currentMonday.getDate() + 3).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
 
         document.getElementById('Friday').innerHTML = "Fri" + " " + (currentMonday.getDate() + 4).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+        <?php
+        //$currentMonday =  $_POST['currentMonday'];
+        // echo $currentMonday;
+        $html = "";
+        $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from db
+        foreach ($query as $task) {
+            $html .= '<li class="drag-item"><p><h1>'. $task->title.'</h1></p><p class="due_time">'.$task->due_date.'</p><p ">'.$task->description.'</p></li>';
+        } ?>
+
+        var html = '<?php echo  $html ?>'
+
+        $("#1").html('')
+        $("#2").html('')
+        $("#3").html('')
+        $("#4").html('')  //reset card
+        $("#5").html('')
+        $(html).each((index,element)=>{
+            if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
+                $("#1").append(element)
+            }else if($(element).find('.due_time').text() == Tuesday){
+                $("#2").append(element)
+            }else if($(element).find('.due_time').text() == Wednesday){
+                $("#3").append(element)
+            }else if($(element).find('.due_time').text() == Thursday){
+                $("#4").append(element)
+            }else if($(element).find('.due_time').text() == Friday){
+                $("#5").append(element)
+            }
+        })
 
         $.post('home.php',{monday:currentMonday},
             function(data)
             {
                 $('#result').html(data);
-        });
+        });// i dont understand how to work these codes...
 
     }
     function nextWeek(){
@@ -112,9 +146,11 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <link rel="stylesheet" href="webroot/css/custom.css">
 
     <?= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>
+    <?= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>
 
     <section class="section">
         <h1>Kanban</h1>
+
          </section>
 
     <div class="drag-container">
