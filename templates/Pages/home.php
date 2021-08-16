@@ -96,7 +96,8 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         $html = "";
         $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from db
         foreach ($query as $task) {
-            $html .= '<li class="drag-item"><p><h1>'. $task->title.'</h1></p><p class="due_time">'.$task->due_date.'</p><p ">'.$task->description.'</p></li>';
+            //creates each task as a draggable item and sets some info up
+            $html .= '<li class="drag-item"><p><h1>'. $task->title.'</h1></p><p class="due_time">'.$task->due_date.'</p><p>'.$task->description.'</p><p class = "button"> '. $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p></li>';
         } ?>
 
         var html = '<?php echo  $html ?>'
@@ -119,13 +120,35 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 $("#5").append(element)
             }
         })
+    }
 
-        $.post('home.php',{monday:currentMonday},
-            function(data)
-            {
-                $('#result').html(data);
-        });// i dont understand how to work these codes...
+    function popup(taskId){
 
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+
+        modal.style.display = "block";
+
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     }
     function nextWeek(){
         currentMonday.setDate(currentMonday.getDate() - 7);
@@ -149,10 +172,20 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     <?= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>
 
     <section class="section">
-        <h1>Kanban</h1>
+        <h1>Dashboard</h1>
 
          </section>
 
+    <!-- The popup/Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+
+    </div>
     <div class="drag-container">
 
         <h2><button type="button" onclick = "nextWeek()"> < </button>
@@ -192,22 +225,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 </span>
                 <div class="drag-options" id="options3"></div>
                 <ul class="drag-inner-list" id="3">
-                    <li class="drag-item">
-                        <p>I am a card</p>
-                    </li>
-                    <?php
-                    $currentMonday = $_POST['currentMonday'];
-
-                    $query = TableRegistry::getTableLocator()->get('Tasks')->find();
-
-                    foreach ($query as $task) {if ($task->duedate== $currentMonday){?>
-                        <li class="drag-item">
-                            <p>
-                                <?php echo($task->title); ?>
-                            </p>
-                        </li>
-                    <?php }} ?>
-
                 </ul>
             </li>
             <li class="drag-column drag-column-approved">
@@ -220,13 +237,13 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
                 </ul>
             </li>
-            <li class="drag-column drag-column-approved">
+            <li class="drag-column drag-column-on-hold">
                 <span class="drag-column-header">
                     <h2 id = "Friday"></h2>
                     <svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
                 </span>
                 <div class="drag-options" id="options4"></div>
-                <ul class="drag-inner-list" id="4">
+                <ul class="drag-inner-list" id="5">
 
                 </ul>
             </li>
