@@ -81,6 +81,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         var Wednesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 2).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         var Thursday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 3).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         var Friday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 4).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
+
         document.getElementById('Monday').innerHTML = "Mon" + " " + currentMonday.getDate().toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
 
         document.getElementById('Tuesday').innerHTML = "Tue" + " " + (currentMonday.getDate() + 1).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();

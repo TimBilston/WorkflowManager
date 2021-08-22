@@ -21,13 +21,23 @@
                 <legend><?= __('Add Task') ?></legend>
                 <?php
                     echo $this->Form->control('title');
-                    echo $this->Form->control('description');
-                    echo $this->Form->control('start_date');
-                    echo $this->Form->control('due_date');
+                    echo $this->Form->control('description', ['type' => 'textarea']);
+                    echo '<div class="row">';
+
+                    echo '<div class="date">';
+                        echo $this->Form->control('start_date');
+                    echo '</div>';
+                    echo '<div class="date">';
+                        echo $this->Form->control('due_date');
+                    echo '</div>';
+
+                    echo '</div>';
                     echo $this->Form->control('employee_id', ['options' => $users]);
                     echo $this->Form->control('recurring');
                     echo $this->Form->control('department_id', ['options' => $departments]);
-                    echo $this->Form->control('status_id', ['options' => $status]);
+                    //id for 'In Progress' is 3
+                    echo $this->Form->hidden('status_id', ['value' => 3]);
+
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
@@ -35,3 +45,10 @@
         </div>
     </div>
 </div>
+
+<style>
+    .date{
+        margin: auto;
+    }
+
+</style>

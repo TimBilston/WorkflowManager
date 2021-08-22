@@ -52,6 +52,7 @@ class TasksController extends AppController
         $task = $this->Tasks->newEmptyEntity();
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
+
             if ($this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
@@ -59,6 +60,7 @@ class TasksController extends AppController
             }
             $this->Flash->error(__('The task could not be saved. Please, try again.'));
         }
+
         $users = $this->Tasks->Users->find('list', ['limit' => 200]);
         $departments = $this->Tasks->Departments->find('list', ['limit' => 200]);
         $status = $this->Tasks->Status->find('list', ['limit' => 200]);
