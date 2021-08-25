@@ -2,6 +2,13 @@
 $this->disableAutoLayout();
 
 ?>
+<title>
+    Error 404
+</title>
+
+<?= $this->Html->meta('icon') ?>
+
+
 <a href="" class="fa fa-arrow-left"></a>
 <div class="error">
     <h1>404</h1>

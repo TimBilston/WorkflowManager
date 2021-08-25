@@ -165,15 +165,19 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 </script>
 <!DOCTYPE html>
 <html>
+<title> Rundles Dashboard </title>
+
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= $this->Html->meta('icon') ?>
 </head>
 <link rel="stylesheet" href="webroot/css/kanban.css">
 <link rel="stylesheet" href="webroot/css/custom.css">
 
     <?= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>
     <?= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>
+    <?= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>
 
     <section class="section">
         <h1>Dashboard</h1>

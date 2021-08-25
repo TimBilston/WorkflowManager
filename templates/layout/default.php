@@ -14,12 +14,11 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Rundles Dashboard';
 ?>
 <!DOCTYPE html>
 <html>
 
-<?= $this->Html->link(__('Board'), ['controller' => 'Pages'], ['class' => 'button6']) ?>
 
 <head>
     <?= $this->Html->charset() ?>
@@ -38,8 +37,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
+
+
+
 <body>
     <nav class="top-nav">
+        <?= $this->Html->link(__('Dashboard'), ['controller' => 'Pages'], ['class' => 'button6']) ?>
     </nav>
     <main class="main">
         <div class="container">
