@@ -77,6 +77,8 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     function changeDates(currentMonday) {
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+        document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
+
         var monthName = months[currentMonday.getMonth()];
         var Monday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate()).toString()+'/'+currentMonday.getFullYear().toString().slice(2) //get every day format
         var Tuesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 1).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
@@ -180,12 +182,13 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     <?= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>
 
     <section class="section">
-        <h1>Dashboard</h1>
+        <h1 style="font-size: xxx-large">Dashboard</h1>
 
          </section>
 
     <!-- The popup/Modal -->
     <div id="myModal" class="modal">
+
 
         <!-- Modal content -->
         <div class="modal-content">
@@ -194,12 +197,17 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         </div>
 
     </div>
+
+    <div style="display: flex; flex-direction: row">
+        <button onclick = "nextWeek()" style="margin: auto" > < </button>
+        <h1 id="Month_Text"> August 2021 </h1>
+        <button onclick = "prevWeek()" style="margin: auto" > > </button>
+    </div>
+
+
+
+
     <div class="drag-container">
-
-        <h2><button type="button" onclick = "nextWeek()"> < </button>
-            August 2021
-            <button type="button" onclick = "prevWeek()"> > </button> </h2>
-
 
 
         <ul class="drag-list">
