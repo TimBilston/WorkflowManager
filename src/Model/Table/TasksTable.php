@@ -77,15 +77,27 @@ class TasksTable extends Table
 
         $validator
             ->scalar('title')
-            ->maxLength('title', 200)
+            ->maxLength('title', 30, "The task's title is too long", 'update')
             ->requirePresence('title', 'create')
-            ->notEmptyString('title');
+            ->notEmptyString('title')
+            ->add('title', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'message' => 'The title can not have any symbols',
+                ]
+            ]);
 
         $validator
             ->scalar('description')
-            ->maxLength('description', 1000)
+            ->maxLength('description', 100,'The description is too long', 'update')
             ->requirePresence('description', 'create')
-            ->notEmptyString('description');
+            ->notEmptyString('description')
+            ->add('description', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'message' => 'Description can not have any symbols',
+                ]
+            ]);
 
         $validator
             ->date('start_date')
@@ -95,7 +107,12 @@ class TasksTable extends Table
         $validator
             ->date('due_date')
             ->requirePresence('due_date', 'create')
-            ->notEmptyDate('due_date');
+            ->notEmptyDate('due_date')
+            ->add('due_date', 'dateCompare', [
+                'rule' => 'dateCompare',
+                'provider' => 'table',
+                'message' => 'Due date cannot be before start date'
+            ]);
 
         $validator
             ->boolean('recurring')
@@ -120,4 +137,12 @@ class TasksTable extends Table
 
         return $rules;
     }
+
+    public function dateCompare($value, $context){
+        if ($context['data']['start_date'] > $value){
+            return false;
+        }
+        return true;
+    }
+
 }

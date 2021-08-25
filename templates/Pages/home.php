@@ -21,6 +21,7 @@ use Cake\Error\Debugger;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Task;
+
 $this->disableAutoLayout();
 
 $checkConnection = function (string $name) {
@@ -49,6 +50,7 @@ if (!Configure::read('debug')) :
 endif;
 
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
+
 
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -98,7 +100,8 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from db
         foreach ($query as $task) {
             //creates each task as a draggable item and sets some info up
-            $html .= '<li class="drag-item"><p><h1>'. $task->title.'</h1></p><p class="due_time">'.$task->due_date.'</p><p>'.$task->description.'</p><p class = "button"> '. $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p></li>';
+
+            $html .= '<li class="drag-item"><p><h1>'. $task->title.'</h1></p><p class="due_time">'.$task->due_date.'</p><p>'.$task->description.'</p><p>'.'</p><p class = "button"> '. $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p></li>';
         } ?>
 
         var html = '<?php echo  $html ?>'

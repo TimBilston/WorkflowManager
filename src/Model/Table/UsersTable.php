@@ -67,30 +67,45 @@ class UsersTable extends Table
 
         $validator
             ->scalar('password')
-            ->maxLength('password', 64)
+            ->maxLength('password', 16)
+            ->minLength('password', 8)
             ->requirePresence('password', 'create')
             ->notEmptyString('password');
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 64)
+            ->maxLength('name', 20)
             ->requirePresence('name', 'create')
-            ->notEmptyString('name');
+            ->notEmptyString('name')
+            ->add('name', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'message' => 'Name can not have any symbols',
+                ]
+            ]);
 
         $validator
             ->scalar('last_name')
-            ->maxLength('last_name', 64)
+            ->maxLength('last_name', 20)
             ->requirePresence('last_name', 'create')
-            ->notEmptyString('last_name');
+            ->notEmptyString('last_name')
+            ->add('name', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'message' => 'Name can not have any symbols',
+                ]
+            ]);
 
         $validator
             ->scalar('phone')
-            ->maxLength('phone', 20)
+            ->maxLength('phone', 10)
             ->requirePresence('phone', 'create')
-            ->notEmptyString('phone');
+            ->notEmptyString('phone')
+            ->numeric('phone');
 
         $validator
             ->email('email')
+            ->maxLength('email', 20)
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
 
