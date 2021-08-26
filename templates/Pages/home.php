@@ -100,10 +100,17 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         // echo $currentMonday;
         $html = "";
         $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from db
+        $query->contain(['Users']);
         foreach ($query as $task) {
             //creates each task as a draggable item and sets some info up
 
-            $html .= '<li class="drag-item"><p><h1>'. $task->title.'</h1></p><p class="due_time">'.$task->due_date.'</p><p>'.$task->description.'</p><p>'.'</p><p class = "button"> '. $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p></li>';
+            $html .= '<li class="drag-item"><p><h1>'.
+                $task->title.'</h1></p><p class="due_time">'.
+                $task->due_date.'</p><p>'.
+                $task->description.'</p><p>'.
+                $task->user->name.'</p><p>'.
+                '</p><p class = "button"> '.
+                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p></li>';
         } ?>
 
         var html = '<?php echo  $html ?>'
