@@ -104,12 +104,20 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         foreach ($query as $task) {
             //creates each task as a draggable item and sets some info up
 
-            $html .= '<li class="drag-item"><p><h1>'.
-                $task->title.'</h1></p><p class="due_time">'.
-                $task->due_date.'</p><p>'.
-                $task->description.'</p><p>'.
-                $task->user->name.'</p><p>'.
-                '</p><p class = "button"> '.
+//            $html .= '<li class="drag-item"><p><h1>'.
+//                $task->title.'</h1></p><p class="due_time">'.
+//                $task->due_date.'</p><p>'.
+//                $task->description.'</p><p>'.
+//                $task->user->name.'</p><p>'.
+//                '</p><p class = "button"> '.
+
+//                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p ></li>';
+            $html .= '<li class="drag-item"><h1>'.
+                $task->title.'</h1><p class="due_time">'.
+                $task->due_date.'</p ><p class="desc">'.
+                $task->description.'</p ><p class="person">'.
+                $task->user->name.'</p ><p>'.
+                '</p ><p class = "button"> '.
                 $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p></li>';
         } ?>
 

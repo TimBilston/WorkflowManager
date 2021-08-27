@@ -3,12 +3,13 @@
 }
 
 body {
-    background: #33363D;
-    color: white;
+    background: #f4f6fa;;
+    color: #3a3a3a;
     font-family: "Lato";
     font-weight: 300;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+
 }
 
 ul {
@@ -19,7 +20,9 @@ ul {
 
 .drag-container {
     max-width: 1500px;
-    margin: 20px auto;
+    background: #fff;
+    margin:0 auto;
+    padding:30px;
 }
 
 .drag-list {
@@ -36,7 +39,7 @@ ul {
     flex: 1;
     margin: 0 10px;
     position: relative;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(193, 193, 193, 0.2);
     overflow: hidden;
 }
 @media (max-width: 690px) {
