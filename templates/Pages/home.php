@@ -192,10 +192,27 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <link rel="stylesheet" href="webroot/css/kanban.css">
 <link rel="stylesheet" href="webroot/css/custom.css">
 
-    <?= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>
-    <?= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>
-    <?= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>
+<!--    <?//= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>-->
+<!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
+<!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
 
+<nav id="navbar" class="rvnm-navbar-box dark-ruby">//navigation
+        <li>
+            <a href="./tasks/add">
+            New Task
+        </a>
+        </li>
+        <li>
+            <a href="./Users">
+            View Users
+        </a>
+        </li>
+        <li>
+            <a href="./Users/add">
+            Create new user
+        </a>
+        </li>
+    </nav>
     <section class="section">
         <h1 style="font-size: xxx-large">Dashboard</h1>
 
