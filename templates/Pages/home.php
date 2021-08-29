@@ -212,6 +212,11 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             Create new user
         </a>
         </li>
+        <li>
+        <a href="./Users/logout">
+            Logout
+        </a>
+        </li>
     </nav>
     <section class="section">
         <h1 style="font-size: xxx-large">Dashboard</h1>
