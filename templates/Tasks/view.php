@@ -35,6 +35,10 @@
                     <td><?= $task->has('department') ? $this->Html->link($task->department->name, ['controller' => 'Departments', 'action' => 'view', $task->department->id]) : '' ?></td>
                 </tr>
                 <tr>
+                    <th><?= __('Client') ?></th>
+                    <td><?= $task->has('client') ? $this->Html->link($task->client->name, ['controller' => 'Clients', 'action' => 'view', $task->client->id]) : '' ?></td>
+                </tr>
+                <tr>
                     <th><?= __('Status') ?></th>
                     <td><?= $task->has('status') ? $this->Html->link($task->status->name, ['controller' => 'Status', 'action' => 'view', $task->status->id]) : '' ?></td>
                 </tr>

@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\TasksController;
+use App\Controller\ClientsController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\TasksController Test Case
+ * App\Controller\ClientsController Test Case
  *
- * @uses \App\Controller\TasksController
+ * @uses \App\Controller\ClientsController
  */
-class TasksControllerTest extends TestCase
+class ClientsControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
@@ -22,19 +22,16 @@ class TasksControllerTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.Tasks',
-        'app.Users',
-        'app.Departments',
         'app.Clients',
-        'app.Status',
-        'app.Subtasks',
+        'app.Users',
+        'app.Tasks',
     ];
 
     /**
      * Test index method
      *
      * @return void
-     * @uses \App\Controller\TasksController::index()
+     * @uses \App\Controller\ClientsController::index()
      */
     public function testIndex(): void
     {
@@ -45,7 +42,7 @@ class TasksControllerTest extends TestCase
      * Test view method
      *
      * @return void
-     * @uses \App\Controller\TasksController::view()
+     * @uses \App\Controller\ClientsController::view()
      */
     public function testView(): void
     {
@@ -56,7 +53,7 @@ class TasksControllerTest extends TestCase
      * Test add method
      *
      * @return void
-     * @uses \App\Controller\TasksController::add()
+     * @uses \App\Controller\ClientsController::add()
      */
     public function testAdd(): void
     {
@@ -67,7 +64,7 @@ class TasksControllerTest extends TestCase
      * Test edit method
      *
      * @return void
-     * @uses \App\Controller\TasksController::edit()
+     * @uses \App\Controller\ClientsController::edit()
      */
     public function testEdit(): void
     {
@@ -78,7 +75,7 @@ class TasksControllerTest extends TestCase
      * Test delete method
      *
      * @return void
-     * @uses \App\Controller\TasksController::delete()
+     * @uses \App\Controller\ClientsController::delete()
      */
     public function testDelete(): void
     {

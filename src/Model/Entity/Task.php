@@ -16,10 +16,12 @@ use Cake\ORM\Entity;
  * @property int $employee_id
  * @property bool $recurring
  * @property int $department_id
+ * @property int|null $client_id
  * @property int $status_id
  *
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Department $department
+ * @property \App\Model\Entity\Client $client
  * @property \App\Model\Entity\Status $status
  * @property \App\Model\Entity\Subtask[] $subtasks
  */
@@ -42,9 +44,11 @@ class Task extends Entity
         'employee_id' => true,
         'recurring' => true,
         'department_id' => true,
+        'client_id' => true,
         'status_id' => true,
         'user' => true,
         'department' => true,
+        'client' => true,
         'status' => true,
         'subtasks' => true,
     ];

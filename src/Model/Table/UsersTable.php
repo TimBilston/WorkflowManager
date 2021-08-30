@@ -67,8 +67,8 @@ class UsersTable extends Table
 
         $validator
             ->scalar('password')
-            ->maxLength('password', 16)
-            ->minLength('password', 8)
+            ->maxLength('password', 16, 'Password must be between 8 - 16 characters long')
+            ->minLength('password', 8, 'Password must be between 8 - 16 characters long')
             ->requirePresence('password', 'create')
             ->notEmptyString('password');
 

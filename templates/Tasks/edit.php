@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Task $task
  * @var string[]|\Cake\Collection\CollectionInterface $users
  * @var string[]|\Cake\Collection\CollectionInterface $departments
+ * @var string[]|\Cake\Collection\CollectionInterface $clients
  * @var string[]|\Cake\Collection\CollectionInterface $status
  */
 ?>
@@ -32,6 +33,7 @@
                     echo $this->Form->control('employee_id', ['options' => $users]);
                     echo $this->Form->control('recurring');
                     echo $this->Form->control('department_id', ['options' => $departments]);
+                    echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
                     echo $this->Form->control('status_id', ['options' => $status]);
                 ?>
             </fieldset>

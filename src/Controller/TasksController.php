@@ -19,7 +19,7 @@ class TasksController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'Departments', 'Status'],
+            'contain' => ['Users', 'Departments', 'Clients', 'Status'],
         ];
         $tasks = $this->paginate($this->Tasks);
 
@@ -36,7 +36,7 @@ class TasksController extends AppController
     public function view($id = null)
     {
         $task = $this->Tasks->get($id, [
-            'contain' => ['Users', 'Departments', 'Status', 'Subtasks'],
+            'contain' => ['Users', 'Departments', 'Clients', 'Status', 'Subtasks'],
         ]);
 
         $this->set(compact('task'));
@@ -52,7 +52,6 @@ class TasksController extends AppController
         $task = $this->Tasks->newEmptyEntity();
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
-
             if ($this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
@@ -60,11 +59,11 @@ class TasksController extends AppController
             }
             $this->Flash->error(__('The task could not be saved. Please, try again.'));
         }
-
         $users = $this->Tasks->Users->find('list', ['limit' => 200]);
         $departments = $this->Tasks->Departments->find('list', ['limit' => 200]);
+        $clients = $this->Tasks->Clients->find('list', ['limit' => 200]);
         $status = $this->Tasks->Status->find('list', ['limit' => 200]);
-        $this->set(compact('task', 'users', 'departments', 'status'));
+        $this->set(compact('task', 'users', 'departments', 'clients', 'status'));
     }
 
     /**
@@ -90,8 +89,9 @@ class TasksController extends AppController
         }
         $users = $this->Tasks->Users->find('list', ['limit' => 200]);
         $departments = $this->Tasks->Departments->find('list', ['limit' => 200]);
+        $clients = $this->Tasks->Clients->find('list', ['limit' => 200]);
         $status = $this->Tasks->Status->find('list', ['limit' => 200]);
-        $this->set(compact('task', 'users', 'departments', 'status'));
+        $this->set(compact('task', 'users', 'departments', 'clients', 'status'));
     }
 
     /**

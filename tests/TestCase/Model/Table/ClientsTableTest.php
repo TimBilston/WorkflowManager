@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\TasksTable;
+use App\Model\Table\ClientsTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\TasksTable Test Case
+ * App\Model\Table\ClientsTable Test Case
  */
-class TasksTableTest extends TestCase
+class ClientsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\TasksTable
+     * @var \App\Model\Table\ClientsTable
      */
-    protected $Tasks;
+    protected $Clients;
 
     /**
      * Fixtures
@@ -24,12 +24,9 @@ class TasksTableTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.Tasks',
-        'app.Users',
-        'app.Departments',
         'app.Clients',
-        'app.Status',
-        'app.Subtasks',
+        'app.Users',
+        'app.Tasks',
     ];
 
     /**
@@ -40,8 +37,8 @@ class TasksTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('Tasks') ? [] : ['className' => TasksTable::class];
-        $this->Tasks = $this->getTableLocator()->get('Tasks', $config);
+        $config = $this->getTableLocator()->exists('Clients') ? [] : ['className' => ClientsTable::class];
+        $this->Clients = $this->getTableLocator()->get('Clients', $config);
     }
 
     /**
@@ -51,7 +48,7 @@ class TasksTableTest extends TestCase
      */
     public function tearDown(): void
     {
-        unset($this->Tasks);
+        unset($this->Clients);
 
         parent::tearDown();
     }
@@ -60,7 +57,7 @@ class TasksTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     * @uses \App\Model\Table\TasksTable::validationDefault()
+     * @uses \App\Model\Table\ClientsTable::validationDefault()
      */
     public function testValidationDefault(): void
     {
@@ -71,20 +68,9 @@ class TasksTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     * @uses \App\Model\Table\TasksTable::buildRules()
+     * @uses \App\Model\Table\ClientsTable::buildRules()
      */
     public function testBuildRules(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test dateCompare method
-     *
-     * @return void
-     * @uses \App\Model\Table\TasksTable::dateCompare()
-     */
-    public function testDateCompare(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
