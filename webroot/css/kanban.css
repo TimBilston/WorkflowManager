@@ -270,38 +270,4 @@ ul {
     cursor: pointer;
 }
 
-.rvnm-navbar-box {
-    position: absolute;
-    left: 0px;
-    top: 0;
-    width: 220px;
-    background: #4387f5;
-    min-height: 50vh;
-    overflow-y: hidden;
-    z-index: 99;
-    height: 100%;
-}
-.rvnm-navbar-box.dark-ruby {
-    background: #353C48;
-}
-.rvnm-navbar-box.dark-ruby li {
-    border-bottom: 0;
-    line-height: 45px;
-    text-align: left;
 
-    list-style: none;
-    height: 45px;
-    background: #353C48;
-}
-.rvnm-navbar-box.dark-ruby li a{
-    text-decoration: none;
-    display: block;
-    width:100%;
-    height: 100%;
-    padding-left:20px;
-    color: rgb(150, 162, 180);
-}
-.rvnm-navbar-box.dark-ruby li a:hover{
-    background:#4387f5;
-    color:#fff;
-}
