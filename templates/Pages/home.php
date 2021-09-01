@@ -195,7 +195,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <!--    <?//= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
-<?php include('navgation.php') ?>
+<?php include('navigation.php') ?>
 
     <section class="section">
         <h1 style="font-size: xxx-large">Dashboard</h1>

@@ -50,7 +50,7 @@ $cakeDescription = 'Rundles Dashboard';
             <?= $this->fetch('content') ?>
         </div>
     </main>
-    <?php include('navgation.php') ?>
+    <?php include('navigation.php') ?>
     <footer>
     </footer>
 </body>
