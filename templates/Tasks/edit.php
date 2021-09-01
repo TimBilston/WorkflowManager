@@ -31,7 +31,8 @@
                     echo $this->Form->control('start_date');
                     echo $this->Form->control('due_date');
                     echo $this->Form->control('employee_id', ['options' => $users]);
-                    echo $this->Form->control('recurring');
+                    echo $this->Form->control('recurrence');
+                    echo $this->Form->control('no_of_recurrence');
                     echo $this->Form->control('department_id', ['options' => $departments]);
                     echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
                     echo $this->Form->control('status_id', ['options' => $status]);

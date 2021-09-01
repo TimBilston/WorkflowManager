@@ -31,6 +31,10 @@
                     <td><?= $task->has('user') ? $this->Html->link($task->user->name, ['controller' => 'Users', 'action' => 'view', $task->user->id]) : '' ?></td>
                 </tr>
                 <tr>
+                    <th><?= __('Recurrence') ?></th>
+                    <td><?= h($task->recurrence) ?></td>
+                </tr>
+                <tr>
                     <th><?= __('Department') ?></th>
                     <td><?= $task->has('department') ? $this->Html->link($task->department->name, ['controller' => 'Departments', 'action' => 'view', $task->department->id]) : '' ?></td>
                 </tr>
@@ -47,16 +51,16 @@
                     <td><?= $this->Number->format($task->id) ?></td>
                 </tr>
                 <tr>
+                    <th><?= __('No Of Recurrence') ?></th>
+                    <td><?= $this->Number->format($task->no_of_recurrence) ?></td>
+                </tr>
+                <tr>
                     <th><?= __('Start Date') ?></th>
                     <td><?= h($task->start_date) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Due Date') ?></th>
                     <td><?= h($task->due_date) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Recurring') ?></th>
-                    <td><?= $task->recurring ? __('Yes') : __('No'); ?></td>
                 </tr>
             </table>
             <div class="related">

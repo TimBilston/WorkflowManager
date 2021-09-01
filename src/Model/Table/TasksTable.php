@@ -80,16 +80,16 @@ class TasksTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-        ->scalar('title')
-        ->maxLength('title', 30, "The task's title is too long", 'update')
-        ->requirePresence('title', 'create')
-        ->notEmptyString('title')
-        ->add('title', [
-            'nosymbol' => [
-                'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
-                'message' => 'The title can not have any symbols',
-            ]
-        ]);
+            ->scalar('title')
+            ->maxLength('title', 30, "The task's title is too long", 'update')
+            ->requirePresence('title', 'create')
+            ->notEmptyString('title')
+            ->add('title', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'message' => 'The title can not have any symbols',
+                ]
+            ]);
 
         $validator
             ->scalar('description')
@@ -119,9 +119,20 @@ class TasksTable extends Table
             ]);
 
         $validator
-            ->boolean('recurring')
-            ->requirePresence('recurring', 'create')
-            ->notEmptyString('recurring');
+            ->scalar('recurrence')
+            ->requirePresence('recurrence', 'create')
+            ->notEmptyString('recurrence');
+
+        $validator
+            ->integer('no_of_recurrence')
+            ->requirePresence('no_of_recurrence', 'create')
+            ->notEmptyString('no_of_recurrence')
+            ->add('no_of_recurrence', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^\d+$/'],
+                    'message' => 'Whole integer only.',
+                ]
+            ]);
 
         return $validator;
     }

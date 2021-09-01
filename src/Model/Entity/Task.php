@@ -14,7 +14,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $start_date
  * @property \Cake\I18n\FrozenDate $due_date
  * @property int $employee_id
- * @property bool $recurring
+ * @property string $recurrence
+ * @property int $no_of_recurrence
  * @property int $department_id
  * @property int|null $client_id
  * @property int $status_id
@@ -42,7 +43,8 @@ class Task extends Entity
         'start_date' => true,
         'due_date' => true,
         'employee_id' => true,
-        'recurring' => true,
+        'recurrence' => true,
+        'no_of_recurrence' => true,
         'department_id' => true,
         'client_id' => true,
         'status_id' => true,
