@@ -3,8 +3,10 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Client $client
  * @var \Cake\Collection\CollectionInterface|string[] $users
+ * @var \App\Model\Entity\Task $task
  */
 ?>
+<link rel="stylesheet" href="../../webroot/css/dropdown.css">
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -25,8 +27,13 @@
                     echo $this->Form->control('employee_id', ['options' => $users]);
                 ?>
             </fieldset>
+
             <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>
         </div>
+
+
     </div>
 </div>
+
+

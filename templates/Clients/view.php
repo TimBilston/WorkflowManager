@@ -35,13 +35,14 @@
                     <td><?= h($client->email) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('User') ?></th>
+                    <th><?= __('Assigned Employee') ?></th>
                     <td><?= $client->has('user') ? $this->Html->link($client->user->name, ['controller' => 'Users', 'action' => 'view', $client->user->id]) : '' ?></td>
                 </tr>
-                <tr>
+                <!--<tr>
                     <th><?= __('Id') ?></th>
                     <td><?= $this->Number->format($client->id) ?></td>
                 </tr>
+                 -->
             </table>
             <div class="related">
                 <h4><?= __('Related Tasks') ?></h4>

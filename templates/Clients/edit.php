@@ -5,6 +5,7 @@
  * @var string[]|\Cake\Collection\CollectionInterface $users
  */
 ?>
+
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -32,6 +33,10 @@
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>
+
+            <?= $this->element('addTask') , ['clientId' => $client->id] ?>
+
         </div>
     </div>
 </div>
+
