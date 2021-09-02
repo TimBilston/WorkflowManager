@@ -8,6 +8,10 @@
  * @var \Cake\Collection\CollectionInterface|string[] $status
  */
 ?>
+
+<!--<script src="/jquery.min.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -53,6 +57,8 @@
 
                     //id for 'In Progress' is 1
                     echo $this->Form->hidden('status_id', ['value' => 1]);
+
+                    echo $this->Form->button(__('Add SubTask'), ['type' => 'button', 'id' => 'add_sub_task']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
@@ -67,3 +73,12 @@
     }
 
 </style>
+
+<script>
+    $(function () {
+        $('#add_sub_task').click(function () {
+            var title = $('input[name="title"]').val();
+            window.open('/subtasks/add?title=' + title, 'sub_task_add');
+        });
+    });
+</script>

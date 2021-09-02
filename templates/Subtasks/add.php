@@ -19,12 +19,12 @@
             <fieldset>
                 <legend><?= __('Add Subtask') ?></legend>
                 <?php
-                    echo $this->Form->control('description', ['type' => 'textarea']);
-                    echo $this->Form->control('title');
-                    echo $this->Form->control('start_date');
-                    echo $this->Form->control('due_date');
-                    echo $this->Form->control('task_id', ['options' => $tasks]);
-                    echo $this->Form->hidden('status_id', ['value' => 3]);
+                echo $this->Form->control('description');
+                echo $this->Form->control('title', ['value' => empty($_GET['title']) ? '' : $_GET['title']]);
+                echo $this->Form->control('start_date');
+                echo $this->Form->control('due_date');
+                echo $this->Form->control('task_id', ['options' => $tasks]);
+                echo $this->Form->control('status_id', ['options' => $status]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
