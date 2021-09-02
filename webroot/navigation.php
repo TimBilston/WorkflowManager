@@ -6,14 +6,18 @@
         <?= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'text']) ?>
     </li>
     <li>
-        <?= $this->Html->link(__('Users'), ['controller' => 'Users'], ['class' => 'text']) ?>
+        <?= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'text']) ?>
     </li>
     <li>
         <?= $this->Html->link(__('Create New User'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'text']) ?>
     </li>
     <li>
+        <?= $this->Html->link(__('Add New Client'), ['controller' => 'Clients', 'action' => 'add'], ['class' => 'text']) ?>
+    </li>
+    <li>
         <?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'text']) ?>
     </li>
+
 </nav>
 <style>
 .rvnm-navbar-box {
