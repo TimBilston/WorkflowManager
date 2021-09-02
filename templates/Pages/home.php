@@ -74,27 +74,53 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         return new Date(d.setDate(diff));
     }
 
+    function addDays(date, days) {
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result.getDate().toString() + ' ' + months[result.getMonth()] + ' ' + result.getFullYear().toString();
+    }
+
+    function getDateString(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result.getMonth() + 1 + '/' + result.getDate().toString() + '/' + result.getFullYear().toString().slice(2)
+    }
+
+
     function changeDates(currentMonday) {
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
 
+        /**
         var monthName = months[currentMonday.getMonth()];
         var Monday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate()).toString()+'/'+currentMonday.getFullYear().toString().slice(2) //get every day format
         var Tuesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 1).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         var Wednesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 2).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         var Thursday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 3).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         var Friday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 4).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
+        **/
 
-        document.getElementById('Monday').innerHTML = "Mon" + " " + currentMonday.getDate().toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
 
-        document.getElementById('Tuesday').innerHTML = "Tue" + " " + (currentMonday.getDate() + 1).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+        var Monday = getDateString(currentMonday, 0);
+        var Tuesday = getDateString(currentMonday, 1);
+        var Wednesday = getDateString(currentMonday, 2);
+        var Thursday = getDateString(currentMonday, 3);
+        var Friday = getDateString(currentMonday, 4);
 
-        document.getElementById('Wednesday').innerHTML = "Wed" + " " + (currentMonday.getDate() + 2).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
 
-        document.getElementById('Thursday').innerHTML = "Thu" + " " + (currentMonday.getDate() + 3).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+        document.getElementById('Monday').innerHTML = "Mon" + " " + addDays(currentMonday, 0);
 
-        document.getElementById('Friday').innerHTML = "Fri" + " " + (currentMonday.getDate() + 4).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+        document.getElementById('Tuesday').innerHTML = "Tue" + " " + addDays(currentMonday, 1);
+
+        document.getElementById('Wednesday').innerHTML = "Wed" + " " + addDays(currentMonday, 2);
+
+        document.getElementById('Thursday').innerHTML = "Thu" + " " + addDays(currentMonday, 3);
+
+        document.getElementById('Friday').innerHTML = "Fri" + " " + addDays(currentMonday, 4);
+
         <?php
         //$currentMonday =  $_POST['currentMonday'];
         // echo $currentMonday;

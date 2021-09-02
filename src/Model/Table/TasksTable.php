@@ -130,7 +130,7 @@ class TasksTable extends Table
             ->add('no_of_recurrence', [
                 'nosymbol' => [
                     'rule' => ['custom', '/^\d+$/'],
-                    'message' => 'Whole integer only.',
+                    'message' => 'Can only have positive whole integers',
                 ]
             ]);
 
