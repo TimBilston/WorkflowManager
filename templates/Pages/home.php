@@ -182,7 +182,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 </script>
 <!DOCTYPE html>
 <html>
-<title> Rundles Dashboard </title>
+<title> Dashboard </title>
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -198,7 +198,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <?php include('navigation.php') ?>
 
     <section class="section">
-        <h1 style="font-size: xxx-large">Dashboard</h1>
+        <h1 style="font-size: xxx-large">Welcome, </h1>
 
          </section>
 
@@ -272,9 +272,9 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             <li class="drag-column drag-column-on-hold">
                 <span class="drag-column-header">
                     <h2 id = "Friday"></h2>
-                    <svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                    <svg data-target="options5" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
                 </span>
-                <div class="drag-options" id="options4"></div>
+                <div class="drag-options" id="options5"></div>
                 <ul class="drag-inner-list" id="5">
 
                 </ul>

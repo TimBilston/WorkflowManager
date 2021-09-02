@@ -20,7 +20,6 @@ ul {
 
 .drag-container {
     max-width: 1500px;
-    background: #353C48;
     margin:0 auto;
     padding:30px;
 }
@@ -58,22 +57,22 @@ ul {
 .drag-column-on-hold .drag-column-header,
 .drag-column-on-hold .is-moved,
 .drag-column-on-hold .drag-options {
-    background:  #2287faa6;
+    background:  #b80c3c;
 }
 .drag-column-in-progress .drag-column-header,
 .drag-column-in-progress .is-moved,
 .drag-column-in-progress .drag-options {
-    background:  #2287faa6;
+    background:  #b80c3c;
 }
 .drag-column-needs-review .drag-column-header,
 .drag-column-needs-review .is-moved,
 .drag-column-needs-review .drag-options {
-    background:  #2287faa6;
+    background:  #b80c3c;
 }
 .drag-column-approved .drag-column-header,
 .drag-column-approved .is-moved,
 .drag-column-approved .drag-options {
-    background:  #2287faa6;
+    background:  #b80c3c;
 }
 
 .drag-column-header {
@@ -184,6 +183,7 @@ ul {
 .drag-options-label span {
     display: inline-block;
     font-size: 0.9rem;
+    color: #FFFFFF;
     font-weight: 400;
     margin-left: 5px;
 }
