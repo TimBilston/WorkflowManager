@@ -59,7 +59,7 @@ class TasksController extends AppController
                 $this->Flash->success(__('The task has been saved.'));
 
                 //************************RECURRENCE FUNCTION***************************
-                if ($task->recurrence == 'Daily') {
+                if ($task->recurrence == 'Quarterly') {
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
                     for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
@@ -68,8 +68,12 @@ class TasksController extends AppController
                         $newTask->id = $newIds + 1;
                         $newIds += 1;
 
-                        $newTask->due_date = $changingDate->addDay(1);
-                        $changingDate = $newTask->due_date;
+                        $newTask->due_date = $this->offsetWeekend($changingDate->addMonth(3));
+                        if ($changingDate->isWeekend()) {
+                            $changingDate = $newTask->due_date;
+                        } else {
+                            $changingDate = $changingDate->addMonth(3);
+                        }
 
                         $this->Tasks->save($newTask);
                     }
@@ -84,6 +88,7 @@ class TasksController extends AppController
 
                         $newTask->due_date = $changingDate->addDays(7);
                         $changingDate = $newTask->due_date;
+
                         $this->Tasks->save($newTask);
                     }
                 } elseif ($task->recurrence == 'Fortnightly'){
@@ -108,8 +113,13 @@ class TasksController extends AppController
                         $newTask->id = $newIds + 1;
                         $newIds += 1;
 
-                        $newTask->due_date = $changingDate->addMonth(1);
-                        $changingDate = $newTask->due_date;
+                        $newTask->due_date = $this->offsetWeekend($changingDate->addMonth(1));
+                        if ($changingDate->isWeekend()) {
+                            $changingDate = $newTask->due_date;
+                        } else {
+                            $changingDate = $changingDate->addMonth(1);
+                        }
+
                         $this->Tasks->save($newTask);
                     }
                 } elseif ($task->recurrence == 'Annually'){
@@ -121,14 +131,16 @@ class TasksController extends AppController
                         $newTask->id = $newIds + 1;
                         $newIds += 1;
 
-                        $newTask->due_date = $changingDate->addYear(1);
-                        $changingDate = $newTask->due_date;
+                        $newTask->due_date = $this->offsetWeekend($changingDate->addYear(1));
+                        if ($changingDate->isWeekend()) {
+                            $changingDate = $newTask->due_date;
+                        } else {
+                            $changingDate = $changingDate->addYear(1);
+                        }
                         $this->Tasks->save($newTask);
                     }
                 }
-
                     //************************RECURRENCE FUNCTION***************************
-
 
                     return $this->redirect(['controller' => 'pages', 'action' => 'display']);
                 }
@@ -139,6 +151,17 @@ class TasksController extends AppController
             $clients = $this->Tasks->Clients->find('list', ['limit' => 200]);
             $status = $this->Tasks->Status->find('list', ['limit' => 200]);
             $this->set(compact('task', 'users', 'departments', 'clients', 'status'));
+    }
+
+    private function offsetWeekend($date){
+        //Check to see if it is equal to Sat or Sun.
+        if ($date->isSaturday()){
+            return $date->addDays(2);
+        } elseif ($date->isSunday()){
+            return $date->addDay(1);
+        }
+        return $date;
+
     }
 
 
