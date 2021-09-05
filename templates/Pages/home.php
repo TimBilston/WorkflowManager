@@ -98,7 +98,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         //$currentMonday =  $_POST['currentMonday'];
         // echo $currentMonday;
         $html = "";
-        $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from db
+        $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from TasksTable
         $query->contain(['Users']);
         foreach ($query as $task) {
             //creates each task as a draggable item and sets some info up

@@ -1,16 +1,19 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Task $task
  * @var \Cake\Collection\CollectionInterface|string[] $users
  * @var \Cake\Collection\CollectionInterface|string[] $departments
  * @var \Cake\Collection\CollectionInterface|string[] $clients
  * @var \Cake\Collection\CollectionInterface|string[] $status
+
  */
 
 use App\Model\Entity\Task;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Cake\Datasource\FactoryLocator;
+
 
 ?>
 <html lang="en">
@@ -33,8 +36,9 @@ use Cake\ORM\Locator\LocatorAwareTrait;
                 <div class="column-responsive column-80">
                     <div class="tasks form content">
                         <div
-                        <?=
-                        $tasksTable = TableRegistry::getTableLocator()->get('Tasks');
+                        <?php
+                        $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');;
+                        //$tasksTable->contain(['Users']);
                         $task = $tasksTable->newEmptyEntity();
                         ?>
                         <?= $this->Form->create($task) ?>
@@ -58,7 +62,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
                             echo $this->Form->hidden('status_id', ['value' => 1]);
                             ?>
                         </fieldset>
-                        <?= $this->Form->button(__(''),['controller' ])?>
+                        <?= $this->Form->button(__('submit'))?>
 
                         <?= $this->Form->end() ?>
 

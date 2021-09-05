@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Client $client
  * @var string[]|\Cake\Collection\CollectionInterface $users
  */
+use Cake\ORM\Locator\LocatorAwareTrait;
 ?>
 
 <div class="row">

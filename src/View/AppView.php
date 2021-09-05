@@ -16,13 +16,14 @@ declare(strict_types=1);
 namespace App\View;
 
 use Cake\View\View;
-
+use Cake\ORM\Locator\LocatorAwareTrait;
 /**
  * Application View
  *
  * Your application's default view class
  *
  * @link https://book.cakephp.org/4/en/views.html#the-app-view
+ * use Cake\ORM\Locator\LocatorAwareTrait;
  */
 class AppView extends View
 {
