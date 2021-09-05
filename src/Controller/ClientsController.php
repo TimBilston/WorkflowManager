@@ -60,7 +60,10 @@ class ClientsController extends AppController
             $this->Flash->error(__('The client could not be saved. Please, try again.'));
         }
         $users = $this->Clients->Users->find('list', ['limit' => 200]);
-        $this->set(compact('client', 'users'));
+        $departments = $this->Clients->Tasks->Departments->find('list', ['limit' => 200]);
+        $clients = $this->Clients->find('list', ['limit' => 200]);
+        $status = $this->Clients->Tasks->Status->find('list', ['limit' => 200]);
+        $this->set(compact('client', 'users', 'departments', 'clients', 'status'));
     }
 
     /**
@@ -72,6 +75,8 @@ class ClientsController extends AppController
      */
     public function edit($id = null)
     {
+        $tasksTable = $this->loadModel('Tasks');
+
         $client = $this->Clients->get($id, [
             'contain' => [],
         ]);
@@ -85,9 +90,37 @@ class ClientsController extends AppController
             $this->Flash->error(__('The client could not be saved. Please, try again.'));
         }
         $users = $this->Clients->Users->find('list', ['limit' => 200]);
-        $this->set(compact('client', 'users'));
+        //$task = $this->Clients->Tasks->find('list', ['limit' => 200]);
+        $departments = $this->Clients->Tasks->Departments->find('list', ['limit' => 200]);
+        $clients = $this->Clients->find('list', ['limit' => 200]);
+        $status = $this->Clients->Tasks->Status->find('list', ['limit' => 200]);
+        $this->set(compact('client', 'users', 'departments', 'clients', 'status'));
     }
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     */
+    public function addTask()
+    {
 
+        $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');;
+        $task = $tasksTable->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $task = $this->Tasks->patchEntity($task, $this->request->getData());
+            if ($this->Tasks->save($task)) {
+                $this->Flash->success(__('The task has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The task could not be saved. Please, try again.'));
+        }
+        $users = $this->Clients->Tasks->Users->find('list', ['limit' => 200]);
+        $departments = $this->Clients->Tasks->Departments->find('list', ['limit' => 200]);
+        $clients = $this->Clients->Tasks->find('list', ['limit' => 200]);
+        $status = $this->Clients->Tasks->Status->find('list', ['limit' => 200]);
+        $this->set(compact('task', 'users', 'departments', 'clients', 'status'));
+    }
     /**
      * Delete method
      *

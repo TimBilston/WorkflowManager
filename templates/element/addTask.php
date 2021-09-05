@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Task $task
  * @var \Cake\Collection\CollectionInterface|string[] $users
  * @var \Cake\Collection\CollectionInterface|string[] $departments
  * @var \Cake\Collection\CollectionInterface|string[] $clients
@@ -37,38 +38,22 @@ use Cake\Datasource\FactoryLocator;
                     <div class="tasks form content">
                         <div
                         <?php
-                        $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');;
-                        //$tasksTable->contain(['Users']);
+                        $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');
                         $task = $tasksTable->newEmptyEntity();
                         ?>
-                        <?= $this->Form->create($task) ?>
-
+                        <?= $this->Form->end() ?>
+                        <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'add']]); ?>
                         <fieldset style="width : 60px">
                             <?php
-                            echo $this->Form->control('title');
-                            echo $this->Form->control('description', ['type' => 'textarea']);
-
-                            echo '<div class="row">';
-                                echo '<div class="date">';
-                                    echo $this->Form->control('due_date');
-                                echo '</div>';
-                            echo '</div>';
-
-                            echo $this->Form->control('employee_id', ['options' => $users]);
-                            echo $this->Form->control('recurring');
-                            echo $this->Form->control('department_id', ['options' => $departments]);
-                            echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
-                            //id for 'In Progress' is 1
-                            echo $this->Form->hidden('status_id', ['value' => 1]);
-                            ?>
+                            $this->element('addTaskForm') ?>
                         </fieldset>
-                        <?= $this->Form->button(__('submit'))?>
-
+                        <?= $this->Form->submit(__('Submit')); ?>
                         <?= $this->Form->end() ?>
 
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#taskModal">Close</button>
+
                 </div>
             </div>
         </div>
