@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Task;
+use phpDocumentor\Reflection\Types\Integer;
+
 /**
  * Tasks Controller
  *
@@ -55,16 +58,112 @@ class TasksController extends AppController
             if ($this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                //************************RECURRENCE FUNCTION***************************
+                if ($task->recurrence == 'Quarterly') {
+                    $newIds = $task->id;
+                    $changingDate = $task->due_date;
+                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                        $newTask = $this->Tasks->newEmptyEntity();
+                        $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
+                        $newTask->id = $newIds + 1;
+                        $newIds += 1;
+
+                        $newTask->due_date = $this->offsetWeekend($changingDate->addMonth(3));
+                        if ($changingDate->isWeekend()) {
+                            $changingDate = $newTask->due_date;
+                        } else {
+                            $changingDate = $changingDate->addMonth(3);
+                        }
+
+                        $this->Tasks->save($newTask);
+                    }
+                } elseif ($task->recurrence == 'Weekly') {
+                    $newIds = $task->id;
+                    $changingDate = $task->due_date;
+                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                        $newTask = $this->Tasks->newEmptyEntity();
+                        $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
+                        $newTask->id = $newIds + 1;
+                        $newIds += 1;
+
+                        $newTask->due_date = $changingDate->addDays(7);
+                        $changingDate = $newTask->due_date;
+
+                        $this->Tasks->save($newTask);
+                    }
+                } elseif ($task->recurrence == 'Fortnightly'){
+                    $newIds = $task->id;
+                    $changingDate = $task->due_date;
+                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                        $newTask = $this->Tasks->newEmptyEntity();
+                        $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
+                        $newTask->id = $newIds + 1;
+                        $newIds += 1;
+
+                        $newTask->due_date = $changingDate->addDays(14);
+                        $changingDate = $newTask->due_date;
+                        $this->Tasks->save($newTask);
+                    }
+                } elseif ($task->recurrence == 'Monthly'){
+                    $newIds = $task->id;
+                    $changingDate = $task->due_date;
+                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                        $newTask = $this->Tasks->newEmptyEntity();
+                        $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
+                        $newTask->id = $newIds + 1;
+                        $newIds += 1;
+
+                        $newTask->due_date = $this->offsetWeekend($changingDate->addMonth(1));
+                        if ($changingDate->isWeekend()) {
+                            $changingDate = $newTask->due_date;
+                        } else {
+                            $changingDate = $changingDate->addMonth(1);
+                        }
+
+                        $this->Tasks->save($newTask);
+                    }
+                } elseif ($task->recurrence == 'Annually'){
+                    $newIds = $task->id;
+                    $changingDate = $task->due_date;
+                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                        $newTask = $this->Tasks->newEmptyEntity();
+                        $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
+                        $newTask->id = $newIds + 1;
+                        $newIds += 1;
+
+                        $newTask->due_date = $this->offsetWeekend($changingDate->addYear(1));
+                        if ($changingDate->isWeekend()) {
+                            $changingDate = $newTask->due_date;
+                        } else {
+                            $changingDate = $changingDate->addYear(1);
+                        }
+                        $this->Tasks->save($newTask);
+                    }
+                }
+                    //************************RECURRENCE FUNCTION***************************
+
+                    return $this->redirect(['controller' => 'pages', 'action' => 'display']);
+                }
+                $this->Flash->error(__('The task could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The task could not be saved. Please, try again.'));
-        }
-        $users = $this->Tasks->Users->find('list', ['limit' => 200]);
-        $departments = $this->Tasks->Departments->find('list', ['limit' => 200]);
-        $clients = $this->Tasks->Clients->find('list', ['limit' => 200]);
-        $status = $this->Tasks->Status->find('list', ['limit' => 200]);
-        $this->set(compact('task', 'users', 'departments', 'clients', 'status'));
+            $users = $this->Tasks->Users->find('list', ['limit' => 200]);
+            $departments = $this->Tasks->Departments->find('list', ['limit' => 200]);
+            $clients = $this->Tasks->Clients->find('list', ['limit' => 200]);
+            $status = $this->Tasks->Status->find('list', ['limit' => 200]);
+            $this->set(compact('task', 'users', 'departments', 'clients', 'status'));
     }
+
+    private function offsetWeekend($date){
+        //Check to see if it is equal to Sat or Sun.
+        if ($date->isSaturday()){
+            return $date->addDays(2);
+        } elseif ($date->isSunday()){
+            return $date->addDay(1);
+        }
+        return $date;
+
+    }
+
 
     /**
      * Edit method

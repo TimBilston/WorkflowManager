@@ -73,27 +73,53 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         return new Date(d.setDate(diff));
     }
 
+    function addDays(date, days) {
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result.getDate().toString() + ' ' + months[result.getMonth()] + ' ' + result.getFullYear().toString();
+    }
+
+    function getDateString(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result.getMonth() + 1 + '/' + result.getDate().toString() + '/' + result.getFullYear().toString().slice(2)
+    }
+
+
     function changeDates(currentMonday) {
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
 
+        /**
         var monthName = months[currentMonday.getMonth()];
         var Monday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate()).toString()+'/'+currentMonday.getFullYear().toString().slice(2) //get every day format
         var Tuesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 1).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         var Wednesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 2).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         var Thursday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 3).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
         var Friday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 4).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
+        **/
 
-        document.getElementById('Monday').innerHTML = "Mon" + " " + currentMonday.getDate().toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
 
-        document.getElementById('Tuesday').innerHTML = "Tue" + " " + (currentMonday.getDate() + 1).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+        var Monday = getDateString(currentMonday, 0);
+        var Tuesday = getDateString(currentMonday, 1);
+        var Wednesday = getDateString(currentMonday, 2);
+        var Thursday = getDateString(currentMonday, 3);
+        var Friday = getDateString(currentMonday, 4);
 
-        document.getElementById('Wednesday').innerHTML = "Wed" + " " + (currentMonday.getDate() + 2).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
 
-        document.getElementById('Thursday').innerHTML = "Thu" + " " + (currentMonday.getDate() + 3).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+        document.getElementById('Monday').innerHTML = "Mon" + " " + addDays(currentMonday, 0);
 
-        document.getElementById('Friday').innerHTML = "Fri" + " " + (currentMonday.getDate() + 4).toString() + " " + monthName + " " + currentMonday.getFullYear().toString();
+        document.getElementById('Tuesday').innerHTML = "Tue" + " " + addDays(currentMonday, 1);
+
+        document.getElementById('Wednesday').innerHTML = "Wed" + " " + addDays(currentMonday, 2);
+
+        document.getElementById('Thursday').innerHTML = "Thu" + " " + addDays(currentMonday, 3);
+
+        document.getElementById('Friday').innerHTML = "Fri" + " " + addDays(currentMonday, 4);
+
         <?php
         //$currentMonday =  $_POST['currentMonday'];
         // echo $currentMonday;
@@ -181,7 +207,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 </script>
 <!DOCTYPE html>
 <html>
-<title> Rundles Dashboard </title>
+<title> Dashboard </title>
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -194,31 +220,10 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <!--    <?//= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
+<?php include('navigation.php') ?>
 
-<nav id="navbar" class="rvnm-navbar-box dark-ruby">//navigation
-        <li>
-            <a href="./tasks/add">
-            New Task
-        </a>
-        </li>
-        <li>
-            <a href="./Users">
-            View Users
-        </a>
-        </li>
-        <li>
-            <a href="./Users/add">
-            Create new user
-        </a>
-        </li>
-        <li>
-        <a href="./Users/logout">
-            Logout
-        </a>
-        </li>
-    </nav>
     <section class="section">
-        <h1 style="font-size: xxx-large">Dashboard</h1>
+        <h1 style="font-size: xxx-large">Welcome! </h1>
 
          </section>
 
@@ -292,9 +297,9 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             <li class="drag-column drag-column-on-hold">
                 <span class="drag-column-header">
                     <h2 id = "Friday"></h2>
-                    <svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                    <svg data-target="options5" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
                 </span>
-                <div class="drag-options" id="options4"></div>
+                <div class="drag-options" id="options5"></div>
                 <ul class="drag-inner-list" id="5">
 
                 </ul>
