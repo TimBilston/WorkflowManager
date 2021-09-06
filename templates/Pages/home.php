@@ -223,7 +223,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <?php include('navigation.php') ?>
 
     <section class="section">
-        <h1 style="font-size: xxx-large">Welcome! </h1>
+    <h1 style="font-size: 70px;text-transform: uppercase;">Welcome! </h1>
 
          </section>
 
