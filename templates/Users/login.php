@@ -15,37 +15,38 @@
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', 'custom']) ?>
+    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', 'custom', 'login']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 
-<body>
-<nav class="top-nav">
-</nav>
-<main class="main">
-    <div class="container">
-        <div class="users form">
-            <?= $this->Flash->render() ?>
-            <h3>Login</h3>
-            <?= $this->Form->create() ?>
-            <fieldset>
-                <legend><?= __('Please enter your username and password') ?></legend>
-                <?= $this->Form->control('email', ['required' => true]) ?>
-                <?= $this->Form->control('password', ['required' => true]) ?>
-            </fieldset>
-            <?= $this->Form->submit(__('Login')); ?>
-            <?= $this->Form->end() ?>
-
-            <?= $this->Html->link("Add User", ['action' => 'add']) ?>
+<div class="parent clearfix">
+    <div class="bg-illustration">
+        <div style="display: flex; justify-content: center">
+            <img src=<?php echo $this->Url->image('logo.png')?> alt="logo">
         </div>
-
     </div>
-</main>
-<footer>
-</footer>
-</body>
-</html>
+
+    <div class="login">
+        <div class="container">
+            <?= $this->Flash->render() ?>
+            <h1 style="font-family: 'Book Antiqua'">Login to access to<br />the Dashboard</h1>
+
+            <div class="login-form">
+
+                    <?= $this->Form->create() ?>
+                    <?= $this->Form->control('email', ['required' => true, 'placeholder' => 'E-mail Address', 'label' => false]) ?>
+                    <?= $this->Form->control('password', ['required' => true, 'placeholder' => 'Password', 'label' => false]) ?>
+
+
+                    <button type="submit"> Login </button>
+                    <?= $this->Form->end() ?>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
