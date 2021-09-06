@@ -25,9 +25,22 @@
     </li>
 
 </nav>
+
+<footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+</footer>
+
+<div style="height:163px;"></div>
+
 <style>
+
 .rvnm-navbar-box {
-    position: absolute;
+    position:fixed;
     left: 0px;
     top: 0;
     width: 220px;
@@ -97,7 +110,7 @@
 .w3-container {
     padding: 0.01em 16px;
     position: fixed;
-l   left:0;
+    left:0;
     bottom:0;
     right:0;
     width:100%;
