@@ -55,6 +55,8 @@ class TasksController extends AppController
         $task = $this->Tasks->newEmptyEntity();
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
+            $task->due_date = $this->offsetWeekend($task->due_date);
+
             if ($this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
 
