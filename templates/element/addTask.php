@@ -44,7 +44,7 @@ use Cake\Datasource\FactoryLocator;
                         <?= $this->Form->end() ?>
                         <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'add']]); ?>
                         <fieldset style="width : 60px">
-                            <?php
+                            <?=
                             $this->element('addTaskForm') ?>
                         </fieldset>
                         <?= $this->Form->submit(__('Submit')); ?>
