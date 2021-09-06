@@ -51,8 +51,7 @@ $cakeDescription = '';
         </div>
     </main>
     <?php include('navigation.php') ?>
-    <footer>
-    </footer>
+    
 </body>
 </html>
 

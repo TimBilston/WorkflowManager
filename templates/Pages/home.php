@@ -220,10 +220,10 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <!--    <?//= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
-<?php include('navigation.php') ?>
+
 
     <section class="section">
-        <h1 style="font-size: xxx-large">Welcome! </h1>
+    <h1 style="font-size: 70px;text-transform: uppercase;">Welcome! </h1>
 
          </section>
 
@@ -307,7 +307,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
         </ul>
     </div>
-
+    <?php include('navigation.php') ?>
 </html>
 <script type = "text/javascript" src = "js/jquery-1.4.1.js" ></script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js" > </script>
