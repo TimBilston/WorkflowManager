@@ -42,7 +42,7 @@ $cakeDescription = '';
 
 <body>
     <nav class="top-nav">
-        <?= $this->Html->link(__('Dashboard'), ['controller' => 'Pages'], ['class' => 'button6']) ?>
+
     </nav>
     <main class="main">
         <div class="container">
