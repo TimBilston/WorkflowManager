@@ -143,7 +143,7 @@ ul {
     text-align: right;
 
 }
-.drag-item p.button a{
+.drag-item p.button1 a{
     color:#3a3a3a;
     text-decoration:none;
     text-align: right;
@@ -154,6 +154,7 @@ ul {
     position: relative;
     z-index: 1;
 }
+
 .drag-item p.button a:hover{
     color: #2287faa6;
     border-color:#2287faa6;
