@@ -73,7 +73,7 @@ class SubtasksTable extends Table
             ->notEmptyString('description')
             ->add('description', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
                     'message' => 'Description can not have any symbols',
                 ]
             ]);
@@ -85,7 +85,7 @@ class SubtasksTable extends Table
             ->notEmptyString('title')
             ->add('title', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
                     'message' => 'The title can not have any symbols',
                 ]
             ]);

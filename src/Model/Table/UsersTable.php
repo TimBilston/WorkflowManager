@@ -79,7 +79,7 @@ class UsersTable extends Table
             ->notEmptyString('name')
             ->add('name', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
                     'message' => 'Name can not have any symbols',
                 ]
             ]);
@@ -91,7 +91,7 @@ class UsersTable extends Table
             ->notEmptyString('last_name')
             ->add('name', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
                     'message' => 'Name can not have any symbols',
                 ]
             ]);

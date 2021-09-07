@@ -64,7 +64,7 @@ class TasksController extends AppController
                 if ($task->recurrence == 'Quarterly') {
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -82,7 +82,7 @@ class TasksController extends AppController
                 } elseif ($task->recurrence == 'Weekly') {
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -96,7 +96,7 @@ class TasksController extends AppController
                 } elseif ($task->recurrence == 'Fortnightly'){
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -109,7 +109,7 @@ class TasksController extends AppController
                 } elseif ($task->recurrence == 'Monthly'){
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -127,7 +127,7 @@ class TasksController extends AppController
                 } elseif ($task->recurrence == 'Annually'){
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;

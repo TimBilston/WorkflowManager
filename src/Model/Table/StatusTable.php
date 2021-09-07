@@ -66,9 +66,15 @@ class StatusTable extends Table
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 100)
+            ->maxLength('name', 20)
             ->requirePresence('name', 'create')
-            ->notEmptyString('name');
+            ->notEmptyString('name')
+            ->add('name', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
+                    'message' => 'Status can not have any symbols',
+                ]
+            ]);
 
         return $validator;
     }

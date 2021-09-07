@@ -72,7 +72,7 @@ class ClientsTable extends Table
             ->notEmptyString('name')
             ->add('name', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
                     'message' => 'Name can not have any symbols',
                 ]
             ]);
@@ -84,7 +84,7 @@ class ClientsTable extends Table
             ->notEmptyString('company_name')
             ->add('company_name', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
                     'message' => 'Company name can not have any symbols',
             ]
         ]);

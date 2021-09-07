@@ -14,7 +14,6 @@ $this->loadHelper('Authentication.Identity');
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name') ?></th>
                     <th><?= $this->Paginator->sort('company_name') ?></th>
                     <th><?= $this->Paginator->sort('phone') ?></th>
@@ -26,7 +25,6 @@ $this->loadHelper('Authentication.Identity');
             <tbody>
                 <?php foreach ($clients as $client): ?>
                 <tr>
-                    <td><?= $this->Number->format($client->id) ?></td>
                     <td><?= h($client->name) ?></td>
                     <td><?= h($client->company_name) ?></td>
                     <td><?= h($client->phone) ?></td>
