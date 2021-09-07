@@ -26,17 +26,6 @@
 
 </nav>
 
-<footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
-</footer>
-
-<div style="height:163px;"></div>
-
 <style>
 
 .rvnm-navbar-box {
@@ -98,37 +87,4 @@
 
 </style>
 
-<style>
-.w3-light-grey, .w3-hover-light-grey:hover, .w3-light-gray, .w3-hover-light-gray:hover {
-    color: #000!important;
-    background-color: #f1f1f1!important;
-}
-.w3-opacity, .w3-hover-opacity:hover {
-    opacity: 0.60;
-    -webkit-backface-visibility: hidden;
-}
-.w3-container {
-    padding: 0.01em 16px;
-    position: fixed;
-    left:0;
-    bottom:0;
-    right:0;
-    width:100%;
-    z-index: 98;
-}
-.w3-padding-64 {
-    padding-top: 64px!important;
-    padding-bottom: 64px!important;
-}
-.w3-center {
-    text-align: center!important;
-}
-.w3-xlarge {
-    font-size: 24px!important;
-}
-.w3-container:after, .w3-container:before, .w3-panel:after, .w3-panel:before, .w3-row:after, .w3-row:before, .w3-row-padding:after, .w3-row-padding:before, .w3-cell-row:before, .w3-cell-row:after, .w3-topnav:after, .w3-topnav:before, .w3-clear:after, .w3-clear:before, .w3-btn-group:before, .w3-btn-group:after, .w3-btn-bar:before, .w3-btn-bar:after, .w3-bar:before, .w3-bar:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-</style>
+

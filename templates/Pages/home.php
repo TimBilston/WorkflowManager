@@ -57,7 +57,7 @@ $this->loadHelper('Authentication.Identity');
 
 <script>
     var currentMonday = new Date();
-
+    var tasksTotal = 0;
     window.onload = function() {
         //gets the current Monday date and converts into a readable format
         <!-- Outputs the Titles -->
@@ -130,9 +130,9 @@ $this->loadHelper('Authentication.Identity');
 
 //                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p ></li>';
             $html .= '<li class="drag-item">'.
-                '<h1>'.$task->title.'</h1>'.
+                '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time">'.$task->due_date.'</p >'.
-                '<p class="desc">'.$task->description.'</p >'.
+                '<p class="desc" title='.$task->description.'>'.$task->description.'</p >'.
                 '<p class="person">'.$task->user->name.'</p>'.
                 '<p class = "button" style="padding: 1px;">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
                 '<p class = "complete_button" style="padding: 1px;">'.$this->Form->postLink(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
@@ -140,7 +140,7 @@ $this->loadHelper('Authentication.Identity');
         } ?>
 
         var html = '<?php echo  $html ?>'
-
+        tasksTotal = 0
 
         $("#1").html('')
         $("#2").html('')
@@ -148,19 +148,24 @@ $this->loadHelper('Authentication.Identity');
         $("#4").html('')  //reset card
         $("#5").html('')
         $(html).each((index,element)=>{
-                if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
-                    $("#1").append(element)
-                }else if($(element).find('.due_time').text() == Tuesday){
-                    $("#2").append(element)
-                }else if($(element).find('.due_time').text() == Wednesday){
-                    $("#3").append(element)
-                }else if($(element).find('.due_time').text() == Thursday){
-                    $("#4").append(element)
-                }else if($(element).find('.due_time').text() == Friday){
-                    $("#5").append(element)
-                }
-
+            if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
+                $("#1").append(element)
+                tasksTotal++
+            }else if($(element).find('.due_time').text() == Tuesday){
+                $("#2").append(element)
+                tasksTotal++
+            }else if($(element).find('.due_time').text() == Wednesday){
+                $("#3").append(element)
+                tasksTotal++
+            }else if($(element).find('.due_time').text() == Thursday){
+                $("#4").append(element)
+                tasksTotal++
+            }else if($(element).find('.due_time').text() == Friday){
+                $("#5").append(element)
+                tasksTotal++
+            }
         })
+        $("#tasksTotal").text(tasksTotal)
     }
 
     function popup(taskId){
@@ -211,6 +216,37 @@ $this->loadHelper('Authentication.Identity');
 </head>
 <link rel="stylesheet" href="webroot/css/kanban.css">
 <link rel="stylesheet" href="webroot/css/custom.css">
+
+<style>
+.w3-light-grey, .w3-hover-light-grey:hover, .w3-light-gray, .w3-hover-light-gray:hover {
+    color: #000!important;
+    background-color: #f1f1f1!important;
+}
+.w3-opacity, .w3-hover-opacity:hover {
+    opacity: 0.60;
+    -webkit-backface-visibility: hidden;
+}
+.w3-container {
+    padding: 0.01em 16px;
+    width:100%;
+    z-index: 98;
+}
+.w3-padding-64 {
+    padding-top: 64px!important;
+    padding-bottom: 64px!important;
+}
+.w3-center {
+    text-align: center!important;
+}
+.w3-xlarge {
+    font-size: 24px!important;
+}
+.w3-container:after, .w3-container:before, .w3-panel:after, .w3-panel:before, .w3-row:after, .w3-row:before, .w3-row-padding:after, .w3-row-padding:before, .w3-cell-row:before, .w3-cell-row:after, .w3-topnav:after, .w3-topnav:before, .w3-clear:after, .w3-clear:before, .w3-btn-group:before, .w3-btn-group:after, .w3-btn-bar:before, .w3-btn-bar:after, .w3-bar:before, .w3-bar:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>
 
 <!--    <?//= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
@@ -306,6 +342,9 @@ $this->loadHelper('Authentication.Identity');
         </ul>
     </div>
     <?php include('navigation.php') ?>
+    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px">
+        <b><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
+    </footer>
 </html>
 <script type = "text/javascript" src = "js/jquery-1.4.1.js" ></script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js" > </script>
