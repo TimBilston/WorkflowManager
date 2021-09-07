@@ -8,9 +8,7 @@
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        <?= $this->fetch('title') ?>
-    </title>
+    <title>Log in</title>
     <?= $this->Html->meta('icon') ?>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
@@ -40,10 +38,8 @@
                     <?= $this->Form->control('email', ['required' => true, 'placeholder' => 'E-mail Address', 'label' => false]) ?>
                     <?= $this->Form->control('password', ['required' => true, 'placeholder' => 'Password', 'label' => false]) ?>
 
-
                     <button type="submit"> Login </button>
                     <?= $this->Form->end() ?>
-
 
             </div>
 

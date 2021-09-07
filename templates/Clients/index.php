@@ -3,6 +3,9 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Client[]|\Cake\Collection\CollectionInterface $clients
  */
+
+$this->loadHelper('Authentication.Identity');
+
 ?>
 <div class="clients index content">
     <?= $this->Html->link(__('New Client'), ['action' => 'add'], ['class' => 'button float-right']) ?>
@@ -31,8 +34,12 @@
                     <td><?= $client->has('user') ? $this->Html->link($client->user->name, ['controller' => 'Users', 'action' => 'view', $client->user->id]) : '' ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $client->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $client->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $client->id], ['confirm' => __('Are you sure you want to delete # {0}?', $client->id)]) ?>
+
+                        <?php if ($this->Identity->get('department_id') == 2){
+                            echo $this->Html->link(__('Edit'), ['action' => 'edit', $client->id]);
+                            echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $client->id], ['confirm' => __('Are you sure you want to delete # {0}?', $client->id)]);
+                        }?>
+
                     </td>
                 </tr>
                 <?php endforeach; ?>

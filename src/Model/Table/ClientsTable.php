@@ -67,24 +67,38 @@ class ClientsTable extends Table
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 64)
+            ->maxLength('name', 20)
             ->requirePresence('name', 'create')
-            ->notEmptyString('name');
+            ->notEmptyString('name')
+            ->add('name', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'message' => 'Name can not have any symbols',
+                ]
+            ]);
 
         $validator
             ->scalar('company_name')
-            ->maxLength('company_name', 64)
+            ->maxLength('company_name', 20)
             ->requirePresence('company_name', 'create')
-            ->notEmptyString('company_name');
+            ->notEmptyString('company_name')
+            ->add('company_name', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z\s]*$/'],
+                    'message' => 'Company name can not have any symbols',
+            ]
+        ]);
 
         $validator
             ->scalar('phone')
-            ->maxLength('phone', 14)
+            ->maxLength('phone', 10)
             ->requirePresence('phone', 'create')
-            ->notEmptyString('phone');
+            ->notEmptyString('phone')
+            ->numeric('phone');
 
         $validator
             ->email('email')
+            ->maxLength('email', 20)
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
 

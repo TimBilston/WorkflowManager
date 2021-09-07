@@ -50,6 +50,7 @@ if (!Configure::read('debug')) :
 endif;
 
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
+$this->loadHelper('Authentication.Identity');
 
 
 ?>
@@ -92,16 +93,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
-
-        /**
-        var monthName = months[currentMonday.getMonth()];
-        var Monday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate()).toString()+'/'+currentMonday.getFullYear().toString().slice(2) //get every day format
-        var Tuesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 1).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
-        var Wednesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 2).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
-        var Thursday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 3).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
-        var Friday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 4).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
-        **/
-
 
         var Monday = getDateString(currentMonday, 0);
         var Tuesday = getDateString(currentMonday, 1);
@@ -223,9 +214,14 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
 
     <section class="section">
-    <h1 style="font-size: 70px;text-transform: uppercase;">Welcome! </h1>
 
-         </section>
+        <?php if ($this->Identity->isLoggedIn()){
+            $currentUserName = $this->Identity->get('name');
+            echo '<h1 style="font-size: 60px; padding: 70px">Welcome '.$currentUserName.'</h1>';
+        }?>
+
+
+    </section>
 
     <!-- The popup/Modal -->
     <div id="myModal" class="modal">
@@ -244,8 +240,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         <h1 id="Month_Text"> August 2021 </h1>
         <button onclick = "prevWeek()" style="margin: auto" > > </button>
     </div>
-
-
 
 
     <div class="drag-container">
