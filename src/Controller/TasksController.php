@@ -55,7 +55,10 @@ class TasksController extends AppController
         $task = $this->Tasks->newEmptyEntity();
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
-            $task->due_date = $this->offsetWeekend($task->due_date);
+
+            if (!$task->due_date == null){
+                $task->due_date = $this->offsetWeekend($task->due_date);
+            }
 
             if ($this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
@@ -163,6 +166,22 @@ class TasksController extends AppController
             return $date->addDay(1);
         }
         return $date;
+
+    }
+
+    public function completeTask($id = null){
+        $task = $this->Tasks->get($id, [
+            'contain' => [],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $task->status_id = 2;
+            if ($this->Tasks->save($task)) {
+                $this->Flash->success('The task has been saved.');
+
+                return $this->redirect(['controller' => 'pages', 'action' => 'display']);
+            }
+            $this->Flash->error(__('The task could not be saved. Please, try again.'));
+        }
 
     }
 

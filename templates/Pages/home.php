@@ -90,7 +90,7 @@ $this->loadHelper('Authentication.Identity');
 
 
     function changeDates(currentMonday) {
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
         document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
 
@@ -117,6 +117,7 @@ $this->loadHelper('Authentication.Identity');
         $html = "";
         $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from TasksTable
         $query->contain(['Users']);
+        $query->contain(['Status']);
         foreach ($query as $task) {
             //creates each task as a draggable item and sets some info up
 
@@ -128,16 +129,18 @@ $this->loadHelper('Authentication.Identity');
 //                '</p><p class = "button"> '.
 
 //                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p ></li>';
-            $html .= '<li class="drag-item"><h1>'.
-                $task->title.'</h1><p class="due_time">'.
-                $task->due_date.'</p ><p class="desc">'.
-                $task->description.'</p ><p class="person">'.
-                $task->user->name.'</p ><p>'.
-                '</p ><p class = "button"> '.
-                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p></li>';
+            $html .= '<li class="drag-item">'.
+                '<h1>'.$task->title.'</h1>'.
+                '<p class="due_time">'.$task->due_date.'</p >'.
+                '<p class="desc">'.$task->description.'</p >'.
+                '<p class="person">'.$task->user->name.'</p>'.
+                '<p class = "button" style="padding: 1px;">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
+                '<p class = "complete_button" style="padding: 1px;">'.$this->Form->postLink(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
+                '</li>';
         } ?>
 
         var html = '<?php echo  $html ?>'
+
 
         $("#1").html('')
         $("#2").html('')
@@ -145,17 +148,18 @@ $this->loadHelper('Authentication.Identity');
         $("#4").html('')  //reset card
         $("#5").html('')
         $(html).each((index,element)=>{
-            if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
-                $("#1").append(element)
-            }else if($(element).find('.due_time').text() == Tuesday){
-                $("#2").append(element)
-            }else if($(element).find('.due_time').text() == Wednesday){
-                $("#3").append(element)
-            }else if($(element).find('.due_time').text() == Thursday){
-                $("#4").append(element)
-            }else if($(element).find('.due_time').text() == Friday){
-                $("#5").append(element)
-            }
+                if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
+                    $("#1").append(element)
+                }else if($(element).find('.due_time').text() == Tuesday){
+                    $("#2").append(element)
+                }else if($(element).find('.due_time').text() == Wednesday){
+                    $("#3").append(element)
+                }else if($(element).find('.due_time').text() == Thursday){
+                    $("#4").append(element)
+                }else if($(element).find('.due_time').text() == Friday){
+                    $("#5").append(element)
+                }
+
         })
     }
 
