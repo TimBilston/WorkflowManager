@@ -118,6 +118,7 @@ $this->loadHelper('Authentication.Identity');
         $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from TasksTable
         $query->contain(['Users']);
         $query->contain(['Status']);
+        $query->contain(['Clients']);
         foreach ($query as $task) {
             //creates each task as a draggable item and sets some info up
 
@@ -129,11 +130,18 @@ $this->loadHelper('Authentication.Identity');
 //                '</p><p class = "button"> '.
 
 //                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p ></li>';
+            $clientName = 'No Client';
+            if (!$task->client == null){
+                $clientName = 'Client: '.$task->client->name;
+            }
+
             $html .= '<li class="drag-item">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time">'.$task->due_date.'</p >'.
                 '<p class="desc" title='.$task->description.'>'.$task->description.'</p >'.
                 '<p class="person">'.$task->user->name.'</p>'.
+                '<p class="person">'.$clientName.'</p>'.
+                '<p class="status">'.$task->status->name.'</p>'.
                 '<p class = "button" style="padding: 1px;">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
                 '<p class = "complete_button" style="padding: 1px;">'.$this->Form->postLink(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
                 '</li>';
@@ -148,22 +156,25 @@ $this->loadHelper('Authentication.Identity');
         $("#4").html('')  //reset card
         $("#5").html('')
         $(html).each((index,element)=>{
-            if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
-                $("#1").append(element)
-                tasksTotal++
-            }else if($(element).find('.due_time').text() == Tuesday){
-                $("#2").append(element)
-                tasksTotal++
-            }else if($(element).find('.due_time').text() == Wednesday){
-                $("#3").append(element)
-                tasksTotal++
-            }else if($(element).find('.due_time').text() == Thursday){
-                $("#4").append(element)
-                tasksTotal++
-            }else if($(element).find('.due_time').text() == Friday){
-                $("#5").append(element)
-                tasksTotal++
+            if ($(element).find('.status').text() != 'Completed'){
+                if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
+                    $("#1").append(element)
+                    tasksTotal++
+                }else if($(element).find('.due_time').text() == Tuesday){
+                    $("#2").append(element)
+                    tasksTotal++
+                }else if($(element).find('.due_time').text() == Wednesday){
+                    $("#3").append(element)
+                    tasksTotal++
+                }else if($(element).find('.due_time').text() == Thursday){
+                    $("#4").append(element)
+                    tasksTotal++
+                }else if($(element).find('.due_time').text() == Friday){
+                    $("#5").append(element)
+                    tasksTotal++
+                }
             }
+
         })
         $("#tasksTotal").text(tasksTotal)
     }
