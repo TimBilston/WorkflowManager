@@ -104,6 +104,10 @@ ul {
 .drag-item h1{
     font-size:30px;
     padding-top:12px;
+    width:100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .drag-item p{
     font-size:14px;
@@ -119,6 +123,10 @@ ul {
 .drag-item .desc{
     background: url('../img/desc.png') no-repeat 6px center;
     background-size: 16px 16px;
+    width:100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .drag-item .person{
     background: url('../img/person.png') no-repeat 6px center;

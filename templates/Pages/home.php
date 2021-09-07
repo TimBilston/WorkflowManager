@@ -130,9 +130,9 @@ $this->loadHelper('Authentication.Identity');
 
 //                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p ></li>';
             $html .= '<li class="drag-item">'.
-                '<h1>'.$task->title.'</h1>'.
+                '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time">'.$task->due_date.'</p >'.
-                '<p class="desc">'.$task->description.'</p >'.
+                '<p class="desc" title='.$task->description.'>'.$task->description.'</p >'.
                 '<p class="person">'.$task->user->name.'</p>'.
                 '<p class = "button" style="padding: 1px;">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
                 '<p class = "complete_button" style="padding: 1px;">'.$this->Form->postLink(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
@@ -223,10 +223,6 @@ $this->loadHelper('Authentication.Identity');
 }
 .w3-container {
     padding: 0.01em 16px;
-    position: fixed;
-    left:0;
-    bottom:0;
-    right:0;
     width:100%;
     z-index: 98;
 }
