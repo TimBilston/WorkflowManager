@@ -159,7 +159,7 @@ if ($this->Identity->isLoggedIn()) {
                 '<p class="employee">'.$task->user->name.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
                 '<p class="button" style="padding: 1px;">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
-                '<p class="button" style="padding: 1px;">'.$this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
+                '<p class="button" style="padding: 1px; text-align:left">'.$this->Html->link(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
                 '</li>';
         } ?>
 
@@ -331,7 +331,7 @@ if ($this->Identity->isLoggedIn()) {
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
 
 
-    <section class="section">
+    <section class="section" style="padding-left:240px;">   
 
         <?php echo '<h1 style="font-size: 60px; padding: 70px">Welcome '.$currentUserName.'</h1>'; ?>
 
@@ -349,7 +349,7 @@ if ($this->Identity->isLoggedIn()) {
 
     </div>
 
-    <div style="display: flex; flex-direction: row">
+    <div style="display: flex; flex-direction: row;padding-left:220px;">
         <button onclick = "nextWeek()" style="margin: auto" > < </button>
         <h1 id="Month_Text"> August 2021 </h1>
         <button onclick = "prevWeek()" style="margin: auto" > > </button>
@@ -416,7 +416,7 @@ if ($this->Identity->isLoggedIn()) {
         </ul>
     </div>
     <?php include('navigation.php') ?>
-    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px">
+    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px; padding-left: 220px;">
         <b><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
     </footer>
 </html>

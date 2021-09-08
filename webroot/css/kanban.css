@@ -19,11 +19,11 @@ ul {
 }
 
 .drag-container {
-    max-width: 1450px;
+    max-width: 1700px;
     margin:0 auto;
     padding:30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px #333;
+    padding-left: 250px; 
 }
 
 .drag-list {
@@ -85,7 +85,7 @@ ul {
 }
 
 .drag-inner-list {
-    min-height: 240px;
+    min-height: 500px; /* dashboard high*/
 }
 
 .drag-item {
@@ -103,7 +103,7 @@ ul {
 
 
 .drag-item h1{
-    font-size:30px;
+    font-size:24px;  /*task title font size*/
     padding-top:12px;
     width:100%;
     white-space: nowrap;
@@ -130,19 +130,21 @@ ul {
     overflow: hidden;
 }
 .drag-item .person{
-    background: url('../img/person.png') no-repeat 6px center;
+    background: url('../img/client.png') no-repeat 6px center;
     background-size: 16px 16px;
 }
 
+.drag-item .status{
+    background: url('../img/progress.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
 .drag-item .employee{
     background: url('../img/person.png') no-repeat 6px center;
     background-size: 16px 16px;
 }
 
-.drag-item .status{
-    background: url('../img/clock.png') no-repeat 6px center;
-    background-size: 16px 16px;
-}
+
+
 
 .description{
     color: #434343;

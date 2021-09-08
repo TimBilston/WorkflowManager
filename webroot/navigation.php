@@ -24,8 +24,9 @@
         <?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'text']) ?>
     </li>
     <li>
-        <div>
-            <a class="text">View My Tasks</a>
+        <!-- <i class="fa fa-sign-out"></i> -->
+        <div style="display:flex;align-items:center">
+            <a class="text">View Tasks </a>
             <label class="switch">
                 <input type="checkbox" id="toggle" onclick="toggleCheck()">
                 <span class="slider round"></span>
@@ -57,6 +58,7 @@
     text-align: left;
     list-style: none;
     height: 60px;
+    line-height:60px;
     background: #FFFFFF;
     margin-bottom: 0rem;
     padding-left:20px;
@@ -67,10 +69,11 @@
     text-decoration: none;
     height: 100%;
     color: #353C48;
-    font-size:1.2em;
+    font-size:16px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     letter-spacing:0px;
     padding-left:6px;
+    font-weight:bold
 
 }
 .rvnm-navbar-box.dark-ruby li:hover a {
