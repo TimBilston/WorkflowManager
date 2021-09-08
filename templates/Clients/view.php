@@ -97,7 +97,6 @@ $currentDate = date('d/m/y');
                             <table>
                                 <thead>
                                 <tr>
-                                    <th><?= __('Id') ?></th>
                                     <th><?= __('Title') ?></th>
                                     <th><?= __('Description') ?></th>
                                     <th><?= __('Start Date') ?></th>
@@ -114,7 +113,6 @@ $currentDate = date('d/m/y');
                                     if(strtotime($tasks->due_date) >= strtotime($currentDate) || $tasks->status_id =='3'):
                                     ?>
                                     <tr>
-                                        <td><?= h($tasks->id) ?></td>
                                         <td><?= h($tasks->title) ?></td>
                                         <td><?= h($tasks->description) ?></td>
                                         <td><?= h($tasks->start_date) ?></td>
@@ -147,7 +145,6 @@ $currentDate = date('d/m/y');
                             <table>
                                 <thead>
                                 <tr>
-                                    <th><?= __('Id') ?></th>
                                     <th><?= __('Title') ?></th>
                                     <th><?= __('Description') ?></th>
                                     <th><?= __('Start Date') ?></th>
@@ -167,7 +164,6 @@ $currentDate = date('d/m/y');
                                     if(strtotime($tasks->due_date) <= strtotime($currentDate) && $tasks->status_id == '1'):
                                         ?>
                                     <tr>
-                                        <td><?= h($tasks->id) ?></td>
                                         <td><?= h($tasks->title) ?></td>
                                         <td><?= h($tasks->description) ?></td>
                                         <td><?= h($tasks->start_date) ?></td>
@@ -199,7 +195,6 @@ $currentDate = date('d/m/y');
                             <table>
                                 <thead>
                                 <tr>
-                                    <th><?= __('Id') ?></th>
                                     <th><?= __('Title') ?></th>
                                     <th><?= __('Description') ?></th>
                                     <th><?= __('Start Date') ?></th>
@@ -217,7 +212,6 @@ $currentDate = date('d/m/y');
                                     if($tasks->status_id == '2'):
                                   ?>
                                     <tr>
-                                        <td><?= h($tasks->id) ?></td>
                                         <td><?= h($tasks->title) ?></td>
                                         <td><?= h($tasks->description) ?></td>
                                         <td><?= h($tasks->start_date) ?></td>
