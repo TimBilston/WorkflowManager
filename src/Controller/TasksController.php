@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\Task;
+use App\Model\Table\SubtasksTable;
 use phpDocumentor\Reflection\Types\Integer;
 
 /**
@@ -58,6 +59,25 @@ class TasksController extends AppController
             $task->due_date = $this->offsetWeekend($task->due_date);
 
             if ($this->Tasks->save($task)) {
+                //controllers for subtasks-----start
+                $subTaskDatas = [];
+                $sub_task_contents = $this->request->getData('sub_task_content', []);
+                foreach ($sub_task_contents as $k => $v) {
+                    $subTaskData = [];
+                    $subTaskData['description'] = $v;
+                    $subTaskData['task_id'] = $task->id;
+                    $subTaskData['is_complete'] = $this->request->getData('sub_task_status_' . $k, 0);
+                    $subTaskData['is_complete_admin'] = $this->request->getData('sub_task_status_admin_' . $k, 0);
+                    $subTaskDatas[] = $subTaskData;
+                }
+
+                $subTaskTable = new SubtasksTable();
+                $subTaskEntities = $subTaskTable->newEntities($subTaskDatas);
+                if (!$subTaskTable->saveMany($subTaskEntities)) {
+                    $this->Flash->error(__('The task could not be saved. Please, try again.'));
+                }
+                //controllers for subtasks-----end
+
                 $this->Flash->success(__('The task has been saved.'));
 
                 //************************RECURRENCE FUNCTION***************************
@@ -182,6 +202,29 @@ class TasksController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
             if ($this->Tasks->save($task)) {
+                //subtasks----start
+                $sub_task_contents = $this->request->getData('sub_task_content', []);
+                $subTaskIds = $this->request->getData('sub_task_id', []);
+                foreach ($sub_task_contents as $k => $v) {
+                    $subTaskData = [];
+                    $subTaskData['description'] = $v;
+                    $subTaskData['task_id'] = $task->id;
+                    $subTaskData['is_complete'] = $this->request->getData('sub_task_status_' . $k, 0);
+                    $subTaskData['is_complete_admin'] = $this->request->getData('sub_task_status_admin_' . $k, 0);
+
+                    $subTaskEntity = $this->Tasks->Subtasks->newEmptyEntity();
+                    if (!empty($subTaskIds[$k])) {
+                        $subTaskList = $this->Tasks->Subtasks->find('list', ['conditions' => ['id' => $subTaskIds[$k]]]);
+                        if ($subTaskList->count() > 0) {
+                            unset($subTaskData['task_id']);
+                            $subTaskEntity = $this->Tasks->Subtasks->get($subTaskIds[$k], ['contain' => []]);
+                        }
+                    }
+                    $subTaskEntity = $this->Tasks->Subtasks->patchEntity($subTaskEntity, $subTaskData);
+                    $this->Tasks->Subtasks->save($subTaskEntity);
+                }
+                //subtasks---end
+
                 $this->Flash->success(__('The task has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -192,7 +235,8 @@ class TasksController extends AppController
         $departments = $this->Tasks->Departments->find('list', ['limit' => 200]);
         $clients = $this->Tasks->Clients->find('list', ['limit' => 200]);
         $status = $this->Tasks->Status->find('list', ['limit' => 200]);
-        $this->set(compact('task', 'users', 'departments', 'clients', 'status'));
+        $subTasks = $this->Tasks->Subtasks->find('all', ['conditions' => ['task_id' => $id]]);
+        $this->set(compact('task', 'users', 'departments', 'clients', 'status', 'subTasks'));
     }
 
     /**

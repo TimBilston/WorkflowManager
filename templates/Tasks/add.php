@@ -40,6 +40,7 @@
     }
 
 </style>
+
 <script>
     $(function () {
         $('#add_sub_task').click(function () {
