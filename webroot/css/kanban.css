@@ -85,7 +85,7 @@ ul {
 }
 
 .drag-inner-list {
-    min-height: 240px;
+    min-height: 500px; /* dashboard high*/
 }
 
 .drag-item {
@@ -103,7 +103,7 @@ ul {
 
 
 .drag-item h1{
-    font-size:30px;
+    font-size:24px;  /*task title font size*/
     padding-top:12px;
     width:100%;
     white-space: nowrap;
