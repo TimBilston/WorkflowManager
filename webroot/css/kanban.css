@@ -19,9 +19,11 @@ ul {
 }
 
 .drag-container {
-    max-width: 1500px;
+    max-width: 1450px;
     margin:0 auto;
     padding:30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #333;
 }
 
 .drag-list {
@@ -89,7 +91,7 @@ ul {
 .drag-item {
     margin: 10px;
     min-height: 100px;
-    background: #fff;
+    background: #ffffff;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     padding: 0 10px 10px;
     box-sizing: border-box;
@@ -99,9 +101,14 @@ ul {
     box-shadow: 0px 0px 4px rgba(214, 214, 214, 0.5);
 }
 
+
 .drag-item h1{
     font-size:30px;
     padding-top:12px;
+    width:100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .drag-item p{
     font-size:14px;
@@ -117,6 +124,10 @@ ul {
 .drag-item .desc{
     background: url('../img/desc.png') no-repeat 6px center;
     background-size: 16px 16px;
+    width:100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .drag-item .person{
     background: url('../img/person.png') no-repeat 6px center;
@@ -142,8 +153,9 @@ ul {
     border-radius: 4px;
     transition: all 0.1s linear;
     position: relative;
-    z-index: 99999;
+    z-index: 1;
 }
+
 .drag-item p.button a:hover{
     color: #2287faa6;
     border-color:#2287faa6;
@@ -168,6 +180,7 @@ ul {
     transform: translateX(100%);
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 2;
 }
 .drag-options.active {
     transform: translateX(0);

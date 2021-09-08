@@ -68,7 +68,13 @@ class DepartmentsTable extends Table
             ->scalar('name')
             ->maxLength('name', 64)
             ->requirePresence('name', 'create')
-            ->notEmptyString('name');
+            ->notEmptyString('name')
+            ->add('name', [
+                'nosymbol' => [
+                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
+                    'message' => 'Name can not have any symbols',
+                ]
+            ]);
 
         return $validator;
     }

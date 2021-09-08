@@ -50,13 +50,28 @@ if (!Configure::read('debug')) :
 endif;
 
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
+$this->loadHelper('Authentication.Identity');
 
 
 ?>
 
 <script>
-    var currentMonday = new Date();
+    <!-- On window load, call php function in task and update all statuses to overdue if needed-->
+    function updateStatus() {
+        <?php
+            $allTasks = TableRegistry::getTableLocator()->get('Tasks')->find()->where([]);
+            foreach ($allTasks as $task){
+                $task->status_id = 3;
+            }
+        ?>
+    }
 
+    window.onload = updateStatus()
+
+</script>
+<script>
+    var currentMonday = new Date();
+    var tasksTotal = 0;
     window.onload = function() {
         //gets the current Monday date and converts into a readable format
         <!-- Outputs the Titles -->
@@ -75,7 +90,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
     function addDays(date, days) {
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
         var result = new Date(date);
         result.setDate(result.getDate() + days);
         return result.getDate().toString() + ' ' + months[result.getMonth()] + ' ' + result.getFullYear().toString();
@@ -89,19 +103,9 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
 
     function changeDates(currentMonday) {
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
         document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
-
-        /**
-        var monthName = months[currentMonday.getMonth()];
-        var Monday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate()).toString()+'/'+currentMonday.getFullYear().toString().slice(2) //get every day format
-        var Tuesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 1).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
-        var Wednesday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 2).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
-        var Thursday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 3).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
-        var Friday = (currentMonday.getMonth()+1)+'/'+ (currentMonday.getDate() + 4).toString()+'/'+currentMonday.getFullYear().toString().slice(2)
-        **/
-
 
         var Monday = getDateString(currentMonday, 0);
         var Tuesday = getDateString(currentMonday, 1);
@@ -111,13 +115,9 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
 
         document.getElementById('Monday').innerHTML = "Mon" + " " + addDays(currentMonday, 0);
-
         document.getElementById('Tuesday').innerHTML = "Tue" + " " + addDays(currentMonday, 1);
-
         document.getElementById('Wednesday').innerHTML = "Wed" + " " + addDays(currentMonday, 2);
-
         document.getElementById('Thursday').innerHTML = "Thu" + " " + addDays(currentMonday, 3);
-
         document.getElementById('Friday').innerHTML = "Fri" + " " + addDays(currentMonday, 4);
 
         <?php
@@ -126,6 +126,8 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         $html = "";
         $query = TableRegistry::getTableLocator()->get('Tasks')->find();// get all data from TasksTable
         $query->contain(['Users']);
+        $query->contain(['Status']);
+        $query->contain(['Clients']);
         foreach ($query as $task) {
             //creates each task as a draggable item and sets some info up
 
@@ -137,16 +139,27 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 //                '</p><p class = "button"> '.
 
 //                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p ></li>';
-            $html .= '<li class="drag-item"><h1>'.
-                $task->title.'</h1><p class="due_time">'.
-                $task->due_date.'</p ><p class="desc">'.
-                $task->description.'</p ><p class="person">'.
-                $task->user->name.'</p ><p>'.
-                '</p ><p class = "button"> '.
-                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p></li>';
+            $clientName = 'No Client';
+            if (!$task->client == null){
+                $clientName = 'Client: '.$task->client->name;
+            }
+
+            $html .= '<li class="drag-item">'.
+                '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
+                '<p class="due_time">'.$task->due_date.'</p >'.
+                '<p class="desc" title='.$task->description.'>'.$task->description.'</p >'.
+                '<p class="person">'.$task->user->name.'</p>'.
+                '<p class="person">'.$clientName.'</p>'.
+                '<p class="status">'.$task->status->name.'</p>'.
+                '<p class = "button" style="padding: 1px;">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
+                '<p class = "button" style="padding: 1px;">'.$this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
+                '</li>';
         } ?>
 
+
+
         var html = '<?php echo  $html ?>'
+        tasksTotal = 0
 
         $("#1").html('')
         $("#2").html('')
@@ -154,18 +167,27 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         $("#4").html('')  //reset card
         $("#5").html('')
         $(html).each((index,element)=>{
-            if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
-                $("#1").append(element)
-            }else if($(element).find('.due_time').text() == Tuesday){
-                $("#2").append(element)
-            }else if($(element).find('.due_time').text() == Wednesday){
-                $("#3").append(element)
-            }else if($(element).find('.due_time').text() == Thursday){
-                $("#4").append(element)
-            }else if($(element).find('.due_time').text() == Friday){
-                $("#5").append(element)
+            if ($(element).find('.status').text() != 'Completed'){
+                if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
+                    $("#1").append(element)
+                    tasksTotal++
+                }else if($(element).find('.due_time').text() == Tuesday){
+                    $("#2").append(element)
+                    tasksTotal++
+                }else if($(element).find('.due_time').text() == Wednesday){
+                    $("#3").append(element)
+                    tasksTotal++
+                }else if($(element).find('.due_time').text() == Thursday){
+                    $("#4").append(element)
+                    tasksTotal++
+                }else if($(element).find('.due_time').text() == Friday){
+                    $("#5").append(element)
+                    tasksTotal++
+                }
             }
+
         })
+        $("#tasksTotal").text(tasksTotal)
     }
 
     function popup(taskId){
@@ -217,15 +239,51 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <link rel="stylesheet" href="webroot/css/kanban.css">
 <link rel="stylesheet" href="webroot/css/custom.css">
 
+<style>
+.w3-light-grey, .w3-hover-light-grey:hover, .w3-light-gray, .w3-hover-light-gray:hover {
+    color: #000!important;
+    background-color: #f1f1f1!important;
+}
+.w3-opacity, .w3-hover-opacity:hover {
+    opacity: 0.60;
+    -webkit-backface-visibility: hidden;
+}
+.w3-container {
+    padding: 0.01em 16px;
+    width:100%;
+    z-index: 98;
+}
+.w3-padding-64 {
+    padding-top: 64px!important;
+    padding-bottom: 64px!important;
+}
+.w3-center {
+    text-align: center!important;
+}
+.w3-xlarge {
+    font-size: 24px!important;
+}
+.w3-container:after, .w3-container:before, .w3-panel:after, .w3-panel:before, .w3-row:after, .w3-row:before, .w3-row-padding:after, .w3-row-padding:before, .w3-cell-row:before, .w3-cell-row:after, .w3-topnav:after, .w3-topnav:before, .w3-clear:after, .w3-clear:before, .w3-btn-group:before, .w3-btn-group:after, .w3-btn-bar:before, .w3-btn-bar:after, .w3-bar:before, .w3-bar:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>
+
 <!--    <?//= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
-<?php include('navigation.php') ?>
+
 
     <section class="section">
-        <h1 style="font-size: xxx-large">Welcome! </h1>
 
-         </section>
+        <?php if ($this->Identity->isLoggedIn()){
+            $currentUserName = $this->Identity->get('name');
+            echo '<h1 style="font-size: 60px; padding: 70px">Welcome '.$currentUserName.'</h1>';
+        }?>
+
+
+    </section>
 
     <!-- The popup/Modal -->
     <div id="myModal" class="modal">
@@ -244,8 +302,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         <h1 id="Month_Text"> August 2021 </h1>
         <button onclick = "prevWeek()" style="margin: auto" > > </button>
     </div>
-
-
 
 
     <div class="drag-container">
@@ -307,7 +363,10 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
         </ul>
     </div>
-
+    <?php include('navigation.php') ?>
+    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px">
+        <b><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
+    </footer>
 </html>
 <script type = "text/javascript" src = "js/jquery-1.4.1.js" ></script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js" > </script>

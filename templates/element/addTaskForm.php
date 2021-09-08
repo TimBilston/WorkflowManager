@@ -24,7 +24,7 @@ echo $this->Form->select('recurrence', [
     'Annually' => 'Annually'
 ]);
 
-echo $this->Form->control('no_of_recurrence', ['default' => 1]);
+echo $this->Form->control('no_of_recurrence', ['default' => 0]);
 
 echo $this->Form->control('department_id', ['options' => $departments]);
 echo $this->Form->control('client_id', ['options' => $clients, 'empty' => 'No Client']);

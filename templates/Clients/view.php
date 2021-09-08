@@ -3,7 +3,46 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Client $client
  */
+
+use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
+$currentDate = date('d/m/y');
 ?>
+<style>
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .active, .collapsible:hover {
+        background-color: #555;
+    }
+
+    .test {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+    }
+    .collapsible:after {
+        content: '\02795'; /* Unicode character for "plus" sign (+) */
+        font-size: 13px;
+        color: white;
+        float: right;
+        margin-left: 5px;
+    }
+
+    .active:after {
+        content: "\2796"; /* Unicode character for "minus" sign (-) */
+    }
+</style>
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -44,47 +83,175 @@
                 </tr>
                  -->
             </table>
-            <div class="related">
-                <h4><?= __('Related Tasks') ?></h4>
-                <?php if (!empty($client->tasks)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Title') ?></th>
-                            <th><?= __('Description') ?></th>
-                            <th><?= __('Start Date') ?></th>
-                            <th><?= __('Due Date') ?></th>
-                            <th><?= __('Employee Id') ?></th>
-                            <th><?= __('Recurring') ?></th>
-                            <th><?= __('Department Id') ?></th>
-                            <th><?= __('Client Id') ?></th>
-                            <th><?= __('Status Id') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($client->tasks as $tasks) : ?>
-                        <tr>
-                            <td><?= h($tasks->id) ?></td>
-                            <td><?= h($tasks->title) ?></td>
-                            <td><?= h($tasks->description) ?></td>
-                            <td><?= h($tasks->start_date) ?></td>
-                            <td><?= h($tasks->due_date) ?></td>
-                            <td><?= h($tasks->employee_id) ?></td>
-                            <td><?= h($tasks->recurring) ?></td>
-                            <td><?= h($tasks->department_id) ?></td>
-                            <td><?= h($tasks->client_id) ?></td>
-                            <td><?= h($tasks->status_id) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Tasks', 'action' => 'view', $tasks->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Tasks', 'action' => 'edit', $tasks->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Tasks', 'action' => 'delete', $tasks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tasks->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
+            <!-- 3 Separate tables for Overdue, Current, and Completed-->
+            <h3>Related Tasks</h3>
+            <button class="collapsible">Overdue Tasks (<?php
+                $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['client_id' => $client->id ,'status_id'=>3])->count();
+                echo $query;
+                ?>)</button>
+            <div class="test" style = "active">
+                <div class="related">
+
+                    <?php if (!empty($client->tasks)) : ?>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th><?= __('Title') ?></th>
+                                    <th><?= __('Description') ?></th>
+                                    <th><?= __('Start Date') ?></th>
+                                    <th><?= __('Due Date') ?></th>
+                                    <th><?= __('Employee') ?></th>
+                                    <th><?= __('Department Id') ?></th>
+                                    <th><?= __('Status Id') ?></th>
+                                    <th class="actions"><?= __('Actions') ?></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($client->tasks as $tasks):?>
+                                    <?php
+                                    if(strtotime($tasks->due_date) >= strtotime($currentDate) || $tasks->status_id =='3'):
+                                    ?>
+                                    <tr>
+                                        <td><?= h($tasks->title) ?></td>
+                                        <td><?= h($tasks->description) ?></td>
+                                        <td><?= h($tasks->start_date) ?></td>
+                                        <td><?= h($tasks->due_date) ?></td>
+                                        <td><?= $client->has('user') ? $this->Html->link($client->user->name, ['controller' => 'Users', 'action' => 'view', $client->user->id]) : '' ?></td>
+                                        <td><?= $client->has('department') ? $this->Html->link($client->tasks->department->name, ['controller' => 'Departments', 'action' => 'view', $client->tasks->department->id]) : '' ?></td>
+                                        <td><?= $client->has('status') ? $this->Html->link($client->$tasks->status->name, ['controller' => 'Status', 'action' => 'view', $client->status->id]) : '' ?></td>
+
+                                        <td class="actions">
+                                            <?= $this->Html->link(__('View'), ['controller' => 'Tasks', 'action' => 'view', $tasks->id]) ?>
+                                            <?= $this->Html->link(__('Edit'), ['controller' => 'Tasks', 'action' => 'edit', $tasks->id]) ?>
+                                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'Tasks', 'action' => 'delete', $tasks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tasks->id)]) ?>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>            </div>
+            <button class="collapsible">Current Tasks (<?php $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['client_id' => $client->id, 'status_id' => 1])->count();
+                echo $query;
+                ?>) </button>
+            <div class="test">
+                <div class="related">
+                    <?php if (!empty($client->tasks)) : ?>
+
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th><?= __('Title') ?></th>
+                                    <th><?= __('Description') ?></th>
+                                    <th><?= __('Start Date') ?></th>
+                                    <th><?= __('Due Date') ?></th>
+                                    <th><?= __('Employee') ?></th>
+                                    <th><?= __('Department Id') ?></th>
+                                    <th><?= __('Status Id') ?></th>
+                                    <th class="actions"><?= __('Actions') ?></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php foreach ($client->tasks as $tasks): ?>
+                                    <?php
+                                     //compares current date to see if overdue, and status is ongoing (not completed)
+                                    $currentDate = date('d/m/y');
+                                    if(strtotime($tasks->due_date) <= strtotime($currentDate) && $tasks->status_id == '1'):
+                                        ?>
+                                    <tr>
+                                        <td><?= h($tasks->title) ?></td>
+                                        <td><?= h($tasks->description) ?></td>
+                                        <td><?= h($tasks->start_date) ?></td>
+                                        <td><?= h($tasks->due_date) ?></td>
+                                        <td><?= $client->has('user') ? $this->Html->link($client->user->name, ['controller' => 'Users', 'action' => 'view', $client->user->id]) : '' ?></td>
+                                        <td><?= $client->has('department') ? $this->Html->link($client->tasks->department->name, ['controller' => 'Departments', 'action' => 'view', $client->tasks->department->id]) : '' ?></td>
+                                        <td><?= $client->has('status') ? $this->Html->link($client->$tasks->status->name, ['controller' => 'Status', 'action' => 'view', $client->status->id]) : '' ?></td>
+
+                                        <td class="actions">
+                                            <?= $this->Html->link(__('View'), ['controller' => 'Tasks', 'action' => 'view', $tasks->id]) ?>
+                                            <?= $this->Html->link(__('Edit'), ['controller' => 'Tasks', 'action' => 'edit', $tasks->id]) ?>
+                                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'Tasks', 'action' => 'delete', $tasks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tasks->id)]) ?>
+                                        </td>
+                                    </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
             </div>
+            <button class="collapsible">Completed Tasks (<?php $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['client_id' => $client->id, 'status_id' => 2])->count();
+                echo $query; ?>) </button>
+            <div class="test">
+                <div class="related">
+                    <?php if (!empty($client->tasks)) : ?>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th><?= __('Title') ?></th>
+                                    <th><?= __('Description') ?></th>
+                                    <th><?= __('Start Date') ?></th>
+                                    <th><?= __('Due Date') ?></th>
+                                    <th><?= __('Employee') ?></th>
+                                    <th><?= __('Department Id') ?></th>
+                                    <th><?= __('Status Id') ?></th>
+                                    <th class="actions"><?= __('Actions') ?></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php foreach ($client->tasks as $tasks): ?>
+                                    <?php
+                                    if($tasks->status_id == '2'):
+                                  ?>
+                                    <tr>
+                                        <td><?= h($tasks->title) ?></td>
+                                        <td><?= h($tasks->description) ?></td>
+                                        <td><?= h($tasks->start_date) ?></td>
+                                        <td><?= h($tasks->due_date) ?></td>
+                                        <td><?= $client->has('user') ? $this->Html->link($client->user->name, ['controller' => 'Users', 'action' => 'view', $client->user->id]) : '' ?></td>
+                                        <td><?= $client->has('department') ? $this->Html->link($client->tasks->department->name, ['controller' => 'Departments', 'action' => 'view', $client->tasks->department->id]) : '' ?></td>
+                                        <td><?= $client->has('status') ? $this->Html->link($client->$tasks->status->name, ['controller' => 'Status', 'action' => 'view', $client->status->id]) : '' ?></td>
+
+                                        <td class="actions">
+                                            <?= $this->Html->link(__('View'), ['controller' => 'Tasks', 'action' => 'view', $tasks->id]) ?>
+                                            <?= $this->Html->link(__('Edit'), ['controller' => 'Tasks', 'action' => 'edit', $tasks->id]) ?>
+                                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'Tasks', 'action' => 'delete', $tasks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tasks->id)]) ?>
+                                        </td>
+                                    </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+</script>

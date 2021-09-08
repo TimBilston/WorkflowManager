@@ -56,7 +56,10 @@ class TasksController extends AppController
         $task = $this->Tasks->newEmptyEntity();
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
-            $task->due_date = $this->offsetWeekend($task->due_date);
+
+            if (!$task->due_date == null){
+                $task->due_date = $this->offsetWeekend($task->due_date);
+            }
 
             if ($this->Tasks->save($task)) {
                 //controllers for subtasks-----start
@@ -84,7 +87,7 @@ class TasksController extends AppController
                 if ($task->recurrence == 'Quarterly') {
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -102,7 +105,7 @@ class TasksController extends AppController
                 } elseif ($task->recurrence == 'Weekly') {
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -116,7 +119,7 @@ class TasksController extends AppController
                 } elseif ($task->recurrence == 'Fortnightly'){
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -129,7 +132,7 @@ class TasksController extends AppController
                 } elseif ($task->recurrence == 'Monthly'){
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -147,7 +150,7 @@ class TasksController extends AppController
                 } elseif ($task->recurrence == 'Annually'){
                     $newIds = $task->id;
                     $changingDate = $task->due_date;
-                    for ($i = 0; $i < $task->no_of_recurrence - 1; $i++) {
+                    for ($i = 0; $i < $task->no_of_recurrence; $i++) {
                         $newTask = $this->Tasks->newEmptyEntity();
                         $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
                         $newTask->id = $newIds + 1;
@@ -183,6 +186,22 @@ class TasksController extends AppController
             return $date->addDay(1);
         }
         return $date;
+
+    }
+
+    public function completeTask($id = null){
+        $task = $this->Tasks->get($id, [
+            'contain' => [],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $task->status_id = 2;
+            if ($this->Tasks->save($task)) {
+                $this->Flash->success('The task has been saved.');
+
+                return $this->redirect(['controller' => 'pages', 'action' => 'display']);
+            }
+            $this->Flash->error(__('The task could not be saved. Please, try again.'));
+        }
 
     }
 

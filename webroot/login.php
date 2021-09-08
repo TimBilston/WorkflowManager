@@ -3,7 +3,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css/login_css.css"/>
+        <link rel="stylesheet" href="css/login.css"/>
         <title>
 Login page
 </title>

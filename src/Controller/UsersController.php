@@ -60,12 +60,13 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Departments'],
+            'contain' => ['Departments' , 'Tasks'],
         ];
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
     }
+
 
     /**
      * View method
