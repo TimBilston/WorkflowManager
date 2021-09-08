@@ -104,7 +104,7 @@ ul {
 
 
 .drag-item h1{
-    font-size:24px;  /*task title font size*/
+    font-size:18px;  /*task title font size*/
     padding-top:12px;
     width:100%;
     white-space: nowrap;
@@ -158,6 +158,18 @@ ul {
 
 }
 .drag-item p.button a{
+    color:#3a3a3a;
+    text-decoration:none;
+    text-align: right;
+    border:1px solid #d9d9d9;
+    padding:4px 8px;
+    border-radius: 4px;
+    transition: all 0.1s linear;
+    position: relative;
+    z-index: 1;
+}
+
+.drag-item button.button{
     color:#3a3a3a;
     text-decoration:none;
     text-align: right;
