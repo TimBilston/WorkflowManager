@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #f9f9f9;;
+    color: #3a3a3a;
+    font-family: "Lato";
+    font-weight: 300;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+
+}
+
+
+.task-card {
+    list-style-type: none;
+    min-height: 50px;
+    background: #f9f9f9;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    padding: 0 10px 10px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 11px;
+    box-shadow: 0px 0px 6px rgba(214, 214, 214, 0.5);
+}
+.task-card .person{
+    display : none;
+    background: url('../img/person.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+.task-card .due_time{
+    background: url('../img/clock.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+.task-card .desc {
+    background: url('../img/desc.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+.task-card .client{
+    background: url('../img/person.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+.task-card p{
+    font-size:11px;
+    margin:6px 0px;
+    color: #8d8a8a;
+    box-sizing: border-box;
+    padding-left:30px;
+}
+.task-card p.test{
+    text-align: right;
+    line-height: 3.8rem;
+    margin: -12px -3px;
+
+}
+.task-card p.test a{
+    border: 1px solid #d9d9d9;
+    color:#3a3a3a;
+    line-height: 3.8rem;
+    text-decoration:none;
+    text-align: right;
+    padding:4px 8px;
+    border-radius: 4px;
+    transition: all 0.1s linear;
+    position: relative;
+    z-index: 99999;
+}
+.task-card p.test a:hover{
+    color: #2287faa6;
+    border-color:#2287faa6;
+}

@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
  * @property int $department_id
  *
  * @property \App\Model\Entity\Department $department
+ * @property \App\Model\Entity\Task[] $tasks
  */
 class User extends Entity
 {
@@ -40,6 +41,7 @@ class User extends Entity
         'created' => true,
         'department_id' => true,
         'department' => true,
+        'tasks' => true,
     ];
 
     /**
@@ -57,5 +59,6 @@ class User extends Entity
             return (new DefaultPasswordHasher())->hash($password);
         }
     }
+
 
 }

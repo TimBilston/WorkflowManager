@@ -56,6 +56,20 @@ $this->loadHelper('Authentication.Identity');
 ?>
 
 <script>
+    <!-- On window load, call php function in task and update all statuses to overdue if needed-->
+    function updateStatus() {
+        <?php
+            $allTasks = TableRegistry::getTableLocator()->get('Tasks')->find()->where([]);
+            foreach ($allTasks as $task){
+                $task->status_id = 3;
+            }
+        ?>
+    }
+
+    window.onload = updateStatus()
+
+</script>
+<script>
     var currentMonday = new Date();
     var tasksTotal = 0;
     window.onload = function() {
@@ -76,7 +90,6 @@ $this->loadHelper('Authentication.Identity');
 
     function addDays(date, days) {
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
         var result = new Date(date);
         result.setDate(result.getDate() + days);
         return result.getDate().toString() + ' ' + months[result.getMonth()] + ' ' + result.getFullYear().toString();
@@ -102,13 +115,9 @@ $this->loadHelper('Authentication.Identity');
 
 
         document.getElementById('Monday').innerHTML = "Mon" + " " + addDays(currentMonday, 0);
-
         document.getElementById('Tuesday').innerHTML = "Tue" + " " + addDays(currentMonday, 1);
-
         document.getElementById('Wednesday').innerHTML = "Wed" + " " + addDays(currentMonday, 2);
-
         document.getElementById('Thursday').innerHTML = "Thu" + " " + addDays(currentMonday, 3);
-
         document.getElementById('Friday').innerHTML = "Fri" + " " + addDays(currentMonday, 4);
 
         <?php
