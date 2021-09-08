@@ -134,6 +134,16 @@ ul {
     background-size: 16px 16px;
 }
 
+.drag-item .employee{
+    background: url('../img/person.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+
+.drag-item .status{
+    background: url('../img/clock.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+
 .description{
     color: #434343;
     font-weight: normal;
