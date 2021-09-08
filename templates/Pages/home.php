@@ -275,7 +275,7 @@ $this->loadHelper('Authentication.Identity');
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
 
 
-    <section class="section">
+    <section class="section" style="padding-left:240px;">   
 
         <?php if ($this->Identity->isLoggedIn()){
             $currentUserName = $this->Identity->get('name');
@@ -297,7 +297,7 @@ $this->loadHelper('Authentication.Identity');
 
     </div>
 
-    <div style="display: flex; flex-direction: row">
+    <div style="display: flex; flex-direction: row;padding-left:220px;">
         <button onclick = "nextWeek()" style="margin: auto" > < </button>
         <h1 id="Month_Text"> August 2021 </h1>
         <button onclick = "prevWeek()" style="margin: auto" > > </button>
@@ -364,7 +364,7 @@ $this->loadHelper('Authentication.Identity');
         </ul>
     </div>
     <?php include('navigation.php') ?>
-    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px">
+    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px; padding-left: 220px;">
         <b><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
     </footer>
 </html>

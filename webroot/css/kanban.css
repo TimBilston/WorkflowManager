@@ -19,11 +19,11 @@ ul {
 }
 
 .drag-container {
-    max-width: 1450px;
+    max-width: 1700px;
     margin:0 auto;
     padding:30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px #333;
+    padding-left: 250px; 
 }
 
 .drag-list {
@@ -133,7 +133,14 @@ ul {
     background: url('../img/person.png') no-repeat 6px center;
     background-size: 16px 16px;
 }
-
+.drag-item .status{
+    background: url('../img/progress.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+.drag-item .client{
+    background: url('../img/client.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
 .description{
     color: #434343;
     font-weight: normal;
