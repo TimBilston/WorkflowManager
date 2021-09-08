@@ -330,13 +330,6 @@ if ($this->Identity->isLoggedIn()) {
 <!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
 
-
-    <section class="section" style="padding-left:240px;">   
-
-        <?php echo '<h1 style="font-size: 60px; padding: 70px">Welcome '.$currentUserName.'</h1>'; ?>
-
-    </section>
-
     <!-- The popup/Modal -->
     <div id="myModal" class="modal">
 
