@@ -81,7 +81,7 @@ class TasksTable extends Table
 
         $validator
             ->scalar('title')
-            ->maxLength('title', 30, "The task's title is too long", 'update')
+            ->maxLength('title', 50, "The task's title is too long", 'update')
             ->requirePresence('title', 'create')
             ->notEmptyString('title')
             ->add('title', [

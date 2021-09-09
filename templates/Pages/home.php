@@ -159,7 +159,7 @@ if ($this->Identity->isLoggedIn()) {
                 '<p class="employee">'.$task->user->name.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
                 '<p class="button" style="padding: 1px; text-align:center">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
-                '<p class="button" style="padding: 1px; text-align:center">'.$this->Html->link(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
+                '<p class="button" style="padding: 1px; text-align:center">'.$this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
                 '</li>';
         } ?>
 
