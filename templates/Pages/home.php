@@ -52,7 +52,6 @@ endif;
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
 $this->loadHelper('Authentication.Identity');
 
-
 ?>
 
 <script>
@@ -144,6 +143,17 @@ $this->loadHelper('Authentication.Identity');
                 $clientName = 'Client: '.$task->client->name;
             }
 
+            $subTasksCount = 0;
+            $completeCount = 0;
+            if (!empty($task->subtasks)) {
+                $subTasksCount = count($task->subtasks);
+                foreach ($task->subtasks as $v) {
+                    if ($v->is_complete) {
+                        $completeCount++;
+                    }
+                }
+            }
+
             $html .= '<li class="drag-item">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time">'.$task->due_date.'</p >'.
@@ -151,6 +161,7 @@ $this->loadHelper('Authentication.Identity');
                 '<p class="person">'.$task->user->name.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
+                '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'.
                 '<p class = "button" style="padding: 1px;">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
                 '<p class = "button" style="padding: 1px;">'.$this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
                 '</li>';
