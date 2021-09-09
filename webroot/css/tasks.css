@@ -18,6 +18,7 @@ body {
 .task-card {
     list-style-type: none;
     min-height: 50px;
+    max-width: 180px;
     background: #f9f9f9;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     padding: 0 10px 10px;
@@ -39,6 +40,7 @@ body {
 .task-card .desc {
     background: url('../img/desc.png') no-repeat 6px center;
     background-size: 16px 16px;
+    text-overflow: ellipsis;
 }
 .task-card .client{
     background: url('../img/person.png') no-repeat 6px center;
