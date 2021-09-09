@@ -19,11 +19,11 @@ ul {
 }
 
 .drag-container {
-    max-width: 1450px;
+    max-width: 1700px;
     margin:0 auto;
     padding:30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px #333;
+    padding-left: 250px;
 }
 
 .drag-list {
@@ -42,6 +42,7 @@ ul {
     position: relative;
     background: rgba(193, 193, 193, 0.2);
     overflow: hidden;
+    border-radius: 10px;
 }
 @media (max-width: 690px) {
     .drag-column {
@@ -85,7 +86,7 @@ ul {
 }
 
 .drag-inner-list {
-    min-height: 240px;
+    min-height: 500px; /* dashboard high*/
 }
 
 .drag-item {
@@ -103,7 +104,7 @@ ul {
 
 
 .drag-item h1{
-    font-size:30px;
+    font-size:18px;  /*task title font size*/
     padding-top:12px;
     width:100%;
     white-space: nowrap;
@@ -130,9 +131,21 @@ ul {
     overflow: hidden;
 }
 .drag-item .person{
+    background: url('../img/client.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+
+.drag-item .status{
+    background: url('../img/progress.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+.drag-item .employee{
     background: url('../img/person.png') no-repeat 6px center;
     background-size: 16px 16px;
 }
+
+
+
 
 .description{
     color: #434343;
@@ -145,6 +158,18 @@ ul {
 
 }
 .drag-item p.button a{
+    color:#3a3a3a;
+    text-decoration:none;
+    text-align: right;
+    border:1px solid #d9d9d9;
+    padding:4px 8px;
+    border-radius: 4px;
+    transition: all 0.1s linear;
+    position: relative;
+    z-index: 1;
+}
+
+.drag-item button.button{
     color:#3a3a3a;
     text-decoration:none;
     text-align: right;

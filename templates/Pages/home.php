@@ -50,7 +50,15 @@ if (!Configure::read('debug')) :
 endif;
 
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
+
+
 $this->loadHelper('Authentication.Identity');
+
+if ($this->Identity->isLoggedIn()) {
+    $currentUserName = $this->Identity->get('name');
+}
+
+
 
 ?>
 
@@ -143,33 +151,20 @@ $this->loadHelper('Authentication.Identity');
                 $clientName = 'Client: '.$task->client->name;
             }
 
-            $subTasksCount = 0;
-            $completeCount = 0;
-            if (!empty($task->subtasks)) {
-                $subTasksCount = count($task->subtasks);
-                foreach ($task->subtasks as $v) {
-                    if ($v->is_complete) {
-                        $completeCount++;
-                    }
-                }
-            }
-
             $html .= '<li class="drag-item">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
-                '<p class="due_time">'.$task->due_date.'</p >'.
-                '<p class="desc" title='.$task->description.'>'.$task->description.'</p >'.
-                '<p class="person">'.$task->user->name.'</p>'.
+                '<p class="due_time">'.$task->due_date.'</p>'.
+                '<p class="desc" title='.$task->description.'>'.$task->description.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
+                '<p class="employee">'.$task->user->name.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
-                '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'.
-                '<p class = "button" style="padding: 1px;">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
-                '<p class = "button" style="padding: 1px;">'.$this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
+                '<p class="button" style="padding: 1px; text-align:center">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
+                '<p class="button" style="padding: 1px; text-align:center">'.$this->Html->link(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
                 '</li>';
         } ?>
 
-
-
         var html = '<?php echo  $html ?>'
+        var currentUser = '<?php echo $currentUserName ?>'
         tasksTotal = 0
 
         $("#1").html('')
@@ -177,28 +172,77 @@ $this->loadHelper('Authentication.Identity');
         $("#3").html('')
         $("#4").html('')  //reset card
         $("#5").html('')
+
+        //if due time = monday ,then add data
         $(html).each((index,element)=>{
             if ($(element).find('.status').text() != 'Completed'){
-                if($(element).find('.due_time').text() == Monday){             //if due time = monday ,then add data
-                    $("#1").append(element)
-                    tasksTotal++
+                if($(element).find('.due_time').text() == Monday){
+
+                    if (document.getElementById('toggle').checked){
+                        if ($(element).find('.employee').text() == currentUser){
+                            $("#1").append(element)
+                            tasksTotal++
+                        }
+                    } else {
+                        $("#1").append(element)
+                        tasksTotal++
+                    }
                 }else if($(element).find('.due_time').text() == Tuesday){
-                    $("#2").append(element)
-                    tasksTotal++
+                    if (document.getElementById('toggle').checked){
+                        if ($(element).find('.employee').text() == currentUser){
+                            $("#2").append(element)
+                            tasksTotal++
+                        }
+                    } else {
+                        $("#2").append(element)
+                        tasksTotal++
+                    }
                 }else if($(element).find('.due_time').text() == Wednesday){
-                    $("#3").append(element)
-                    tasksTotal++
+                    if (document.getElementById('toggle').checked){
+                        if ($(element).find('.employee').text() == currentUser){
+                            $("#3").append(element)
+                            tasksTotal++
+                        }
+                    } else {
+                        $("#3").append(element)
+                        tasksTotal++
+                    }
                 }else if($(element).find('.due_time').text() == Thursday){
-                    $("#4").append(element)
-                    tasksTotal++
+                    if (document.getElementById('toggle').checked){
+                        if ($(element).find('.employee').text() == currentUser){
+                            $("#4").append(element)
+                            tasksTotal++
+                        }
+                    } else {
+                        $("#4").append(element)
+                        tasksTotal++
+                    }
                 }else if($(element).find('.due_time').text() == Friday){
-                    $("#5").append(element)
-                    tasksTotal++
+                    if (document.getElementById('toggle').checked){
+                        if ($(element).find('.employee').text() == currentUser){
+                            $("#5").append(element)
+                            tasksTotal++
+                        }
+                    } else {
+                        $("#5").append(element)
+                        tasksTotal++
+                    }
                 }
             }
 
         })
         $("#tasksTotal").text(tasksTotal)
+    }
+
+    function toggleCheck(){
+        var checkBox = document.getElementById("toggle");
+        if (checkBox.checked == true){
+            currentMonday = getMonday(new Date());
+            changeDates(currentMonday);
+        } else {
+            currentMonday = getMonday(new Date());
+            changeDates(currentMonday);
+        }
     }
 
     function popup(taskId){
@@ -248,6 +292,7 @@ $this->loadHelper('Authentication.Identity');
     <?= $this->Html->meta('icon') ?>
 </head>
 <link rel="stylesheet" href="webroot/css/kanban.css">
+<link rel="stylesheet" href="webroot/css/tasks.css">
 <link rel="stylesheet" href="webroot/css/custom.css">
 
 <style>
@@ -285,17 +330,6 @@ $this->loadHelper('Authentication.Identity');
 <!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
 
-
-    <section class="section">
-
-        <?php if ($this->Identity->isLoggedIn()){
-            $currentUserName = $this->Identity->get('name');
-            echo '<h1 style="font-size: 60px; padding: 70px">Welcome '.$currentUserName.'</h1>';
-        }?>
-
-
-    </section>
-
     <!-- The popup/Modal -->
     <div id="myModal" class="modal">
 
@@ -308,7 +342,7 @@ $this->loadHelper('Authentication.Identity');
 
     </div>
 
-    <div style="display: flex; flex-direction: row">
+    <div style="display: flex; flex-direction: row;padding-left:220px;">
         <button onclick = "nextWeek()" style="margin: auto" > < </button>
         <h1 id="Month_Text"> August 2021 </h1>
         <button onclick = "prevWeek()" style="margin: auto" > > </button>
@@ -375,7 +409,7 @@ $this->loadHelper('Authentication.Identity');
         </ul>
     </div>
     <?php include('navigation.php') ?>
-    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px">
+    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px; padding-left: 220px;">
         <b><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
     </footer>
 </html>

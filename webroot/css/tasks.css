@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 body {
@@ -42,6 +44,12 @@ body {
     background: url('../img/person.png') no-repeat 6px center;
     background-size: 16px 16px;
 }
+.task-card .employee{
+    background: url('../img/person.png') no-repeat 6px center;
+    background-size: 16px 16px;
+}
+
+
 .task-card p{
     font-size:11px;
     margin:6px 0px;
