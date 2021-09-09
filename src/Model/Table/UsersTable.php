@@ -109,7 +109,7 @@ class UsersTable extends Table
 
         $validator
             ->email('email')
-            ->maxLength('email', 20)
+            ->maxLength('email', 40)
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
 

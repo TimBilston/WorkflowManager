@@ -12,6 +12,22 @@ namespace App\Controller;
 class SubtasksController extends AppController
 {
     /**
+     * Before Filter method
+     *
+     * Handles the authentication of certain pages
+     *
+     * @param \Cake\Event\EventInterface $event
+     * @return Response|void|null
+     */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // Configure the login action to not require authentication, preventing
+        // the infinite redirect loop issue
+        //$this->Authentication->addUnauthenticatedActions();
+
+    }
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
