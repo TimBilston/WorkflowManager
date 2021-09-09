@@ -330,6 +330,7 @@ if ($this->Identity->isLoggedIn()) {
 <!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
 <!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
 
+
     <!-- The popup/Modal -->
     <div id="myModal" class="modal">
 
