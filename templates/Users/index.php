@@ -85,7 +85,7 @@
                                             <h4 style = "margin-bottom: 0rem">' . $task->title . '</h4>
                                             <p class="due_time">' . $task->due_date . '</p>
                                             <p class ="person">'.$user->id .'</p>
-                                            <p class="desc" >' . substr($task->description,0,15) . '...</p>
+                                            <p class="desc" >' . substr($task->description,0,20) . '...</p>
                                             <p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
                     echo $output;
                 }?>
