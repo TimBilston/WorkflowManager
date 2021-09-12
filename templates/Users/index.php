@@ -20,7 +20,150 @@
 
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
     <script src ="webroot/js/jquery-1.4.1.js"></script>
+    <script>
+        var Monday = "";
+        var Tuesday = "";
+        var Wednesday = "";
+        var Thursday = "";
+        var Friday = "";
 
+        var currentMonday = new Date();
+        window.onload = function() {
+            //gets the current Monday date and converts into a readable format
+            <!-- Outputs the Titles -->
+            currentMonday = getMonday(new Date());
+            changeDates(currentMonday);
+        }
+
+        function getMonday(d) {
+            d = new Date(d);
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff));
+        }
+        function addDays(date, days) {
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result.getDate().toString() + ' ' + months[result.getMonth()] + ' ' + result.getFullYear().toString();
+        }
+
+        function getDateString(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            var ddmm = result.toLocaleString('en-au').slice(0,5);
+            return ddmm +  '/' + result.getFullYear().toString().slice(2);
+        }
+        function doSomething() {
+            var thisMonday = currentMonday;
+            //compare dates and turn display to visible if good
+            var elements =  document.getElementsByClassName('task-card');
+            elements = Array.prototype.slice.call(elements, 0);
+            elements.sort(function(a, b){return a.id - b.id});
+            let names = document.getElementsByClassName('names');
+            //const length = elements.length;
+            let MD = getDateString(thisMonday, 0);
+            let TuD = getDateString(thisMonday, 1);
+            let WD = getDateString(thisMonday, 2);
+            let ThD = getDateString(thisMonday, 3);
+            let FD = getDateString(thisMonday, 4);
+            for(let i = 0; i < elements.length; i++){
+                //set every element to invisible to start
+                elements[i].style.display = "none";
+                console.log("hidden");
+            }
+            for(let j = 0; j < names.length; j++){
+                for (let i = 0; i < elements.length; i++) {
+                    elements.sort(function(a, b){return a.id - b.id});
+                    //for testing elements[i].innerHTML = "foo";
+                    if(elements[i].childNodes[5].innerText == names[j].id){
+                        let id = elements[i].id;
+                        //If task name is equal then check for dates and then display task
+                        switch (elements[i].childNodes[3].innerText){
+                            case MD:
+
+                                document.getElementById("M_TD " + names[j].id).append(elements[i]);
+                                document.getElementById(id).style.display = "block";
+                                break;
+                            case TuD:
+                                document.getElementById("Tu_TD " + names[j].id).append(elements[i]);
+                                document.getElementById(id).style.display = "block";
+                                break;
+                            case WD:
+                                document.getElementById("W_TD " + names[j].id).append(elements[i]);
+                                document.getElementById(id).style.display = "block";
+                                break;
+                            case ThD:
+                                document.getElementById("Th_TD " + names[j].id).append(elements[i]);
+                                document.getElementById(id).style.display = "block";
+                                break;
+                            case FD:
+                                document.getElementById("F_TD " + names[j].id).append(elements[i]);
+                                document.getElementById(id).style.display = "block";
+                                break;
+                            default:
+                                elements[i].style.display = "none";
+                                console.log("hide");
+                        }
+/*
+                        if(elements[i].childNodes[3].innerText === MD){
+                            document.getElementById("M_TD " + names[j].id).append(elements[i]);
+                            elements[i].style.display = "block";
+                        }
+                        else if(elements[i].childNodes[3].innerText === TuD){
+                            document.getElementById("Tu_TD " + names[j].id).append(elements[i]);
+                            elements[i].style.display = "block";
+                        }
+                        else if(elements[i].childNodes[3].innerText === WD){
+                            document.getElementById("W_TD " + names[j].id).append(elements[i]);
+                            elements[i].style.display = "block";
+                        }
+                        else if(elements[i].childNodes[3].innerText === ThD){
+                            document.getElementById("Th_TD " + names[j].id).append(elements[i]);
+                            elements[i].style.display = "block";
+
+                        }
+                        else if(elements[i].childNodes[3].innerText === FD){
+                            document.getElementById("F_TD " + names[j].id).append(elements[i]);
+                            elements[i].style.display = "block";
+                        }
+                        else {
+                            elements[i].style.display = "none";
+                            console.log("hidden");
+                        }*/
+
+                    }
+                }
+            }
+        }
+
+        function changeDates(currentMonday) {
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
+
+            Monday = "Mon" + " " + addDays(currentMonday, 0);
+            Tuesday = "Tue" + " " + addDays(currentMonday, 1);
+            Wednesday = "Wed" + " " + addDays(currentMonday, 2);
+            Thursday = "Thu" + " " + addDays(currentMonday, 3);
+            Friday = "Fri" + " " + addDays(currentMonday, 4);
+
+            document.getElementById('Mon').innerHTML = Monday;
+            document.getElementById('Tue').innerHTML = Tuesday;
+            document.getElementById('Wed').innerHTML = Wednesday;
+            document.getElementById('Thu').innerHTML = Thursday;
+            document.getElementById('Fri').innerHTML = Friday;
+            doSomething();
+        }
+        function nextWeek(){
+            currentMonday.setDate(currentMonday.getDate() - 7);
+            changeDates(currentMonday);
+        }
+        function prevWeek(){
+            currentMonday.setDate(currentMonday.getDate() + 7);
+            changeDates(currentMonday);
+        }
+    </script>
 
     <div class="table-responsive">
         <table>
@@ -36,44 +179,7 @@
             </thead>
             <tbody>
             <script>
-                function doSomething() {
-                    //compare dates and turn display to visible if good
-                    var elements = document.getElementsByClassName('task-card');
-                    var names = document.getElementsByClassName('names');
-                    var MD = getDateString(currentMonday, 0);
-                    var TuD = getDateString(currentMonday, 1);
-                    var WD = getDateString(currentMonday, 2);
-                    var ThD = getDateString(currentMonday, 3);
-                    var FD = getDateString(currentMonday, 4);
-                    for(let j = 0; j < names.length; j++){
-                        for (let i = 0; i < elements.length; i++) {
-                            //for testing elements[i].innerHTML = "foo";
-                            if(elements[i].childNodes[3].innerText == MD && elements[i].childNodes[5].innerText == names[j].id){
-                                document.getElementById("M_TD " + names[j].id).append(elements[i]);
-                                elements[i].style.display = "block";
-                            }
-                            else if(elements[i].childNodes[3].innerText == TuD  && elements[i].childNodes[5].innerText == names[j].id){
-                                document.getElementById("Tu_TD " + names[j].id).append(elements[i]);
-                                elements[i].style.display = "block";
-                            }
-                            else if(elements[i].childNodes[3].innerText == WD  && elements[i].childNodes[5].innerText == names[j].id){
-                                document.getElementById("W_TD " + names[j].id).append(elements[i]);
-                                elements[i].style.display = "block";
-                            }
-                            else if(elements[i].childNodes[3].innerText == ThD && elements[i].childNodes[5].innerText == names[j].id){
-                                document.getElementById("Th_TD " + names[j].id).append(elements[i]);
-                                elements[i].style.display = "block";
-                            }
-                            else if(elements[i].childNodes[3].innerText == FD  && elements[i].childNodes[5].innerText == names[j].id){
-                                document.getElementById("F_TD " + names[j].id).append(elements[i]);
-                                elements[i].style.display = "block";
-                            }
-                            else if (elements[i].childNodes[3].innerText != MD && elements[i].childNodes[3].innerText != TuD && elements[i].childNodes[3].innerText != WD && elements[i].childNodes[3].innerText != ThD && elements[i].childNodes[3].innerText != FD){
-                                elements[i].style.display = "none"
-                            }
-                        }
-                    }
-                    }
+
             </script>
 
             <?php foreach ($users as $user): ?>
@@ -83,7 +189,7 @@
                     $output = "";
                     $output .= '<li class="task-card" style = "display : none" id =' . $task->id . '>
                                             <h4 style = "margin-bottom: 0rem">' . $task->title . '</h4>
-                                            <p class="due_time">' . $task->due_date . '</p>
+                                            <p class="due_time">' . date_format($task->due_date, "d/m/y") . '</p>
                                             <p class ="person">'.$user->id .'</p>
                                             <p class="desc" >' . substr($task->description,0,20) . '...</p>
                                             <p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
@@ -113,70 +219,4 @@
         <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>
-<script>
-    var Monday = "";
-    var Tuesday = "";
-    var Wednesday = "";
-    var Thursday = "";
-    var Friday = "";
 
-    var currentMonday = new Date();
-    window.onload = function() {
-        //gets the current Monday date and converts into a readable format
-        <!-- Outputs the Titles -->
-        currentMonday = getMonday(new Date());
-        changeDates(currentMonday);
-    }
-
-    function getMonday(d) {
-        d = new Date(d);
-        var day = d.getDay(),
-            diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-        return new Date(d.setDate(diff));
-    }
-
-    function addDays(date, days) {
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var result = new Date(date);
-        result.setDate(result.getDate() + days);
-        return result.getDate().toString() + ' ' + months[result.getMonth()] + ' ' + result.getFullYear().toString();
-    }
-
-    function getDateString(date, days) {
-        var result = new Date(date);
-        result.setDate(result.getDate() + days);
-        return result.getMonth() + 1 + '/' + result.getDate().toString() + '/' + result.getFullYear().toString().slice(2)
-    }
-
-
-    function changeDates(currentMonday) {
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-        document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
-
-        Monday = "Mon" + " " + addDays(currentMonday, 0);
-        Tuesday = "Tue" + " " + addDays(currentMonday, 1);
-        Wednesday = "Wed" + " " + addDays(currentMonday, 2);
-        Thursday = "Thu" + " " + addDays(currentMonday, 3);
-        Friday = "Fri" + " " + addDays(currentMonday, 4);
-
-        document.getElementById('Mon').innerHTML = Monday;
-        document.getElementById('Tue').innerHTML = Tuesday;
-        document.getElementById('Wed').innerHTML = Wednesday;
-        document.getElementById('Thu').innerHTML = Thursday;
-        document.getElementById('Fri').innerHTML = Friday;
-        doSomething();
-    }
-    function nextWeek(){
-        currentMonday.setDate(currentMonday.getDate() - 7);
-        changeDates(currentMonday);
-    }
-    function prevWeek(){
-        currentMonday.setDate(currentMonday.getDate() + 7);
-        changeDates(currentMonday);
-    }
-    function returnMonday(){
-        changeDates(currentMonday);
-        return currentMonday;
-    }
-</script>
