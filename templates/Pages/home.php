@@ -162,7 +162,7 @@ if (!empty($task->subtasks)) {
 
             $html .= '<li class="drag-item">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
-                '<p class="due_time">'.$task->due_date.'</p>'.
+                '<p class="due_time" style="visibility: hidden; display: none">'.$task->due_date.'</p>'.
                 '<p class="desc" title='.$task->description.'>'.$task->description.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
                 '<p class="employee">'.$task->user->name.'</p>'.
@@ -177,10 +177,11 @@ if (!empty($task->subtasks)) {
         var currentUser = '<?php echo $currentUserName ?>'
         tasksTotal = 0
 
+        //Reset card
         $("#1").html('')
         $("#2").html('')
         $("#3").html('')
-        $("#4").html('')  //reset card
+        $("#4").html('')
         $("#5").html('')
 
         //if due time = monday ,then add data
