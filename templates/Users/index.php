@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
+use Cake\Routing\Router;
 ?>
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,10 +60,25 @@
         function doSomething() {
             var thisMonday = currentMonday;
             //compare dates and turn display to visible if good
-            var elements =  document.getElementsByClassName('task-card');
+
+            var elements =  document.getElementsByClassName('task-card'); //Gets all hidden task card elements. Turns into an array so we can sort them
             elements = Array.prototype.slice.call(elements, 0);
             elements.sort(function(a, b){return a.id - b.id});
-            let names = document.getElementsByClassName('names');
+            let names = document.getElementsByClassName('names');//get array of names that exist.
+           /* const queryString = window.location.search;//gets url query string
+            console.log(queryString);//logs query string
+            const urlParams = new URLSearchParams(queryString);//gets url parameters
+            if (urlParams.has('Employees')){//checks if has employee parameter
+                const Employee = urlParams.get('Employees')
+                console.log(Employee);
+                for(let i = 0; i < names.length; i++){
+                    if(names[i] = Employee){
+                        names = names[i];//sets names to only the value with the correct id
+                    }
+
+                }
+            }*/
+
             //const length = elements.length;
             let MD = getDateString(thisMonday, 0);
             let TuD = getDateString(thisMonday, 1);
@@ -76,14 +92,13 @@
             }
             for(let j = 0; j < names.length; j++){
                 for (let i = 0; i < elements.length; i++) {
-                    elements.sort(function(a, b){return a.id - b.id});
+                    elements.sort(function(a, b){return a.id - b.id}); //need to sort every iteration by id otherwise order gets messed up every .append()
                     //for testing elements[i].innerHTML = "foo";
                     if(elements[i].childNodes[5].innerText == names[j].id){
                         let id = elements[i].id;
                         //If task name is equal then check for dates and then display task
                         switch (elements[i].childNodes[3].innerText){
                             case MD:
-
                                 document.getElementById("M_TD " + names[j].id).append(elements[i]);
                                 document.getElementById(id).style.display = "block";
                                 break;
@@ -107,33 +122,6 @@
                                 elements[i].style.display = "none";
                                 console.log("hide");
                         }
-/*
-                        if(elements[i].childNodes[3].innerText === MD){
-                            document.getElementById("M_TD " + names[j].id).append(elements[i]);
-                            elements[i].style.display = "block";
-                        }
-                        else if(elements[i].childNodes[3].innerText === TuD){
-                            document.getElementById("Tu_TD " + names[j].id).append(elements[i]);
-                            elements[i].style.display = "block";
-                        }
-                        else if(elements[i].childNodes[3].innerText === WD){
-                            document.getElementById("W_TD " + names[j].id).append(elements[i]);
-                            elements[i].style.display = "block";
-                        }
-                        else if(elements[i].childNodes[3].innerText === ThD){
-                            document.getElementById("Th_TD " + names[j].id).append(elements[i]);
-                            elements[i].style.display = "block";
-
-                        }
-                        else if(elements[i].childNodes[3].innerText === FD){
-                            document.getElementById("F_TD " + names[j].id).append(elements[i]);
-                            elements[i].style.display = "block";
-                        }
-                        else {
-                            elements[i].style.display = "none";
-                            console.log("hidden");
-                        }*/
-
                     }
                 }
             }
@@ -169,8 +157,19 @@
 
     <div class="table-responsive">
         <table>
-            <thead>
-                <tr >
+            <thead><!--Form for selecting drop down user, sets user id in URL -->
+            <form>
+                <label for="Employees">Select an Employee:</label>
+                <select name="Employees" id="Employees">
+                    <option value ="blank"></option>
+                    <?php foreach ($users as $user):?>
+                    <option value ="<?=$user->id?>"><?=$user->name?></option>
+                    <?php endforeach ?>
+                </select>
+                <br><br>
+                <input type="submit" value="Submit">
+            </form>
+                <tr>
                     <th class="text-center"><?= $this->Paginator->sort('name') ?></th>
                     <th class="text-center" id = "Mon"></th>
                     <th class="text-center" id = "Tue"></th>
@@ -184,29 +183,33 @@
 
             </script>
 
-            <?php foreach ($users as $user): ?>
-                <?php foreach ($user->tasks as $task) {
+            <?php foreach ($users as $user):?>
+            <?php
+                if($_GET['Employees']==$user->id || $_GET['Employees']=="blank" || is_null($_GET['Employees'])):
                     ?>
-                    <?php
-                    $output = "";
-                    $output .= '<li class="task-card" style = "display : none" id =' . $task->id . '>
-                                            <h4 style = "margin-bottom: 0rem">' . $task->title . '</h4>
-                                            <p class="due_time">' . date_format($task->due_date, "d/m/y") . '</p>
-                                            <p class ="person">'.$user->id .'</p>
-                                            <p class="desc" >' . substr($task->description,0,20) . '...</p>
-                                            <p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
-                    echo $output;
-                }?>
-                <tr>
-                    <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
-                    <td id = "M_TD <?=$user->id?>"></td>
-                    <td id = "Tu_TD <?=$user->id?>"></td>
-                    <td id = "W_TD <?=$user->id?>"></td>
-                    <td id = "Th_TD <?=$user->id?>"></td>
-                    <td id = "F_TD <?=$user->id?>"></td>
+                    <?php foreach ($user->tasks as $task) {
+                        ?>
+                        <?php // Initialises every task as an invisible card
+                        $output = "";
+                        $output .= '<li class="task-card" style = "display : none" id =' . $task->id . '>
+                                                <h4 style = "margin-bottom: 0rem">' . $task->title . '</h4>
+                                                <p class="due_time">' . date_format($task->due_date, "d/m/y") . '</p>
+                                                <p class ="person">'.$user->id .'</p>
+                                                <p class="desc" >' . substr($task->description,0,20) . '...</p>
+                                                <p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
+                        echo $output;
+                    }
+                    ?>
+                    <tr>
+                        <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
+                        <td id = "M_TD <?=$user->id?>"></td>
+                        <td id = "Tu_TD <?=$user->id?>"></td>
+                        <td id = "W_TD <?=$user->id?>"></td>
+                        <td id = "Th_TD <?=$user->id?>"></td>
+                        <td id = "F_TD <?=$user->id?>"></td>
 
-                </tr>
-                <?php endforeach; ?>
+                    </tr>
+                <?php endif; endforeach; ?>
             </tbody>
         </table>
     </div>
