@@ -56,11 +56,20 @@ button.dashboard {
     white-space: nowrap;
 }
 
-.float-right {
+.new_user {
     float: right;
-    margin-top: 2.7rem;
+    margin-top: 2.2rem;
     background-color: #b80c3c;
     border: 0.1rem solid #b80c3c;
-    height: 3rem;
-    line-height: 3rem;
+    height: 3.5rem;
+    line-height: 3.5rem;
+}
+
+.new_client {
+    float: right;
+    background-color: #b80c3c;
+    margin-top: 1.8rem;
+    border: 0.1rem solid #b80c3c;
+    height: 3.5rem;
+    line-height: 3.5rem;
 }

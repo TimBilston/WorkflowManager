@@ -426,8 +426,8 @@ if (!empty($task->subtasks)) {
         </ul>
     </div>
     <?php include('navigation.php') ?>
-    <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity w3-xlarge" style="margin-top:20px; padding-left: 220px;">
-        <b><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
+    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; padding-left: 220px; background: #ffebeb; ">
+        <b style="color:#000000"><i class="fa fa-table"></i>This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
     </footer>
 </html>
 <script type = "text/javascript" src = "js/jquery-1.4.1.js" ></script>

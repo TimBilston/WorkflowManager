@@ -17,7 +17,7 @@
         <h1 id="Month_Text"> August 2021 </h1>
         <!--<h1 id="misc"></h1> -->
         <button onclick = "prevWeek()" style="margin: auto" class="employee_view"> > </button>
-        <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+        <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button new_user']) ?>
     </div>
 
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>

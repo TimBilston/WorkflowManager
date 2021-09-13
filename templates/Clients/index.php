@@ -7,9 +7,10 @@
 $this->loadHelper('Authentication.Identity');
 
 ?>
+<link rel="stylesheet" href="webroot/css/buttons.css">
 <div class="clients index content">
-    <?= $this->Html->link(__('New Client'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Clients') ?></h3>
+    <?= $this->Html->link(__('New Client'), ['action' => 'add'], ['class' => 'button new_client']) ?>
+    <h1 class="clients_title"><?= __('Clients') ?></h1>
     <div class="table-responsive">
         <table>
             <thead>
@@ -44,7 +45,7 @@ $this->loadHelper('Authentication.Identity');
             </tbody>
         </table>
     </div>
-    <div class="paginator">
+    <!--<div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>
             <?= $this->Paginator->prev('< ' . __('previous')) ?>
@@ -53,5 +54,5 @@ $this->loadHelper('Authentication.Identity');
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
         <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
+    </div>-->
 </div>
