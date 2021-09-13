@@ -8,14 +8,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="webroot/css/home.css">
 <link rel="stylesheet" href="webroot/css/tasks.css">
+<link rel="stylesheet" href="webroot/css/buttons.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <div class="users index content">
-    <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+
     <div style="display: flex; flex-direction: row">
-        <button onclick = "nextWeek()" style="margin: auto" > < </button>
+        <button onclick = "nextWeek()" style="margin: auto" class="employee_view"> < </button>
         <h1 id="Month_Text"> August 2021 </h1>
-        <h1 id="fucker"></h1>
-        <button onclick = "prevWeek()" style="margin: auto" > > </button>
+        <!--<h1 id="misc"></h1> -->
+        <button onclick = "prevWeek()" style="margin: auto" class="employee_view"> > </button>
+        <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     </div>
 
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
@@ -138,7 +140,7 @@
         }
 
         function changeDates(currentMonday) {
-            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
             document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
 
@@ -168,13 +170,13 @@
     <div class="table-responsive">
         <table>
             <thead>
-                <tr>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th id = "Mon"></th>
-                    <th id = "Tue"></th>
-                    <th id = "Wed"></th>
-                    <th id = "Thu"></th>
-                    <th id = "Fri"></th>
+                <tr >
+                    <th class="text-center"><?= $this->Paginator->sort('name') ?></th>
+                    <th class="text-center" id = "Mon"></th>
+                    <th class="text-center" id = "Tue"></th>
+                    <th class="text-center" id = "Wed"></th>
+                    <th class="text-center" id = "Thu"></th>
+                    <th class="text-center" id = "Fri"></th>
                 </tr>
             </thead>
             <tbody>
@@ -196,7 +198,7 @@
                     echo $output;
                 }?>
                 <tr>
-                    <td class = "names" id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
+                    <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
                     <td id = "M_TD <?=$user->id?>"></td>
                     <td id = "Tu_TD <?=$user->id?>"></td>
                     <td id = "W_TD <?=$user->id?>"></td>
@@ -208,7 +210,7 @@
             </tbody>
         </table>
     </div>
-    <div class="paginator">
+    <!--<div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>
             <?= $this->Paginator->prev('< ' . __('previous')) ?>
@@ -217,6 +219,6 @@
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
         <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
+    </div>-->
 </div>
 

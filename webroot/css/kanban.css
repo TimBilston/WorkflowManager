@@ -12,6 +12,25 @@ body {
 
 }
 
+button.month_button {
+    background-color: #b80c3c;
+    border: 0.1rem solid #b80c3c;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    height: 2rem;
+    letter-spacing: .1rem;
+    line-height: 2rem;
+    padding: 0 2rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -308,4 +327,7 @@ ul {
     cursor: pointer;
 }
 
+.wrapper {
+    text-align: center;
+}
 

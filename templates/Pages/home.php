@@ -168,8 +168,12 @@ if (!empty($task->subtasks)) {
                 '<p class="employee">'.$task->user->name.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
                 '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'.
+                '<div class="wrapper">'.
                 '<p class="button" style="padding: 1px; text-align:center">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
-                '<p class="button" style="padding: 1px; text-align:center">'.$this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
+                '</div>'.
+                '<div class="wrapper">'.
+                    '<p class="button" style="padding: 1px; text-align:center">'.$this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).'</p>'.
+                '</div>'.
                 '</li>';
         } ?>
 
@@ -305,6 +309,7 @@ if (!empty($task->subtasks)) {
 <link rel="stylesheet" href="webroot/css/kanban.css">
 <link rel="stylesheet" href="webroot/css/tasks.css">
 <link rel="stylesheet" href="webroot/css/custom.css">
+<link rel="stylesheet" href="webroot/css/buttons.css">
 
 <style>
 .w3-light-grey, .w3-hover-light-grey:hover, .w3-light-gray, .w3-hover-light-gray:hover {
@@ -355,9 +360,9 @@ if (!empty($task->subtasks)) {
     </div>
 
     <div style="display: flex; flex-direction: row;padding-left:220px;">
-        <button onclick = "nextWeek()" style="margin: auto" > < </button>
+        <button onclick = "nextWeek()" style="margin: auto" class="dashboard"> < </button>
         <h1 id="Month_Text"> August 2021 </h1>
-        <button onclick = "prevWeek()" style="margin: auto" > > </button>
+        <button onclick = "prevWeek()" style="margin: auto" class="dashboard"> > </button>
     </div>
 
 
@@ -369,7 +374,7 @@ if (!empty($task->subtasks)) {
             <li class="drag-column drag-column-on-hold">
                 <span class="drag-column-header">
                     <h2 id="Monday"></h2>
-                    <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                    <!--<svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
                 </span>
 
                 <div class="drag-options" id="options1"></div>
@@ -381,7 +386,7 @@ if (!empty($task->subtasks)) {
             <li class="drag-column drag-column-in-progress">
                 <span class="drag-column-header">
                     <h2 id = "Tuesday"></h2>
-                    <svg class="drag-header-more" data-target="options2" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                    <!--<svg class="drag-header-more" data-target="options2" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
                 </span>
                 <div class="drag-options" id="options2"></div>
                 <ul class="drag-inner-list" id="2">
@@ -391,7 +396,7 @@ if (!empty($task->subtasks)) {
             <li class="drag-column drag-column-needs-review">
                 <span class="drag-column-header">
                     <h2 id = "Wednesday"></h2>
-                    <svg data-target="options3" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                    <!--<svg data-target="options3" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
                 </span>
                 <div class="drag-options" id="options3"></div>
                 <ul class="drag-inner-list" id="3">
@@ -400,7 +405,7 @@ if (!empty($task->subtasks)) {
             <li class="drag-column drag-column-approved">
                 <span class="drag-column-header">
                     <h2 id = "Thursday"></h2>
-                    <svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                    <!--<svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
                 </span>
                 <div class="drag-options" id="options4"></div>
                 <ul class="drag-inner-list" id="4">
@@ -410,7 +415,7 @@ if (!empty($task->subtasks)) {
             <li class="drag-column drag-column-on-hold">
                 <span class="drag-column-header">
                     <h2 id = "Friday"></h2>
-                    <svg data-target="options5" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+                    <!--<svg data-target="options5" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
                 </span>
                 <div class="drag-options" id="options5"></div>
                 <ul class="drag-inner-list" id="5">

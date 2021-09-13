@@ -1,0 +1,66 @@
+button{
+    background-color: #ffffff;
+    color: #3a3a3a;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid #d9d9d9;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.1s linear;
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    font-weight: 550;
+}
+
+button:hover{
+    color: #2287faa6;
+    border-color:#2287faa6;
+}
+
+button.employee_view {
+    background-color: #b80c3c;
+    border: 0.1rem solid #b80c3c;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    height: 3rem;
+    letter-spacing: .1rem;
+    line-height: 3rem;
+    padding: 0 3rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+button.dashboard {
+    background-color: #b80c3c;
+    border: 0.1rem solid #b80c3c;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    height: 2rem;
+    letter-spacing: .1rem;
+    line-height: 2rem;
+    padding: 0 2rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.float-right {
+    float: right;
+    margin-top: 2.7rem;
+    background-color: #b80c3c;
+    border: 0.1rem solid #b80c3c;
+    height: 3rem;
+    line-height: 3rem;
+}
