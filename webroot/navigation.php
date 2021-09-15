@@ -1,6 +1,34 @@
+<?php 
+    use Cake\ORM\TableRegistry; 
+    use App\Model\Entity\Task;
+?>
+ <?php
+    $allTasks = TableRegistry::getTableLocator()->get('Tasks')->find()->where([]);
+    $allTasks->contain(['Status']);
+    $navData = array(
+        array('name'=>'Completed', 'value'=>0, 'itemStyle'=>array('color'=>'green')),
+        array('name'=>'Not Completed', 'value'=>0,'itemStyle'=>array('color'=>'#b80c3c'))
+    );
+    $NotCompleted = 0;
+    $Completed = 0;
+    foreach ($allTasks as $task){
+        if($task->status_id == 2){
+            $Completed += 1;
+            $navData[0]['value'] = $Completed;
+            $navData[0]['name'] = 'Completed';
+        }else{
+            echo $NotCompleted;
+            $NotCompleted += 1;
+            $navData[1]['value'] = $NotCompleted;
+            $navData[1]['name'] = 'Not Completed';
+        }
+       
+    };
+?>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <nav id="navbar" class="rvnm-navbar-box dark-ruby">
 
 <a href="<?php echo $this->Url->build(['controller' => 'pages', 'action' => 'display'])?>">
@@ -30,13 +58,55 @@
             <label class="switch">
                 <input type="checkbox" id="toggle" onclick="toggleCheck()">
                 <span class="slider round"></span>
-            </label=
+            </label>
         </div>
-
     </li>
-
+    <div id="container" style="width:220px;height: 400px"></div>
 </nav>
-
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    var navData = '<?php echo json_encode($navData) ?>';
+    navData = JSON.parse(navData);
+    var option;
+    option = {
+        tooltip: {
+            trigger: 'item',
+            position:['10%', '80%'],
+        },
+        legend: {
+            top: '5%',
+            left: 'center'
+        },
+        series: [
+            {
+                name: 'tasks',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: false,
+                    position: 'left'
+                },
+                
+                labelLine: {
+                    show: false
+                },
+                data:navData
+                
+            }
+        ]
+    };
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+</script>
 <style>
 
 .rvnm-navbar-box {
