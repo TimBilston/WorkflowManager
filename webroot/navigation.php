@@ -1,5 +1,5 @@
-<?php 
-    use Cake\ORM\TableRegistry; 
+<?php
+    use Cake\ORM\TableRegistry;
     use App\Model\Entity\Task;
 ?>
  <?php
@@ -17,12 +17,11 @@
             $navData[0]['value'] = $Completed;
             $navData[0]['name'] = 'Completed';
         }else{
-            echo $NotCompleted;
             $NotCompleted += 1;
             $navData[1]['value'] = $NotCompleted;
             $navData[1]['name'] = 'Not Completed';
         }
-       
+
     };
 ?>
 
@@ -94,12 +93,12 @@
                     show: false,
                     position: 'left'
                 },
-                
+
                 labelLine: {
                     show: false
                 },
                 data:navData
-                
+
             }
         ]
     };
