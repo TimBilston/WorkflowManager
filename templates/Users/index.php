@@ -11,7 +11,8 @@ use Cake\Routing\Router;
 <link rel="stylesheet" href="webroot/css/tasks.css">
 <link rel="stylesheet" href="webroot/css/buttons.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<div class="users index content">
+
+<div class="users index content" onload="document.Employees.submit()">
 
     <div style="display: flex; flex-direction: row">
         <button onclick = "nextWeek()" style="margin: auto" class="employee_view"> < </button>
@@ -32,6 +33,7 @@ use Cake\Routing\Router;
 
         var currentMonday = new Date();
         window.onload = function() {
+            $('Employees').submit();
             //gets the current Monday date and converts into a readable format
             <!-- Outputs the Titles -->
             currentMonday = getMonday(new Date());
@@ -155,10 +157,11 @@ use Cake\Routing\Router;
         }
     </script>
 
+
     <div class="table-responsive">
         <table>
             <thead><!--Form for selecting drop down user, sets user id in URL -->
-            <form>
+            <form id="Employees">
                 <label for="Employees">Select an Employee:</label>
                 <select name="Employees" id="Employees">
                     <option value ="blank"></option>
@@ -185,7 +188,7 @@ use Cake\Routing\Router;
 
             <?php foreach ($users as $user):?>
             <?php
-                if($_GET['Employees']==$user->id || $_GET['Employees']=="blank" || is_null($_GET['Employees'])):
+                if(isset($_GET['Employees'])==$user->id || isset($_GET['Employees'])=="blank" || isset($_GET['Employees'])==false):
                     ?>
                     <?php foreach ($user->tasks as $task) {
                         ?>

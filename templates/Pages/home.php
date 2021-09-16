@@ -159,7 +159,6 @@ if (!empty($task->subtasks)) {
             if (!$task->client == null){
                 $clientName = 'Client: '.$task->client->name;
             }
-
             $html .= '<li class="drag-item">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time" style="visibility: hidden; display: none">'.$task->due_date.'</p>'.
