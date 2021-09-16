@@ -157,21 +157,20 @@ use Cake\Routing\Router;
         }
     </script>
 
-
-    <div class="table-responsive">
         <table>
             <thead><!--Form for selecting drop down user, sets user id in URL -->
-            <form id="Employees">
-                <label for="Employees">Select an Employee:</label>
-                <select name="Employees" id="Employees">
-                    <option value ="blank"></option>
-                    <?php foreach ($users as $user):?>
-                    <option value ="<?=$user->id?>"><?=$user->name?></option>
-                    <?php endforeach ?>
-                </select>
-                <br><br>
-                <input type="submit" value="Submit">
-            </form>
+            <div class="custom-select">
+                <form id="Employees">
+                    <label for="Employees">Select an Employee:</label>
+                    <select name="Employees" id="Employees">
+                        <option value ="blank"></option>
+                        <?php foreach ($users as $user):?>
+                        <option value ="<?=$user->id?>"><?=$user->name?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
                 <tr>
                     <th class="text-center"><?= $this->Paginator->sort('name') ?></th>
                     <th class="text-center" id = "Mon"></th>
