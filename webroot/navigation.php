@@ -82,13 +82,27 @@
             {
                 name: 'tasks',
                 type: 'pie',
-                radius: ['40%', '70%'],
+                radius: ['0', '70%'],
                 avoidLabelOverlap: false,
                 itemStyle: {
                     borderRadius: 10,
                     borderColor: '#fff',
-                    borderWidth: 2
+                    borderWidth: 2,
+                    normal:{
+                        label:{
+                            position : 'inner',
+                            formatter : function (params){return (params.percent - 0) + '%';},
+                                textStyle: {
+                                    color: '#fff',
+                                    fontSize:12
+                            }
+                        },
+                        labelLine:{
+                            show:true
+                        }                     
+                    }
                 },
+                
                 label: {
                     show: false,
                     position: 'left'
