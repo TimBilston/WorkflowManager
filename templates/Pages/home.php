@@ -167,6 +167,7 @@ if (!empty($task->subtasks)) {
                 '<p class="employee">'.$task->user->name.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
                 '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'.
+                // '<p>'.$this->element('_viewTask').'</p >'.      //if u wanna to add inside the card just use like thie line !!!!!!!!!!!!!
                 '<div class="wrapper">'.
                 '<p class="button" style="padding: 1px; text-align:center">'.$this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p>'.
                 '</div>'.
@@ -246,6 +247,7 @@ if (!empty($task->subtasks)) {
 
         })
         $("#tasksTotal").text(tasksTotal)
+        $("body").append(<?php $this->element("addTask") ?> ) // if u wanna add model just like this 
     }
 
     function toggleCheck(){
