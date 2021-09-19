@@ -59,11 +59,14 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Departments' , 'Tasks'],
+            'contain' => ['Departments', 'Tasks' ],
         ];
         $users = $this->paginate($this->Users);
 
-        $this->set(compact('users'));
+        $departments = $this->Users->Departments->find('list', ['limit' => 200]);
+        $clients = $this->Users->Tasks->Clients->find('list', ['limit' => 200]);
+        $status = $this->Users->Tasks->Status->find('list', ['limit' => 200]);
+        $this->set(compact('users' , 'departments', 'clients', 'status'));
     }
 
 
