@@ -77,7 +77,7 @@ if (!empty($task->subtasks)) {
         <?php
             $allTasks = TableRegistry::getTableLocator()->get('Tasks')->find()->where([]);
             foreach ($allTasks as $task){
-                //$task->status_id = 3;
+                $task->status_id = 3;
             }
         ?>
     }
@@ -189,24 +189,17 @@ if (!empty($task->subtasks)) {
         $("#5").html('')
         var currentData = [
             {
-                name: 'In Progress',
+                name: 'Completed',
                 value: 0,
                 itemStyle:{
-                    color: '#505cea'
+                    color: 'green'
                 }
             },
             {
-                name: 'Over Due',
+                name: 'Not Completed',
                 value: 0,
                 itemStyle:{
-                    color: '#ee2062'
-                }
-            },
-            {
-                name: 'Attention Needed',
-                value: 0,
-                itemStyle:{
-                    color: '#4bd36f'
+                    color: '#b80c3c'
                 }
             }
         ]
@@ -219,9 +212,10 @@ if (!empty($task->subtasks)) {
         //if due time = monday ,then add data
         // $NotCompleted = 0;
         $Completed = 0;
-        $InProgress = 0;
-        $AttentionNeeded = 0;
-        $OverDue = 0;
+        $NotCompleted = 0;
+        // $InProgress = 0;
+        // $AttentionNeeded = 0;
+        // $OverDue = 0;
         $(html).each((index,element)=>{
             if ($(element).find('.status').text() != 'Completed'){
                 if($(element).find('.due_time').text() == Monday){
@@ -230,112 +224,44 @@ if (!empty($task->subtasks)) {
                             $("#1").append(element)
                             tasksTotal++
 
-                            if($(element).find(".status").text() === 'In Progress'){
-                                $InProgress += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'In Progress'){
-                                        item.value = $InProgress
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Attention Needed'){
-                                $AttentionNeeded += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Attention Needed'){
-                                        item.value = $AttentionNeeded
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Over Due'){
-                                $OverDue += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Over Due'){
-                                        item.value = $OverDue
-                                    }
-                                })
-                            }
+                            $NotCompleted += 1;
+                            currentData.forEach(item=>{
+                                if(item.name == 'Not Completed'){
+                                    item.value = $NotCompleted
+                                }
+                            })
                         }
                     } else {
                         $("#1").append(element)
                         tasksTotal++
-                        if($(element).find(".status").text() === 'In Progress'){
-                            $InProgress += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'In Progress'){
-                                    item.value = $InProgress
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Attention Needed'){
-                            $AttentionNeeded += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Attention Needed'){
-                                    item.value = $AttentionNeeded
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Over Due'){
-                            $OverDue += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Over Due'){
-                                    item.value = $OverDue
-                                }
-                            })
-                        }
+                        $NotCompleted += 1;
+                        currentData.forEach(item=>{
+                            if(item.name == 'Not Completed'){
+                                item.value = $NotCompleted
+                            }
+                        })
                     }
-                    
-                    
-                    
                 }else if($(element).find('.due_time').text() == Tuesday){
                     if (document.getElementById('toggle').checked){
                         if ($(element).find('.employee').text() == currentUser){
                             $("#2").append(element)
                             tasksTotal++
-
-                            if($(element).find(".status").text() === 'In Progress'){
-                                $InProgress += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'In Progress'){
-                                        item.value = $InProgress
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Attention Needed'){
-                                $AttentionNeeded += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Attention Needed'){
-                                        item.value = $AttentionNeeded
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Over Due'){
-                                $OverDue += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Over Due'){
-                                        item.value = $OverDue
-                                    }
-                                })
-                            }
+                            $NotCompleted += 1;
+                            currentData.forEach(item=>{
+                                if(item.name == 'Not Completed'){
+                                    item.value = $NotCompleted
+                                }
+                            })
                         }
                     } else {
                         $("#2").append(element)
                         tasksTotal++
-                        if($(element).find(".status").text() === 'In Progress'){
-                            $InProgress += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'In Progress'){
-                                    item.value = $InProgress
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Attention Needed'){
-                            $AttentionNeeded += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Attention Needed'){
-                                    item.value = $AttentionNeeded
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Over Due'){
-                            $OverDue += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Over Due'){
-                                    item.value = $OverDue
-                                }
-                            })
-                        }
+                        $NotCompleted += 1;
+                        currentData.forEach(item=>{
+                            if(item.name == 'Not Completed'){
+                                item.value = $NotCompleted
+                            }
+                        })
                     }
                    
                 }else if($(element).find('.due_time').text() == Wednesday){
@@ -344,54 +270,22 @@ if (!empty($task->subtasks)) {
                             $("#3").append(element)
                             tasksTotal++
 
-                            if($(element).find(".status").text() === 'In Progress'){
-                                $InProgress += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'In Progress'){
-                                        item.value = $InProgress
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Attention Needed'){
-                                $AttentionNeeded += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Attention Needed'){
-                                        item.value = $AttentionNeeded
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Over Due'){
-                                $OverDue += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Over Due'){
-                                        item.value = $OverDue
-                                    }
-                                })
-                            }
+                            $NotCompleted += 1;
+                            currentData.forEach(item=>{
+                                if(item.name == 'Not Completed'){
+                                    item.value = $NotCompleted
+                                }
+                            })
                         }
                     } else {
                         $("#3").append(element)
                         tasksTotal++
-                        if($(element).find(".status").text() === 'In Progress'){
-                            $InProgress += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'In Progress'){
-                                    item.value = $InProgress
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Attention Needed'){
-                            $AttentionNeeded += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Attention Needed'){
-                                    item.value = $AttentionNeeded
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Over Due'){
-                            $OverDue += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Over Due'){
-                                    item.value = $OverDue
-                                }
-                            })
-                        }
+                        $NotCompleted += 1;
+                        currentData.forEach(item=>{
+                            if(item.name == 'Not Completed'){
+                                item.value = $NotCompleted
+                            }
+                        })
                     }
                     
                 }else if($(element).find('.due_time').text() == Thursday){
@@ -400,55 +294,23 @@ if (!empty($task->subtasks)) {
                             $("#4").append(element)
                             tasksTotal++
 
-                            if($(element).find(".status").text() === 'In Progress'){
-                                $InProgress += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'In Progress'){
-                                        item.value = $InProgress
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Attention Needed'){
-                                $AttentionNeeded += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Attention Needed'){
-                                        item.value = $AttentionNeeded
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Over Due'){
-                                $OverDue += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Over Due'){
-                                        item.value = $OverDue
-                                    }
-                                })
-                            }
+                            $NotCompleted += 1;
+                            currentData.forEach(item=>{
+                                if(item.name == 'Not Completed'){
+                                    item.value = $NotCompleted
+                                }
+                            })
                         }
                     } else {
                         $("#4").append(element)
                         tasksTotal++
 
-                        if($(element).find(".status").text() === 'In Progress'){
-                            $InProgress += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'In Progress'){
-                                    item.value = $InProgress
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Attention Needed'){
-                            $AttentionNeeded += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Attention Needed'){
-                                    item.value = $AttentionNeeded
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Over Due'){
-                            $OverDue += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Over Due'){
-                                    item.value = $OverDue
-                                }
-                            })
-                        }
+                        $NotCompleted += 1;
+                        currentData.forEach(item=>{
+                            if(item.name == 'Not Completed'){
+                                item.value = $NotCompleted
+                            }
+                        })
                     }
                     
                 }else if($(element).find('.due_time').text() == Friday){
@@ -457,57 +319,44 @@ if (!empty($task->subtasks)) {
                             $("#5").append(element)
                             tasksTotal++
 
-                            if($(element).find(".status").text() === 'In Progress'){
-                                $InProgress += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'In Progress'){
-                                        item.value = $InProgress
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Attention Needed'){
-                                $AttentionNeeded += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Attention Needed'){
-                                        item.value = $AttentionNeeded
-                                    }
-                                })
-                            }else if($(element).find(".status").text() === 'Over Due'){
-                                $OverDue += 1;
-                                currentData.forEach(item=>{
-                                    if(item.name == 'Over Due'){
-                                        item.value = $OverDue
-                                    }
-                                })
-                            }
+                            $NotCompleted += 1;
+                            currentData.forEach(item=>{
+                                if(item.name == 'Not Completed'){
+                                    item.value = $NotCompleted
+                                }
+                            })
                         }
                     } else {
                         $("#5").append(element)
                         tasksTotal++
 
-                        if($(element).find(".status").text() === 'In Progress'){
-                            $InProgress += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'In Progress'){
-                                    item.value = $InProgress
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Attention Needed'){
-                            $AttentionNeeded += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Attention Needed'){
-                                    item.value = $AttentionNeeded
-                                }
-                            })
-                        }else if($(element).find(".status").text() === 'Over Due'){
-                            $OverDue += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Over Due'){
-                                    item.value = $OverDue
-                                }
-                            })
-                        }
+                        $NotCompleted += 1;
+                        currentData.forEach(item=>{
+                            if(item.name == 'Not Completed'){
+                                item.value = $NotCompleted
+                            }
+                        })
                     }
                     
+                }
+            }else{
+                console.log("333")
+                if (document.getElementById('toggle').checked){
+                    if ($(element).find('.employee').text() == currentUser){
+                        $Completed += 1;
+                        currentData.forEach(item=>{
+                            if(item.name == 'Completed'){
+                                item.value = $Completed
+                            }
+                        })
+                    }
+                } else {
+                    $Completed += 1;
+                    currentData.forEach(item=>{
+                        if(item.name == 'Completed'){
+                            item.value = $Completed
+                        }
+                    })
                 }
             }
         })
@@ -943,7 +792,7 @@ if (!empty($task->subtasks)) {
                 </label>
             </div>
         </li>
-        <div id="container" style="width:220px;height: 400px ;margin-top: 70px"></div>
+        <div id="container" style="width:220px;height: 400px"></div>
     </nav>
     
 
