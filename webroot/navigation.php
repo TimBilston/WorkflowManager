@@ -60,7 +60,7 @@
             </label>
         </div>
     </li>
-    <div id="container" style="width:220px;height: 400px"></div>
+    <div id="container" style="width:220px;height: 400px; margin-top:100px; "></div>
 </nav>
 <script type="text/javascript">
     var dom = document.getElementById("container");
@@ -82,13 +82,27 @@
             {
                 name: 'tasks',
                 type: 'pie',
-                radius: ['40%', '70%'],
+                radius: ['0', '70%'],
                 avoidLabelOverlap: false,
                 itemStyle: {
                     borderRadius: 10,
                     borderColor: '#fff',
-                    borderWidth: 2
+                    borderWidth: 2,
+                    normal:{
+                        label:{
+                            position : 'inner',
+                            formatter : function (params){return (params.percent - 0) + '%';},
+                                textStyle: {
+                                    color: '#fff',
+                                    fontSize:12
+                            }
+                        },
+                        labelLine:{
+                            show:true
+                        }                     
+                    }
                 },
+                
                 label: {
                     show: false,
                     position: 'left'
