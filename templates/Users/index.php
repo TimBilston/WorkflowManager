@@ -198,8 +198,8 @@ use Cake\Routing\Router;
                                                 <p class="due_time">' . date_format($task->due_date, "d/m/y") . '</p>
                                                 <p class ="person">'.$user->id .'</p>
                                                 <p class="desc" >' . substr($task->description,0,20) . '...</p>
-                                                '. $this->element('viewTask', ['taskID' => $task->id,]).'
-                                                <p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
+                                                '. $this->element('viewTask', ['taskID' => $task->id,]);
+                                                //'<p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
                         echo $output;
                     }
                     ?>

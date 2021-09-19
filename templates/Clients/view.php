@@ -93,7 +93,6 @@ $currentDate = date('d/m/y');
                 <div class="related">
 
                     <?php if (!empty($client->tasks)) : ?>
-                        <div class="table-responsive">
                             <table>
                                 <thead>
                                 <tr>
