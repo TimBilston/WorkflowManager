@@ -4,12 +4,11 @@
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 use Cake\Routing\Router;
+
+echo $this->Html->css(['tasks' , 'home', 'buttons']);
 ?>
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="webroot/css/home.css">
-<link rel="stylesheet" href="webroot/css/tasks.css">
-<link rel="stylesheet" href="webroot/css/buttons.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <div class="users index content" onload="document.Employees.submit()">
@@ -187,7 +186,9 @@ use Cake\Routing\Router;
 
             <?php foreach ($users as $user):?>
             <?php
-                if(isset($_GET['Employees'])==$user->id || isset($_GET['Employees'])=="blank" || isset($_GET['Employees'])==false):
+                //(if url param is set AND (its either blank or an employeeID)) OR if it isn't set
+                //Gets a specific employee ONLY, OR gets all employees if it set to 'blank' or not set
+                if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
                     ?>
                     <?php foreach ($user->tasks as $task) {
                         ?>
