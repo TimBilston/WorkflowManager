@@ -73,3 +73,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('#add_sub_task').click(function () {
+            var title = $('input[name="title"]').val();
+            window.open('/subtasks/add?title=' + title, 'sub_task_add');
+        });
+    });
+</script>
