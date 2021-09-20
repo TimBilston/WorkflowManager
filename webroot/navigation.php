@@ -18,6 +18,10 @@
         <?= $this->Html->link(__('Manage Employees'), ['controller' => 'Users'], ['class' => 'text']) ?>
     </li>
     <li>
+            <i class="fa fa-bar-chart"></i>
+            <?= $this->Html->link(__('KPI'), ['controller' => 'kpi'], ['class' => 'text']) ?>
+        </li>
+    <li>
     <i class="fa fa-users"></i>
         <?= $this->Html->link(__('View Clients'), ['controller' => 'Clients'], ['class' => 'text']) ?>
     </li>
