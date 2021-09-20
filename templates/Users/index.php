@@ -4,14 +4,14 @@
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 use Cake\Routing\Router;
+
+echo $this->Html->css(['tasks' , 'home', 'buttons']);
 ?>
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="webroot/css/home.css">
-<link rel="stylesheet" href="webroot/css/tasks.css">
-<link rel="stylesheet" href="webroot/css/buttons.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<div class="users index content">
+
+<div class="users index content" onload="document.Employees.submit()">
 
     <div style="display: flex; flex-direction: row">
         <button onclick = "nextWeek()" style="margin: auto" class="employee_view"> < </button>
@@ -32,6 +32,7 @@ use Cake\Routing\Router;
 
         var currentMonday = new Date();
         window.onload = function() {
+            $('Employees').submit();
             //gets the current Monday date and converts into a readable format
             <!-- Outputs the Titles -->
             currentMonday = getMonday(new Date());
@@ -155,20 +156,20 @@ use Cake\Routing\Router;
         }
     </script>
 
-    <div class="table-responsive">
         <table>
             <thead><!--Form for selecting drop down user, sets user id in URL -->
-            <form>
-                <label for="Employees">Select an Employee:</label>
-                <select name="Employees" id="Employees">
-                    <option value ="blank"></option>
-                    <?php foreach ($users as $user):?>
-                    <option value ="<?=$user->id?>"><?=$user->name?></option>
-                    <?php endforeach ?>
-                </select>
-                <br><br>
-                <input type="submit" value="Submit">
-            </form>
+            <div class="custom-select">
+                <form id="Employees">
+                    <label for="Employees">Select an Employee:</label>
+                    <select name="Employees" id="Employees">
+                        <option value ="blank"></option>
+                        <?php foreach ($users as $user):?>
+                        <option value ="<?=$user->id?>"><?=$user->name?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
                 <tr>
                     <th class="text-center"><?= $this->Paginator->sort('name') ?></th>
                     <th class="text-center" id = "Mon"></th>
@@ -185,7 +186,9 @@ use Cake\Routing\Router;
 
             <?php foreach ($users as $user):?>
             <?php
-                if($_GET['Employees']==$user->id || $_GET['Employees']=="blank" || is_null($_GET['Employees'])):
+                //(if url param is set AND (its either blank or an employeeID)) OR if it isn't set
+                //Gets a specific employee ONLY, OR gets all employees if it set to 'blank' or not set
+                if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
                     ?>
                     <?php foreach ($user->tasks as $task) {
                         ?>
@@ -196,7 +199,8 @@ use Cake\Routing\Router;
                                                 <p class="due_time">' . date_format($task->due_date, "d/m/y") . '</p>
                                                 <p class ="person">'.$user->id .'</p>
                                                 <p class="desc" >' . substr($task->description,0,20) . '...</p>
-                                                <p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
+                                                '. $this->element('viewTask', ['taskID' => $task->id,]);
+                                                //'<p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
                         echo $output;
                     }
                     ?>

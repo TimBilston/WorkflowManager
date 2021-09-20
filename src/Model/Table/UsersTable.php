@@ -12,6 +12,8 @@ use Cake\Validation\Validator;
  * Users Model
  *
  * @property \App\Model\Table\DepartmentsTable&\Cake\ORM\Association\BelongsTo $Departments
+ * @property \App\Model\Table\TasksTable&\Cake\ORM\Association\HasMany $Tasks
+
  *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
