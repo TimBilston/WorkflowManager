@@ -78,32 +78,32 @@ class SubtasksTable extends Table
                 ]
             ]);
 
-        $validator
-            ->scalar('title')
-            ->maxLength('title', 30, "The task's title is too long", 'update')
-            ->requirePresence('title', 'create')
-            ->notEmptyString('title')
-            ->add('title', [
-                'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
-                    'message' => 'The title can not have any symbols',
-                ]
-            ]);
-
-        $validator
-            ->date('start_date')
-            ->requirePresence('start_date', 'create')
-            ->notEmptyDate('start_date');
-
-        $validator
-            ->date('due_date')
-            ->requirePresence('due_date', 'create')
-            ->notEmptyDate('due_date')
-            ->add('due_date', 'dateCompare', [
-                'rule' => 'dateCompare',
-                'provider' => 'table',
-                'message' => 'Due date cannot be before start date'
-            ]);
+//        $validator
+//            ->scalar('title')
+//            ->maxLength('title', 30, "The task's title is too long", 'update')
+//            ->requirePresence('title', 'create')
+//            ->notEmptyString('title')
+//            ->add('title', [
+//                'nosymbol' => [
+//                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
+//                    'message' => 'The title can not have any symbols',
+//                ]
+//            ]);
+//
+//        $validator
+//            ->date('start_date')
+//            ->requirePresence('start_date', 'create')
+//            ->notEmptyDate('start_date');
+//
+//        $validator
+//            ->date('due_date')
+//            ->requirePresence('due_date', 'create')
+//            ->notEmptyDate('due_date')
+//            ->add('due_date', 'dateCompare', [
+//                'rule' => 'dateCompare',
+//                'provider' => 'table',
+//                'message' => 'Due date cannot be before start date'
+//            ]);
 
         return $validator;
     }

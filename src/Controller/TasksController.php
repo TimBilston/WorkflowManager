@@ -78,6 +78,7 @@ class TasksController extends AppController
             }
 
             if ($this->Tasks->save($task)) {
+
                 //controllers for subtasks-----start
                 $subTaskDatas = [];
                 $sub_task_contents = $this->request->getData('sub_task_content', []);
@@ -93,7 +94,7 @@ class TasksController extends AppController
                 $subTaskTable = new SubtasksTable();
                 $subTaskEntities = $subTaskTable->newEntities($subTaskDatas);
                 if (!$subTaskTable->saveMany($subTaskEntities)) {
-                    $this->Flash->error(__('The task could not be saved. Please, try again.'));
+                    $this->Flash->error(__('The subtask could contain figures. Please, try again.'));
                 }
                 //controllers for subtasks-----end
 
@@ -237,7 +238,7 @@ class TasksController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
             if ($this->Tasks->save($task)) {
-                //subtasks----start
+                //subtasks controllers for edit func----start
                 $sub_task_contents = $this->request->getData('sub_task_content', []);
                 $subTaskIds = $this->request->getData('sub_task_id', []);
                 foreach ($sub_task_contents as $k => $v) {
@@ -270,6 +271,7 @@ class TasksController extends AppController
         $departments = $this->Tasks->Departments->find('list', ['limit' => 200]);
         $clients = $this->Tasks->Clients->find('list', ['limit' => 200]);
         $status = $this->Tasks->Status->find('list', ['limit' => 200]);
+
         $subTasks = $this->Tasks->Subtasks->find('all', ['conditions' => ['task_id' => $id]]);
         $this->set(compact('task', 'users', 'departments', 'clients', 'status', 'subTasks'));
     }

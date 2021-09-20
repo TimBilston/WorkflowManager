@@ -21,6 +21,8 @@ use Cake\Error\Debugger;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use App\Model\Entity\Task;
+use App\Model\Table\SubtasksTable;
+
 
 $this->disableAutoLayout();
 
@@ -144,6 +146,8 @@ if (!empty($task->subtasks)) {
         $query->contain(['Users']);
         $query->contain(['Status']);
         $query->contain(['Clients']);
+        $query->contain(['Subtasks']);
+
         foreach ($query as $task) {
             //creates each task as a draggable item and sets some info up
 
@@ -155,6 +159,18 @@ if (!empty($task->subtasks)) {
 //                '</p><p class = "button"> '.
 
 //                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p ></li>';
+
+            $subTasksCount = 0;
+            $completeCount = 0;
+            if (!empty($task->subtasks)) {
+                $subTasksCount = count($task->subtasks);
+                foreach ($task->subtasks as $v) {
+                    if ($v->is_complete) {
+                        $completeCount++;
+                    }
+                }
+            }
+
             $clientName = 'No Client';
             if (!$task->client == null){
                 $clientName = 'Client: '.$task->client->name;

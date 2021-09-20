@@ -26,6 +26,12 @@
             <fieldset>
                 <legend><?= __('Add Task') ?></legend>
                 <?= $this->element('addTaskForm') ?>
+
+                echo '<div class="input text">';
+                    echo '<label>Sub Task</label>';
+                    echo '<div id="z_js_wrap_sub_task_item"></div>';
+                    echo '</div>';
+                echo $this->Form->button(__('Add SubTask'), ['type' => 'button', 'id' => 'add_sub_task']);
             </fieldset>
 
             <?= $this->Form->button(__('Submit')) ?>
@@ -37,6 +43,9 @@
 <style>
     .date{
         margin: auto;
+    }
+    .sub_task_content {
+        margin-left: 10px;
     }
 
 </style>

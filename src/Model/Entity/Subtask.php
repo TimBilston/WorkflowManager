@@ -39,5 +39,8 @@ class Subtask extends Entity
         'status_id' => true,
         'task' => true,
         'status' => true,
+
+        'is_complete' => true,
+        'is_complete_admin' => true,
     ];
 }
