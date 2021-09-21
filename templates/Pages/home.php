@@ -356,7 +356,6 @@ if (!empty($task->subtasks)) {
                     
                 }
             }else{
-                console.log("333")
                 if (document.getElementById('toggle').checked){
                     if ($(element).find('.employee').text() == currentUser){
                         $Completed += 1;
@@ -378,7 +377,7 @@ if (!empty($task->subtasks)) {
         })
         console.log(currentData)
         $("#tasksTotal").text(tasksTotal)
-        $("body").append(<?php $this->element("addTask") ?> ) // if u wanna add model just like this
+        $("body").append(<?php $this->element("_viewTask") ?> ) // if u wanna add model just like this
         currentData.forEach(item=>{
             if(item.value==0){
                 item.itemStyle.color = '#666'
@@ -789,6 +788,10 @@ if (!empty($task->subtasks)) {
         <li>
         <i class="fa fa-user-circle"></i>
             <?= $this->Html->link(__('Manage Employees'), ['controller' => 'Users'], ['class' => 'text']) ?>
+        </li>
+        <li>
+            <i class="fa fa-bar-chart"></i>
+            <?= $this->Html->link(__('KPI'), ['controller' => 'kpi'], ['class' => 'text']) ?>
         </li>
         <li>
         <i class="fa fa-users"></i>
