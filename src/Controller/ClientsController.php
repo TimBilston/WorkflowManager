@@ -34,6 +34,8 @@ class ClientsController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
+
         $this->paginate = [
             'contain' => ['Users'],
         ];
@@ -51,6 +53,8 @@ class ClientsController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
+
         $client = $this->Clients->get($id, [
             'contain' => ['Users', 'Tasks'],
         ]);
@@ -65,6 +69,8 @@ class ClientsController extends AppController
      */
     public function add()
     {
+        $this->Authorization->skipAuthorization();
+
         $client = $this->Clients->newEmptyEntity();
         if ($this->request->is('post')) {
             $client = $this->Clients->patchEntity($client, $this->request->getData());
@@ -91,6 +97,10 @@ class ClientsController extends AppController
      */
     public function edit($id = null)
     {
+        $client = $this->Clients->newEmptyEntity();
+        $this->Authorization->authorize($client);
+
+
         $tasksTable = $this->loadModel('Tasks');
 
         $client = $this->Clients->get($id, [
@@ -119,6 +129,7 @@ class ClientsController extends AppController
      */
     public function addTask()
     {
+        $this->Authorization->skipAuthorization();
 
         $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');;
         $task = $tasksTable->newEmptyEntity();
@@ -146,6 +157,10 @@ class ClientsController extends AppController
      */
     public function delete($id = null)
     {
+        $client = $this->Clients->newEmptyEntity();
+        $this->Authorization->authorize($client);
+
+
         $this->request->allowMethod(['post', 'delete']);
         $client = $this->Clients->get($id);
         if ($this->Clients->delete($client)) {

@@ -30,6 +30,7 @@ class KpiController extends AppController
         // Configure the login action to not require authentication, preventing
         // the infinite redirect loop issue
         //$this->Authentication->addUnauthenticatedActions();
+        $this->Authorization->skipAuthorization();
 
     }
     /**

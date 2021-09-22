@@ -23,6 +23,8 @@ class UsersController extends AppController
 
     public function login()
     {
+        $this->Authorization->skipAuthorization();
+
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
@@ -43,6 +45,8 @@ class UsersController extends AppController
 
     public function logout()
     {
+        $this->Authorization->skipAuthorization();
+
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
