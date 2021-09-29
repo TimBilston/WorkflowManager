@@ -196,7 +196,7 @@ if (!empty($task->subtasks)) {
         var html = '<?php echo  $html ?>'
         var currentUser = '<?php echo $currentUserName ?>'
         tasksTotal = 0
-        
+
         //Reset card
         $("#1").html('')
         $("#2").html('')
@@ -279,7 +279,7 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                   
+
                 }else if($(element).find('.due_time').text() == Wednesday){
                     if (document.getElementById('toggle').checked){
                         if ($(element).find('.employee').text() == currentUser){
@@ -303,7 +303,7 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                    
+
                 }else if($(element).find('.due_time').text() == Thursday){
                     if (document.getElementById('toggle').checked){
                         if ($(element).find('.employee').text() == currentUser){
@@ -328,7 +328,7 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                    
+
                 }else if($(element).find('.due_time').text() == Friday){
                     if (document.getElementById('toggle').checked){
                         if ($(element).find('.employee').text() == currentUser){
@@ -353,9 +353,10 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                    
+
                 }
             }else{
+                console.log("333")
                 if (document.getElementById('toggle').checked){
                     if ($(element).find('.employee').text() == currentUser){
                         $Completed += 1;
@@ -377,7 +378,8 @@ if (!empty($task->subtasks)) {
         })
         console.log(currentData)
         $("#tasksTotal").text(tasksTotal)
-        $("body").append(<?php $this->element("_viewTask") ?> ) // if u wanna add model just like this
+        //loop through every task and append
+        $("card52").append(<?php $this->element('viewTask',['taskID' => $task->id])?>) // if u wanna add modal just like this
         currentData.forEach(item=>{
             if(item.value==0){
                 item.itemStyle.color = '#666'
@@ -424,10 +426,10 @@ if (!empty($task->subtasks)) {
                             },
                             labelLine:{
                                 show:true
-                            }                     
+                            }
                         }
                     },
-                    
+
                     label: {
                         show: false,
                         position: 'left'
@@ -813,7 +815,7 @@ if (!empty($task->subtasks)) {
         </li>
         <div id="container" style="width:220px;height: 400px"></div>
     </nav>
-    
+
 
     <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; padding-left: 220px; background: #ffebeb; ">
         <b style="color:#000000"><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
@@ -914,5 +916,5 @@ if (!empty($task->subtasks)) {
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-    
+
 </script>
