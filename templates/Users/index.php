@@ -195,7 +195,7 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
                         <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
                         <p class ="person"><?=$user->id?></p>
                         <p class="desc" ><?=substr($task->description,0,20)?>...</p>
-                        <?php echo //$this->element('viewTask', ['taskID' => $task->id]);?>
+                        <?php echo $this->element('viewTask', ['taskID' => $task->id]);?>
                     <?php endforeach;?>
                     <tr>
                         <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>

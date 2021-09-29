@@ -1,3 +1,7 @@
+.modal-medium {
+    width: 600px;
+}
+
 .modal-title{
     text-transform: capitalize;
 }
@@ -44,7 +48,7 @@
     border: 1px solid #d9d9d9;
     font-size: 11px;
     color: #3a3a3a;
-    background-color:#f9f9f9;
+    background-color:#FFFFFF;
     height: 2.2rem;
     line-height: 1.2rem;
     text-decoration: none;
@@ -60,4 +64,22 @@
     color: #2287faa6;
     border-color: #2287faa6;
     background-color: #f9f9f9;
+}
+.editform{
+    display: none;
+    padding-left: 40px;
+}
+.linkButton{
+    text-decoration: underline;
+    border: none;
+    color: #606c76;
+    text-transform: capitalize;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 0px;
+}
+.linkButton:hover{
+    color: #0071BC;
+    background-color: transparent;
 }
