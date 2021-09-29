@@ -1,3 +1,7 @@
+.modal-medium {
+    width: 600px;
+}
+
 .modal-title{
     text-transform: capitalize;
 }
