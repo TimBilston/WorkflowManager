@@ -9,11 +9,17 @@ $this->disableAutoLayout();
 <?= $this->Html->meta('icon') ?>
 
 
+
+<header>
+    <button style="width: auto; margin: 10px" onclick="history.go(-1);">Go back</button>
+</header>
 <a href="" class="fa fa-arrow-left"></a>
 <div class="error">
     <h1>404</h1>
     <p>We're sorry but it looks like that page doesn't exist anymore.</p>
 </div>
+
+
 
 <style>
     body,

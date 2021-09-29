@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\Task;
+use App\Model\Entity\Kpi;
 use App\Model\Table\SubtasksTable;
 use phpDocumentor\Reflection\Types\Integer;
 
@@ -13,7 +14,7 @@ use phpDocumentor\Reflection\Types\Integer;
  * @property \App\Model\Table\TasksTable $Tasks
  * @method \App\Model\Entity\Task[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class TasksController extends AppController
+class KpiController extends AppController
 {
     /**
      * Before Filter method
@@ -42,7 +43,7 @@ class TasksController extends AppController
         $this->paginate = [
             'contain' => ['Users', 'Departments', 'Clients', 'Status'],
         ];
-        $tasks = $this->paginate($this->Tasks);
+        $tasks = $this->paginate($this->Kpi);
 
         $this->set(compact('tasks'));
     }
@@ -79,7 +80,6 @@ class TasksController extends AppController
             }
 
             if ($this->Tasks->save($task)) {
-
                 //controllers for subtasks-----start
                 $subTaskDatas = [];
                 $sub_task_contents = $this->request->getData('sub_task_content', []);
@@ -95,7 +95,7 @@ class TasksController extends AppController
                 $subTaskTable = new SubtasksTable();
                 $subTaskEntities = $subTaskTable->newEntities($subTaskDatas);
                 if (!$subTaskTable->saveMany($subTaskEntities)) {
-                    $this->Flash->error(__('The subtask could contain figures. Please, try again.'));
+                    $this->Flash->error(__('The task could not be saved. Please, try again.'));
                 }
                 //controllers for subtasks-----end
 
@@ -239,7 +239,7 @@ class TasksController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
             if ($this->Tasks->save($task)) {
-                //subtasks controllers for edit func----start
+                //subtasks----start
                 $sub_task_contents = $this->request->getData('sub_task_content', []);
                 $subTaskIds = $this->request->getData('sub_task_id', []);
                 foreach ($sub_task_contents as $k => $v) {
@@ -272,7 +272,6 @@ class TasksController extends AppController
         $departments = $this->Tasks->Departments->find('list', ['limit' => 200]);
         $clients = $this->Tasks->Clients->find('list', ['limit' => 200]);
         $status = $this->Tasks->Status->find('list', ['limit' => 200]);
-
         $subTasks = $this->Tasks->Subtasks->find('all', ['conditions' => ['task_id' => $id]]);
         $this->set(compact('task', 'users', 'departments', 'clients', 'status', 'subTasks'));
     }

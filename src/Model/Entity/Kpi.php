@@ -6,20 +6,27 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Subtask Entity
+ * Task Entity
  *
  * @property int $id
- * @property string $description
  * @property string $title
+ * @property string $description
  * @property \Cake\I18n\FrozenDate $start_date
  * @property \Cake\I18n\FrozenDate $due_date
- * @property int $task_id
+ * @property int $employee_id
+ * @property string $recurrence
+ * @property int $no_of_recurrence
+ * @property int $department_id
+ * @property int|null $client_id
  * @property int $status_id
  *
- * @property \App\Model\Entity\Task $task
+ * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\Department $department
+ * @property \App\Model\Entity\Client $client
  * @property \App\Model\Entity\Status $status
+ * @property \App\Model\Entity\Subtask[] $subtasks
  */
-class Subtask extends Entity
+class Kpi extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -31,16 +38,20 @@ class Subtask extends Entity
      * @var array
      */
     protected $_accessible = [
-        'description' => true,
         'title' => true,
+        'description' => true,
         'start_date' => true,
         'due_date' => true,
-        'task_id' => true,
+        'employee_id' => true,
+        'recurrence' => true,
+        'no_of_recurrence' => true,
+        'department_id' => true,
+        'client_id' => true,
         'status_id' => true,
-        'task' => true,
+        'user' => true,
+        'department' => true,
+        'client' => true,
         'status' => true,
-
-        'is_complete' => true,
-        'is_complete_admin' => true,
+        'subtasks' => true,
     ];
 }

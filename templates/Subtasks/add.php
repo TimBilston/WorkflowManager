@@ -35,7 +35,7 @@
                     echo $this->Form->button(__('Add'), ['type' => 'button', 'id' => 'z_js_btn_add_item']);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Submit'), ['type' => 'button', 'id' => 'z_js_btn_submit']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
