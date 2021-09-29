@@ -4,12 +4,11 @@
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 use Cake\Routing\Router;
+
+echo $this->Html->css(['tasks' , 'home', 'buttons']);
 ?>
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="webroot/css/home.css">
-<link rel="stylesheet" href="webroot/css/tasks.css">
-<link rel="stylesheet" href="webroot/css/buttons.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <div class="users index content" onload="document.Employees.submit()">
@@ -96,7 +95,7 @@ use Cake\Routing\Router;
                 for (let i = 0; i < elements.length; i++) {
                     elements.sort(function(a, b){return a.id - b.id}); //need to sort every iteration by id otherwise order gets messed up every .append()
                     //for testing elements[i].innerHTML = "foo";
-                    if(elements[i].childNodes[5].innerText == names[j].id){
+                    if(elements[i].childNodes[5].innerText === names[j].id){
                         let id = elements[i].id;
                         //If task name is equal then check for dates and then display task
                         switch (elements[i].childNodes[3].innerText){
@@ -184,25 +183,20 @@ use Cake\Routing\Router;
             <script>
 
             </script>
-
-            <?php foreach ($users as $user):?>
-            <?php
-                if(isset($_GET['Employees'])==$user->id || isset($_GET['Employees'])=="blank" || isset($_GET['Employees'])==false):
-                    ?>
-                    <?php foreach ($user->tasks as $task) {
-                        ?>
-                        <?php // Initialises every task as an invisible card
-                        $output = "";
-                        $output .= '<li class="task-card" style = "display : none" id =' . $task->id . '>
-                                                <h4 style = "margin-bottom: 0rem">' . $task->title . '</h4>
-                                                <p class="due_time">' . date_format($task->due_date, "d/m/y") . '</p>
-                                                <p class ="person">'.$user->id .'</p>
-                                                <p class="desc" >' . substr($task->description,0,20) . '...</p>
-                                                '. $this->element('viewTask', ['taskID' => $task->id,]);
-                                                //'<p class = "test"> ' . $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]) . ' </p></li>';
-                        echo $output;
-                    }
-                    ?>
+            <?php foreach ($users as $user):
+                echo $user->name;
+                //(if url param is set AND (its either blank or an employeeID)) OR if it isn't set
+                //Gets a specific employee ONLY, OR gets all employees if it set to 'blank' or not set
+                if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
+                    foreach ($user->tasks as $task) :
+                         // Initialises every task as an invisible card?>
+                        <li class="task-card" style = "display : none" id =<?=$task->id?>>
+                        <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
+                        <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
+                        <p class ="person"><?=$user->id?></p>
+                        <p class="desc" ><?=substr($task->description,0,20)?>...</p>
+                        <?php echo //$this->element('viewTask', ['taskID' => $task->id]);?>
+                    <?php endforeach;?>
                     <tr>
                         <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
                         <td id = "M_TD <?=$user->id?>"></td>
@@ -210,21 +204,11 @@ use Cake\Routing\Router;
                         <td id = "W_TD <?=$user->id?>"></td>
                         <td id = "Th_TD <?=$user->id?>"></td>
                         <td id = "F_TD <?=$user->id?>"></td>
-
                     </tr>
-                <?php endif; endforeach; ?>
+                <?php endif; ?>
+            <?php endforeach;?>
             </tbody>
         </table>
     </div>
-    <!--<div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>-->
 </div>
 
