@@ -11,6 +11,7 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
+
 <div class="users index content" onload="document.Employees.submit()">
 
     <div style="display: flex; flex-direction: row">
@@ -180,23 +181,21 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
                 </tr>
             </thead>
             <tbody>
-            <script>
-
-            </script>
             <?php foreach ($users as $user):
                 echo $user->name;
                 //(if url param is set AND (its either blank or an employeeID)) OR if it isn't set
                 //Gets a specific employee ONLY, OR gets all employees if it set to 'blank' or not set
                 if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
-                    foreach ($user->tasks as $task) :
-                         // Initialises every task as an invisible card?>
+                    foreach ($user->tasks as $task) :?>
+                        // Initialises every task as an invisible card?>
                         <li class="task-card" style = "display : none" id =<?=$task->id?>>
-                        <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
-                        <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
-                        <p class ="person"><?=$user->id?></p>
-                        <p class="desc" ><?=substr($task->description,0,20)?>...</p>
-                        <?php echo $this->element('viewTask', ['taskID' => $task->id]);?>
-                    <?php endforeach;?>
+                            <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
+                            <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
+                            <p class ="person"><?=$user->id?></p>
+                            <p class="desc" ><?=substr($task->description,0,20)?>...</p>
+                            <!-- <div id="modal<?=$task->id?>" style ="display:block"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>  -->
+
+                            <?php endforeach;?>
                     <tr>
                         <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
                         <td id = "M_TD <?=$user->id?>"></td>
@@ -211,4 +210,10 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
         </table>
     </div>
 </div>
+<script>
+    window.onload = appendModals();
 
+    function appendModals(){
+
+    }
+</script>
