@@ -9,7 +9,11 @@
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Html->link(__('Edit Task'), ['action' => 'edit', $task->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Task'), ['action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id), 'class' => 'side-nav-item']) ?>
+            <?php if ($task->recurrence_id == null){
+                echo $this->Form->postLink(__('Delete Task'), ['action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id), 'class' => 'side-nav-item']);
+            } else {
+                echo $this->Form->postLink(__('Delete Task'), ['controller' => 'recurrences', 'action' => 'delete', $task->recurrence_id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id), 'class' => 'side-nav-item']);
+            } ?>
             <?= $this->Html->link(__('List Tasks'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('New Task'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
@@ -31,8 +35,8 @@
                     <td><?= $task->has('user') ? $this->Html->link($task->user->name, ['controller' => 'Users', 'action' => 'view', $task->user->id]) : '' ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Recurrence') ?></th>
-                    <td><?= h($task->recurrence) ?></td>
+                    <th><?= __('Recurrence Type') ?></th>
+                    <td><?= h($task->recurrence_type) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Department') ?></th>
@@ -45,6 +49,10 @@
                 <tr>
                     <th><?= __('Status') ?></th>
                     <td><?= $task->has('status') ? $this->Html->link($task->status->name, ['controller' => 'Status', 'action' => 'view', $task->status->id]) : '' ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Recurrence') ?></th>
+                    <td><?= $task->has('recurrence') ? $this->Html->link($task->recurrence->id, ['controller' => 'Recurrences', 'action' => 'view', $task->recurrence->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>

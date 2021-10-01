@@ -29,6 +29,7 @@ class TasksTableTest extends TestCase
         'app.Departments',
         'app.Clients',
         'app.Status',
+        'app.Recurrences',
         'app.Subtasks',
     ];
 
@@ -74,17 +75,6 @@ class TasksTableTest extends TestCase
      * @uses \App\Model\Table\TasksTable::buildRules()
      */
     public function testBuildRules(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test dateCompare method
-     *
-     * @return void
-     * @uses \App\Model\Table\TasksTable::dateCompare()
-     */
-    public function testDateCompare(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

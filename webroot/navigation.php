@@ -29,16 +29,7 @@
     <i class="fa fa-sign-out"></i>
         <?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'text']) ?>
     </li>
-    <li>
-        <!-- <i class="fa fa-sign-out"></i> -->
-        <div style="display:flex;align-items:center">
-            <a class="text">View My Tasks</a>
-            <label class="switch">
-                <input type="checkbox" id="toggle" onclick="toggleCheck()">
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </li>
+
 </nav>
 
 <style>

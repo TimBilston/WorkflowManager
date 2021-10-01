@@ -15,6 +15,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\DepartmentsTable&\Cake\ORM\Association\BelongsTo $Departments
  * @property \App\Model\Table\ClientsTable&\Cake\ORM\Association\BelongsTo $Clients
  * @property \App\Model\Table\StatusTable&\Cake\ORM\Association\BelongsTo $Status
+ * @property \App\Model\Table\RecurrencesTable&\Cake\ORM\Association\BelongsTo $Recurrences
  * @property \App\Model\Table\SubtasksTable&\Cake\ORM\Association\HasMany $Subtasks
  *
  * @method \App\Model\Entity\Task newEmptyEntity()
@@ -61,6 +62,9 @@ class TasksTable extends Table
         $this->belongsTo('Status', [
             'foreignKey' => 'status_id',
             'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Recurrences', [
+            'foreignKey' => 'recurrence_id',
         ]);
         $this->hasMany('Subtasks', [
             'foreignKey' => 'task_id',
@@ -119,9 +123,9 @@ class TasksTable extends Table
             ]);
 
         $validator
-            ->scalar('recurrence')
-            ->requirePresence('recurrence', 'create')
-            ->notEmptyString('recurrence');
+            ->scalar('recurrence_type')
+            ->requirePresence('recurrence_type', 'create')
+            ->notEmptyString('recurrence_type');
 
         $validator
             ->integer('no_of_recurrence')
@@ -150,6 +154,7 @@ class TasksTable extends Table
         $rules->add($rules->existsIn(['department_id'], 'Departments'), ['errorField' => 'department_id']);
         $rules->add($rules->existsIn(['client_id'], 'Clients'), ['errorField' => 'client_id']);
         $rules->add($rules->existsIn(['status_id'], 'Status'), ['errorField' => 'status_id']);
+        $rules->add($rules->existsIn(['recurrence_id'], 'Recurrences'), ['errorField' => 'recurrence_id']);
 
         return $rules;
     }
