@@ -4,12 +4,23 @@
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 use Cake\Routing\Router;
+$tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');
+echo $this->Html->css(['tasks' , 'home', 'buttons', 'bootstrap' , 'Modal']);
+echo $this->Html->script(['jquery-1.4.1.js', 'bootstrap.min' ,'submit.js']);
 
-echo $this->Html->css(['tasks' , 'home', 'buttons']);
 ?>
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+
+<?php foreach ($users as $user):
+    foreach ($user->tasks as $task):
+        ?>
+        <div class = "modals" id="<?=$task->id?>" style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
+    <?php endforeach;
+endforeach;?>
 
 
 <div class="users index content" onload="document.Employees.submit()">
@@ -24,6 +35,8 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
 
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
     <script src ="webroot/js/jquery-1.4.1.js"></script>
+
+
     <script>
         var Monday = "";
         var Tuesday = "";
@@ -32,13 +45,6 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
         var Friday = "";
 
         var currentMonday = new Date();
-        window.onload = function() {
-            $('Employees').submit();
-            //gets the current Monday date and converts into a readable format
-            <!-- Outputs the Titles -->
-            currentMonday = getMonday(new Date());
-            changeDates(currentMonday);
-        }
 
         function getMonday(d) {
             d = new Date(d);
@@ -67,19 +73,6 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
             elements = Array.prototype.slice.call(elements, 0);
             elements.sort(function(a, b){return a.id - b.id});
             let names = document.getElementsByClassName('names');//get array of names that exist.
-           /* const queryString = window.location.search;//gets url query string
-            console.log(queryString);//logs query string
-            const urlParams = new URLSearchParams(queryString);//gets url parameters
-            if (urlParams.has('Employees')){//checks if has employee parameter
-                const Employee = urlParams.get('Employees')
-                console.log(Employee);
-                for(let i = 0; i < names.length; i++){
-                    if(names[i] = Employee){
-                        names = names[i];//sets names to only the value with the correct id
-                    }
-
-                }
-            }*/
 
             //const length = elements.length;
             let MD = getDateString(thisMonday, 0);
@@ -182,19 +175,17 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
             </thead>
             <tbody>
             <?php foreach ($users as $user):
-                echo $user->name;
                 //(if url param is set AND (its either blank or an employeeID)) OR if it isn't set
                 //Gets a specific employee ONLY, OR gets all employees if it set to 'blank' or not set
                 if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
                     foreach ($user->tasks as $task) :?>
-                        // Initialises every task as an invisible card?>
+                        <!--Initialises every task as an invisible card?-->
                         <li class="task-card" style = "display : none" id =<?=$task->id?>>
                             <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
                             <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
                             <p class ="person"><?=$user->id?></p>
                             <p class="desc" ><?=substr($task->description,0,20)?>...</p>
-                            <!-- <div id="modal<?=$task->id?>" style ="display:block"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>  -->
-
+                        </li>
                             <?php endforeach;?>
                     <tr>
                         <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
@@ -211,9 +202,22 @@ echo $this->Html->css(['tasks' , 'home', 'buttons']);
     </div>
 </div>
 <script>
-    window.onload = appendModals();
-
-    function appendModals(){
-
+    window.onload = function(){
+        //gets the current Monday date and converts into a readable format
+        currentMonday = getMonday(new Date());
+        changeDates(currentMonday);
+        doSomething();
+        //appends the modals to the taskcards
+        let tasks = document.getElementsByClassName("task-card");
+        let modals = document.getElementsByClassName("modals");
+        for(let i = 0; i <tasks.length; i++){
+            for (let j = 0; j <modals.length; j++){
+                if (tasks[i].id === modals[j].id){
+                    tasks[i].append(modals[j]);
+                    modals[j].style.display = "block";
+                    console.log("appended");
+                }
+            }
+        }
     }
 </script>

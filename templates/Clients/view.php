@@ -130,9 +130,9 @@ $currentDate = date('d/m/y');
                                 <?php endforeach; ?>
                                 </tbody>
                             </table>
-                        </div>
                     <?php endif; ?>
-                </div>            </div>
+                </div>
+        </div>
             <button class="collapsible">Current Tasks (<?php $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['client_id' => $client->id, 'status_id' => 1])->count();
                 echo $query;
                 ?>) </button>
@@ -233,7 +233,6 @@ $currentDate = date('d/m/y');
                     <?php endif; ?>
                 </div>
             </div>
-
 
         </div>
     </div>
