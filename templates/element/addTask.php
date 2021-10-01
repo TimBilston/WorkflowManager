@@ -14,7 +14,7 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Datasource\FactoryLocator;
-
+echo $this->Html->css(['bootstrap' , 'Modal']);
 
 ?>
 <html lang="en">
@@ -24,17 +24,17 @@ use Cake\Datasource\FactoryLocator;
 <link rel="stylesheet" href="../../webroot/css/custom.css">
 <link rel="stylesheet" href="../../webroot/css/bootstrap.css">
 
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#taskModal">Add related task</button>
+<button type="button" data-toggle="modal" data-target="#taskModal">Add related task</button>
 
 <div id= "taskModal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+    <div class="modal-dialog" style="width:600px">
+        <div class="modal-content" >
             <div class="modal-header">
                 <h3 class="modal-title">Add Task</h3>
             </div>
             <div class="modal-body">
                <!-- GETS THE ADD TASK TEMPLATE ELEMENT templates/element/addTask -->
-                <div class="column-responsive column-80">
+                <div class="column-responsive">
                     <div class="tasks form content">
                         <div
                         <?php
@@ -43,7 +43,7 @@ use Cake\Datasource\FactoryLocator;
                         ?>
                         <?= $this->Form->end() ?>
                         <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'add']]); ?>
-                        <fieldset style="width : 60px">
+                        <fieldset>
                             <?=
                             $this->element('addTaskForm') ?>
                         </fieldset>
@@ -52,7 +52,7 @@ use Cake\Datasource\FactoryLocator;
 
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#taskModal">Close</button>
+                    <button type="button" data-toggle="modal" data-target="#taskModal">Close</button>
 
                 </div>
             </div>

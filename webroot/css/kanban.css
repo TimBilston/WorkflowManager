@@ -151,6 +151,7 @@ ul {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
 .drag-item .person{
     background: url('../img/client.png') no-repeat 6px center;
     background-size: 16px 16px;

@@ -45,6 +45,13 @@ endforeach;?>
         var Friday = "";
 
         var currentMonday = new Date();
+        window.onload = function() {
+            $('Employees').submit();
+            //gets the current Monday date and converts into a readable format
+            <!-- Outputs the Titles -->
+            currentMonday = getMonday(new Date());
+            changeDates(currentMonday);
+        }
 
         function getMonday(d) {
             d = new Date(d);
