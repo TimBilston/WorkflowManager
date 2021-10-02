@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Task;
 use App\Model\Table\SubtasksTable;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Tasks Controller

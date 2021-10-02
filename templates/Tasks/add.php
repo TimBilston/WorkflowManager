@@ -9,6 +9,9 @@
  * @var \Cake\Collection\CollectionInterface|string[] $recurrences
  */
 ?>
+<!--<script src="/jquery.min.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -19,44 +22,16 @@
     <div class="column-responsive column-80">
         <div class="tasks form content">
             <?= $this->Form->create($task) ?>
+
             <fieldset>
                 <legend><?= __('Add Task') ?></legend>
+                <?= $this->element('addTaskForm') ?>
+
                 <?php
-                echo $this->Form->control('title');
-                echo $this->Form->control('description', ['type' => 'textarea']);
-
-
-                echo '<div class="row">';
-                echo '<div class="date">';
-                echo $this->Form->control('start_date');
-                echo '</div>';
-                echo '<div class="date">';
-                echo $this->Form->control('due_date');
-                echo '</div>';
-                echo '</div>';
-
-                echo $this->Form->control('employee_id', ['options' => $users]);
-
-                echo $this->Form->label('Repeat');
-                echo $this->Form->select('recurrence_type', [
-                    'Never' => 'Never',
-                    'Weekly' => 'Weekly',
-                    'Fortnightly' => 'Fortnightly',
-                    'Monthly' => 'Monthly',
-                    'Quarterly' => 'Quarterly',
-                    'Annually' => 'Annually'
-                ]);
-
-                echo $this->Form->control('no_of_recurrence', ['default' => 0]);
-
-                echo $this->Form->control('department_id', ['options' => $departments]);
-                echo $this->Form->control('client_id', ['options' => $clients, 'empty' => 'No Client']);
-
-                //id for 'In Progress' is 1
-                echo $this->Form->hidden('status_id', ['value' => 1]);
-
-                echo $this->Form->control('employee_id', ['options' => $users]);
-
+                    echo '<div class="input text">';
+                    echo '<label>Sub Task</label>';
+                    echo '<div id="z_js_wrap_sub_task_item"></div>';
+                    echo '</div>';
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
@@ -64,3 +39,22 @@
         </div>
     </div>
 </div>
+
+<style>
+    .date{
+        margin: auto;
+    }
+    .sub_task_content {
+        margin-left: 10px;
+    }
+
+</style>
+
+<script>
+    $(function () {
+        $('#add_sub_task').click(function () {
+            var title = $('input[name="title"]').val();
+            window.open('/subtasks/add?title=' + title, 'sub_task_add');
+        });
+    });
+</script>

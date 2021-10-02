@@ -15,7 +15,7 @@ echo '</div>';
 echo $this->Form->control('employee_id', ['options' => $users]);
 
 echo $this->Form->label('Repeat');
-echo $this->Form->select('recurrence', [
+echo $this->Form->select('recurrence_type', [
     'Never' => 'Never',
     'Weekly' => 'Weekly',
     'Fortnightly' => 'Fortnightly',
