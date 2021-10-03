@@ -1,5 +1,9 @@
-
-
+<?php
+    $this->loadHelper('Authentication.Identity');
+    if ($this->Identity->isLoggedIn()) {
+    $currentUserId = $this->Identity->get('id');
+}
+?>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
@@ -25,6 +29,12 @@
     <i class="fa fa-users"></i>
         <?= $this->Html->link(__('View Clients'), ['controller' => 'Clients'], ['class' => 'text']) ?>
     </li>
+
+    <li>
+        <i class="fa fa-user-circle"></i>
+        <?= $this->Html->link(__('My Account'), ['controller' => 'Users', 'action' => 'view', $currentUserId], ['class' => 'text']) ?>
+    </li>
+
     <li>
     <i class="fa fa-sign-out"></i>
         <?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'text']) ?>
