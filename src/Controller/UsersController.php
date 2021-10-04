@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Authentication\PasswordHasher\DefaultPasswordHasher;
+use phpDocumentor\Reflection\Types\This;
+
 /**
  * Users Controller
  *
@@ -154,4 +157,5 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
