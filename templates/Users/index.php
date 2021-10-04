@@ -48,7 +48,6 @@ endforeach;?>
         <h1 id="Month_Text"> August 2021 </h1>
         <!--<h1 id="misc"></h1> -->
         <button onclick = "prevWeek()" style="margin: auto" class="employee_view"> > </button>
-        <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button new_user']) ?>
     </div>
 
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
@@ -179,13 +178,16 @@ endforeach;?>
             <div class="custom-select">
                 <form id="Employees">
                     <label for="Employees">Select an Employee:</label>
-                    <select name="Employees" id="Employees">
-                        <option value ="blank"></option>
-                        <?php foreach ($users as $user):?>
-                        <option value ="<?=$user->id?>"><?=$user->name?></option>
-                        <?php endforeach ?>
-                    </select>
-                    <input type="submit" value="Submit">
+                    <div style="display: inline-flex"> <!--groups so they can be on same line-->
+                        <select name="Employees" id="Employees">
+                            <option value ="blank"></option>
+                            <?php foreach ($users as $user):?>
+                            <option value ="<?=$user->id?>"><?=$user->name?></option>
+                            <?php endforeach ?>
+                        </select>
+                        <input type="submit" value="Submit">
+                        <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button new_user']) ?>
+                    </div>
                 </form>
             </div>
                 <tr>
