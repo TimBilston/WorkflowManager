@@ -135,7 +135,7 @@ ul {
 .drag-item p{
     font-size:14px;
     margin:6px 0;
-    color: #999;
+    color: #343434;
     box-sizing: border-box;
     padding-left:30px;
 }
@@ -150,6 +150,7 @@ ul {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    color: #343434
 }
 
 .drag-item .person{
@@ -164,6 +165,7 @@ ul {
 .drag-item .employee{
     background: url('../img/person.png') no-repeat 6px center;
     background-size: 16px 16px;
+    color: #343434
 }
 
 
@@ -180,6 +182,7 @@ ul {
 
 }
 .drag-item p.button a{
+    background-color: #ffffff;
     color:#3a3a3a;
     text-decoration:none;
     text-align: right;
