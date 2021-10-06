@@ -46,7 +46,6 @@
         <input class="z_js_id" value="{id}" type="hidden">
         <input class="z_js_status" {status_checked} type="checkbox">
         <span class="z_js_content">{content}</span>
-        <input class="z_js_status_admin" {status_admin_checked} type="checkbox">
         <a href="javascript:" class="z_js_btn_del del_btn">Delete</a>
     </div>
 </script>

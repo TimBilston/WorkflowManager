@@ -58,6 +58,7 @@ $this->loadHelper('Authentication.Identity');
 
 if ($this->Identity->isLoggedIn()) {
     $currentUserName = $this->Identity->get('name');
+    $currentUserId = $this->Identity->get('id');
 }
 
 $subTasksCount = 0;
@@ -175,12 +176,13 @@ if (!empty($task->subtasks)) {
             if (!$task->client == null){
                 $clientName = 'Client: '.$task->client->name;
             }
-            $html .= '<li class="drag-item">'.
+            $html .= '<li class="drag-item" id="card'.$task->id.'">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time" style="visibility: hidden; display: none">'.$task->due_date.'</p>'.
                 '<p class="desc" title='.$task->description.'>'.$task->description.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
                 '<p class="employee">'.$task->user->name.'</p>'.
+                '<p class="employee_id" style="visibility: hidden; display: none">'.$task->user->id.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
                 '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'.
                 //'<p>'.$this->element('viewTask',['taskID' => $task->id]).'</p >'.      //if u wanna to add inside the card just use like thie line !!!!!!!!!!!!!
@@ -195,8 +197,9 @@ if (!empty($task->subtasks)) {
 
         var html = '<?php echo  $html ?>'
         var currentUser = '<?php echo $currentUserName ?>'
+        var currentUserId = '<?php echo $currentUserId ?>'
         tasksTotal = 0
-        
+
         //Reset card
         $("#1").html('')
         $("#2").html('')
@@ -236,7 +239,7 @@ if (!empty($task->subtasks)) {
             if ($(element).find('.status').text() != 'Completed'){
                 if($(element).find('.due_time').text() == Monday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#1").append(element)
                             tasksTotal++
 
@@ -259,7 +262,7 @@ if (!empty($task->subtasks)) {
                     }
                 }else if($(element).find('.due_time').text() == Tuesday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#2").append(element)
                             tasksTotal++
                             $NotCompleted += 1;
@@ -279,10 +282,10 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                   
+
                 }else if($(element).find('.due_time').text() == Wednesday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#3").append(element)
                             tasksTotal++
 
@@ -303,10 +306,10 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                    
+
                 }else if($(element).find('.due_time').text() == Thursday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#4").append(element)
                             tasksTotal++
 
@@ -328,10 +331,10 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                    
+
                 }else if($(element).find('.due_time').text() == Friday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#5").append(element)
                             tasksTotal++
 
@@ -353,9 +356,10 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                    
+
                 }
             }else{
+                console.log("333")
                 if (document.getElementById('toggle').checked){
                     if ($(element).find('.employee').text() == currentUser){
                         $Completed += 1;
@@ -377,7 +381,8 @@ if (!empty($task->subtasks)) {
         })
         console.log(currentData)
         $("#tasksTotal").text(tasksTotal)
-        $("body").append(<?php $this->element("_viewTask") ?> ) // if u wanna add model just like this
+        //loop through every task and append
+        $("card52").append(<?php $this->element('viewTask',['taskID' => $task->id])?>) // if u wanna add modal just like this
         currentData.forEach(item=>{
             if(item.value==0){
                 item.itemStyle.color = '#666'
@@ -424,10 +429,10 @@ if (!empty($task->subtasks)) {
                             },
                             labelLine:{
                                 show:true
-                            }                     
+                            }
                         }
                     },
-                    
+
                     label: {
                         show: false,
                         position: 'left'
@@ -798,6 +803,10 @@ if (!empty($task->subtasks)) {
             <?= $this->Html->link(__('View Clients'), ['controller' => 'Clients'], ['class' => 'text']) ?>
         </li>
         <li>
+            <i class="fa fa-user-circle"></i>
+            <?= $this->Html->link(__('My Account'), ['controller' => 'Users',  'action' => 'view',  $currentUserId], ['class' => 'text']) ?>
+        </li>
+        <li>
         <i class="fa fa-sign-out"></i>
             <?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'text']) ?>
         </li>
@@ -813,7 +822,7 @@ if (!empty($task->subtasks)) {
         </li>
         <div id="container" style="width:220px;height: 400px"></div>
     </nav>
-    
+
 
     <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; padding-left: 220px; background: #ffebeb; ">
         <b style="color:#000000"><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
@@ -914,5 +923,5 @@ if (!empty($task->subtasks)) {
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-    
+
 </script>

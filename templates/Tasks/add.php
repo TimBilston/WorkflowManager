@@ -6,9 +6,9 @@
  * @var \Cake\Collection\CollectionInterface|string[] $departments
  * @var \Cake\Collection\CollectionInterface|string[] $clients
  * @var \Cake\Collection\CollectionInterface|string[] $status
+ * @var \Cake\Collection\CollectionInterface|string[] $recurrences
  */
 ?>
-
 <!--<script src="/jquery.min.js"></script>-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -33,9 +33,7 @@
                     echo '<div id="z_js_wrap_sub_task_item"></div>';
                     echo '</div>';
                 ?>
-
             </fieldset>
-
             <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>
         </div>

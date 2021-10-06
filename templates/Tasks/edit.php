@@ -6,9 +6,9 @@
  * @var string[]|\Cake\Collection\CollectionInterface $departments
  * @var string[]|\Cake\Collection\CollectionInterface $clients
  * @var string[]|\Cake\Collection\CollectionInterface $status
+ * @var string[]|\Cake\Collection\CollectionInterface $recurrences
  */
 ?>
-
 <style>
     .sub_task_content {
         margin-left: 10px;
@@ -16,6 +16,7 @@
 </style>
 <!-- <script src="/jquery.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 <div class="row">
     <aside class="column">
@@ -40,7 +41,15 @@
                     echo $this->Form->control('start_date');
                     echo $this->Form->control('due_date');
                     echo $this->Form->control('employee_id', ['options' => $users]);
-                    echo $this->Form->control('recurrence');
+                    echo $this->Form->label('Repeat');
+                    echo $this->Form->select('recurrence_type', [
+                        'Never' => 'Never',
+                        'Weekly' => 'Weekly',
+                        'Fortnightly' => 'Fortnightly',
+                        'Monthly' => 'Monthly',
+                        'Quarterly' => 'Quarterly',
+                        'Annually' => 'Annually'
+                    ]);
                     echo $this->Form->control('no_of_recurrence');
                     echo $this->Form->control('department_id', ['options' => $departments]);
                     echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);

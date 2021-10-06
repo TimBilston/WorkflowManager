@@ -207,10 +207,13 @@ use App\Model\Entity\Task;
         ],
         series: [
             {
-                name: 'Completed',
-                type: 'bar',
-                data: NewformatData.map(i=>i.Completed || 0),
-                barMinHeight: 4,
+              name: 'Completed',
+              type: 'bar',
+              data: NewformatData.map(i=>i.Completed || 0),
+              barMinHeight: 4,
+              itemStyle: {
+                color:'green'
+              },
             },
             {
                 name: 'Not Completed',

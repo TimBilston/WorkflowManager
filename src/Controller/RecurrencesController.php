@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use phpDocumentor\Reflection\Types\Integer;
+
 /**
- * Departments Controller
+ * Recurrences Controller
  *
- * @property \App\Model\Table\DepartmentsTable $Departments
- * @method \App\Model\Entity\Department[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\RecurrencesTable $Recurrences
+ * @method \App\Model\Entity\Recurrence[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class DepartmentsController extends AppController
+class RecurrencesController extends AppController
 {
     /**
      * Before Filter method
@@ -34,27 +36,25 @@ class DepartmentsController extends AppController
      */
     public function index()
     {
+        $recurrences = $this->paginate($this->Recurrences);
 
-
-        $departments = $this->paginate($this->Departments);
-
-        $this->set(compact('departments'));
+        $this->set(compact('recurrences'));
     }
 
     /**
      * View method
      *
-     * @param string|null $id Department id.
+     * @param string|null $id Recurrence id.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $department = $this->Departments->get($id, [
-            'contain' => ['Tasks', 'Users'],
+        $recurrence = $this->Recurrences->get($id, [
+            'contain' => ['Tasks'],
         ]);
 
-        $this->set(compact('department'));
+        $this->set(compact('recurrence'));
     }
 
     /**
@@ -64,60 +64,61 @@ class DepartmentsController extends AppController
      */
     public function add()
     {
-        $department = $this->Departments->newEmptyEntity();
+        $recurrence = $this->Recurrences->newEmptyEntity();
         if ($this->request->is('post')) {
-            $department = $this->Departments->patchEntity($department, $this->request->getData());
-            if ($this->Departments->save($department)) {
-                $this->Flash->success(__('The department has been saved.'));
+            $recurrence = $this->Recurrences->patchEntity($recurrence, $this->request->getData());
+            if ($this->Recurrences->save($recurrence)) {
+                $this->Flash->success(__('The recurrence has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The department could not be saved. Please, try again.'));
+            $this->Flash->error(__('The recurrence could not be saved. Please, try again.'));
         }
-        $this->set(compact('department'));
+        $this->set(compact('recurrence'));
+
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Department id.
+     * @param string|null $id Recurrence id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $department = $this->Departments->get($id, [
+        $recurrence = $this->Recurrences->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $department = $this->Departments->patchEntity($department, $this->request->getData());
-            if ($this->Departments->save($department)) {
-                $this->Flash->success(__('The department has been saved.'));
+            $recurrence = $this->Recurrences->patchEntity($recurrence, $this->request->getData());
+            if ($this->Recurrences->save($recurrence)) {
+                $this->Flash->success(__('The recurrence has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The department could not be saved. Please, try again.'));
+            $this->Flash->error(__('The recurrence could not be saved. Please, try again.'));
         }
-        $this->set(compact('department'));
+        $this->set(compact('recurrence'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Department id.
+     * @param string|null $id Recurrence id.
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $department = $this->Departments->get($id);
-        if ($this->Departments->delete($department)) {
-            $this->Flash->success(__('The department has been deleted.'));
+        $recurrence = $this->Recurrences->get($id);
+        if ($this->Recurrences->delete($recurrence)) {
+            $this->Flash->success(__('The recurrence has been deleted.'));
         } else {
-            $this->Flash->error(__('The department could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The recurrence could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'pages', 'action' => 'display']);
     }
 }

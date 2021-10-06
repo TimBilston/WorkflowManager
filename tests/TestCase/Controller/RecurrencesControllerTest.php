@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\TasksController;
+use App\Controller\RecurrencesController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\TasksController Test Case
+ * App\Controller\RecurrencesController Test Case
  *
- * @uses \App\Controller\TasksController
+ * @uses \App\Controller\RecurrencesController
  */
-class TasksControllerTest extends TestCase
+class RecurrencesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
@@ -22,20 +22,15 @@ class TasksControllerTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.Tasks',
-        'app.Users',
-        'app.Departments',
-        'app.Clients',
-        'app.Status',
         'app.Recurrences',
-        'app.Subtasks',
+        'app.Tasks',
     ];
 
     /**
      * Test index method
      *
      * @return void
-     * @uses \App\Controller\TasksController::index()
+     * @uses \App\Controller\RecurrencesController::index()
      */
     public function testIndex(): void
     {
@@ -46,7 +41,7 @@ class TasksControllerTest extends TestCase
      * Test view method
      *
      * @return void
-     * @uses \App\Controller\TasksController::view()
+     * @uses \App\Controller\RecurrencesController::view()
      */
     public function testView(): void
     {
@@ -57,7 +52,7 @@ class TasksControllerTest extends TestCase
      * Test add method
      *
      * @return void
-     * @uses \App\Controller\TasksController::add()
+     * @uses \App\Controller\RecurrencesController::add()
      */
     public function testAdd(): void
     {
@@ -68,7 +63,7 @@ class TasksControllerTest extends TestCase
      * Test edit method
      *
      * @return void
-     * @uses \App\Controller\TasksController::edit()
+     * @uses \App\Controller\RecurrencesController::edit()
      */
     public function testEdit(): void
     {
@@ -79,7 +74,7 @@ class TasksControllerTest extends TestCase
      * Test delete method
      *
      * @return void
-     * @uses \App\Controller\TasksController::delete()
+     * @uses \App\Controller\RecurrencesController::delete()
      */
     public function testDelete(): void
     {
