@@ -1,4 +1,6 @@
 <?php
+
+
 echo $this->Form->control('title');
 echo $this->Form->control('description', ['type' => 'textarea']);
 
@@ -12,7 +14,11 @@ echo $this->Form->control('due_date');
 echo '</div>';
 echo '</div>';
 
-echo $this->Form->control('employee_id', ['options' => $users]);
+if ($task->employee_id == null) {
+    echo $this->Form->control('employee_id', ['options' => $users]);
+} else {
+    echo  $this->Form->label('Employee Name: '.$userName->name);
+}
 
 echo $this->Form->label('Repeat');
 echo $this->Form->select('recurrence_type', [
@@ -26,8 +32,13 @@ echo $this->Form->select('recurrence_type', [
 
 echo $this->Form->control('no_of_recurrence', ['default' => 0]);
 
-echo $this->Form->control('department_id', ['options' => $departments]);
-echo $this->Form->control('client_id', ['options' => $clients, 'empty' => 'No Client']);
+
+if ($task->client_id == null){
+    echo $this->Form->control('client_id', ['options' => $clients, 'empty' => 'No Client']);
+} else {
+    echo $this->Form->label('Client Name: '.$clientName->name);
+}
+
 
 //id for 'In Progress' is 1
 echo $this->Form->hidden('status_id', ['value' => 1]);

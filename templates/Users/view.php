@@ -8,8 +8,9 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Change Password'), ['action' => 'edit', $user->id],  ['class' => 'button-24', 'role' => 'button']) ?>
+            <?= $this->Html->link(__('Edit My Details'), ['action' => 'edit', $user->id],  ['class' => 'button-24', 'role' => 'button']) ?>
             <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Create Task'), ['controller' => 'tasks', 'action' => 'add', '?' => ['userId' => $user->id]], ['class' => 'side-nav-item']) ?>
 
         </div>
     </aside>
