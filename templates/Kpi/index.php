@@ -43,6 +43,9 @@ use App\Model\Entity\Task;
     array_push($allData, array('name'=>'Total', 'value'=>1, 'dueDate'=> $task->due_date));
   }
 
+
+
+
   $BarAllData = Array(); // get all task ratio
   $BarInProgress = 0;
   $BarCompleted = 0;
@@ -63,6 +66,27 @@ use App\Model\Entity\Task;
       array_push($BarAllData, array('name'=>'InProgress', 'value'=>1));
     }
   }
+
+  $advanceData = Array();//get overdue and total data from db
+  $advance_e = 0;
+  $overdue_e = 0;
+
+  foreach ($query as $task) {
+    if($task->status->name=='Over Due'){
+      $OverDue += 1;
+      array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+    }else if($task->status->name == 'Completed'){
+      if(strtotime($task->complete_date) < strtotime($task->due_date)){
+        $advance_e += 1;
+        array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+      }else if(strtotime($task->complete_date) > strtotime($task->due_date)){
+        $overdue_e += 1;
+        array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+      }
+    }
+   
+  }
+
 
   $tableData = Array(); // table data
   foreach ($query as $task) {
@@ -104,6 +128,12 @@ use App\Model\Entity\Task;
     margin-top:50px;
    
   }
+  #advanceBar{
+    width:100%;
+    height:600px;
+    margin-top:50px;
+   
+  }
   .table-box{
     position: fixed;
     right:0;
@@ -133,6 +163,7 @@ use App\Model\Entity\Task;
   <div id="total"></div>
   <div id="overdue"></div>
   <div id="totalBar"></div>
+  <div id="advanceBar"></div>
   <div class="table-box">
     <table class="table" cellpadding="0">
       <tr>
@@ -163,6 +194,9 @@ use App\Model\Entity\Task;
     }
   })
     var NewformatData = newProcess(formatData)  //according to date delete repeat thing again
+    NewformatData.sort(function(a, b){
+        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+    })
     function newProcess(arr) {
       const cache = [];
       for (const t of arr) {
@@ -248,6 +282,9 @@ use App\Model\Entity\Task;
       }
     })
     var NewformatAllData = newAllProcess(formatAllData)  //according to date delete repeat thing again
+    NewformatAllData.sort(function(a, b){
+        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+    })
     function newAllProcess(arr) {
       const cache = [];
       for (const t of arr) {
@@ -379,6 +416,78 @@ use App\Model\Entity\Task;
     if (BarOption && typeof BarOption === 'object') {
       BarMyChart.setOption(BarOption);
     }
+
+
+    var advanceData = <?php echo json_encode($advanceData) ?>; //get data
+    function barProcess(arr) {
+      const cache = [];
+      for (const t of arr) { 
+          if (cache.find(c => c.name === t.name)) {   //delete repeat things
+            cache.find(c => c.name === t.name).value += 1
+          }else{
+            cache.push(t);
+          }
+      }
+      return cache;
+    }
+    var advanceBarData = barProcess(advanceData) 
+    
+    var advanceBar = document.getElementById("advanceBar");
+    var BarMyChart = echarts.init(advanceBar);
+    var BarOption;
+    BarOption  = {
+      title: {
+        text: 'Tasks Progress',
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        left: 'center'
+      },
+      color:['#b80c3c', 'green'],
+      series: [
+        {
+          type: 'pie',
+          radius: ['40%', '70%'],
+          data: advanceBarData,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2,
+            normal:{
+              label:{
+                position : 'outer',
+                formatter : function (params){
+                    if(params.percent){
+                        return (params.percent - 0) + '%';
+                    }else{
+                        return '';
+                    }
+                },
+                textStyle: {
+                    color: "#333",
+                    fontSize:14,
+                    fontWeight:'bold'
+                }
+              },
+              labelLine:{
+                show:true
+              }                     
+            }
+          },
+        }
+      ]
+    };
+    if (BarOption && typeof BarOption === 'object') {
+      BarMyChart.setOption(BarOption);
+    }
+
+
+
+
+
+
 
     var tableData = <?php echo json_encode($tableData) ?>; //get data 
     var curDate = new Date().getTime()

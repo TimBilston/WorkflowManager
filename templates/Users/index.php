@@ -37,7 +37,7 @@ endforeach;?>
         display:flex;
     }
     .echarts-list{
-        width:400px;
+        width:600px;
         height:400px;
     }
 </style>
@@ -242,12 +242,14 @@ endforeach;?>
 
             </h1>
         </div>
-        <div class="echarts-inner">
+        <div class="echarts-inner"  style="margin-bottom:26px;">
             <div class="echarts-list" id="total"></div>
             <div class="echarts-list" id="overdue"></div>
-            <div class="echarts-list" id="totalBar"></div>
         </div>
-
+        <div class="echarts-inner" style="border-top:1px solid #d9d9d9;padding-top:26px;">
+            <div class="echarts-list" id="totalBar"></div>
+            <div class="echarts-list" id="advanceBar"></div>
+        </div>
     </div>
 
 </div>
@@ -272,9 +274,9 @@ endforeach;?>
     }
 </script>
     <?php
-    $navData = Array();
-    $NotComplted=0;
-    $Completed=0;
+        $navData = Array();
+        $NotComplted=0;
+        $Completed=0;
     ?>
 
     <?php foreach ($users as $user):?>
@@ -348,6 +350,36 @@ endforeach;?>
                     }
                     ?>
             <?php endif; endforeach; ?>
+
+
+     <?php
+        $advanceData = Array();//get overdue and total data from db
+        $advance_e = 0;
+        $overdue_e = 0;
+    ?>
+        <?php foreach ($users as $user):?>
+            <?php
+                if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
+                    ?>
+                    <?php foreach ($user->tasks as $task) {
+                        ?>
+                        <?php // Initialises every task as an invisible card
+                         if($task->status_id==4){
+                            $OverDue += 1;
+                            array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+                          }else if($task->status_id==2){
+                            if(strtotime($task->complete_date) < strtotime($task->due_date)){
+                              $advance_e += 1;
+                              array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+                            }else if(strtotime($task->complete_date) > strtotime($task->due_date)){
+                              $overdue_e += 1;
+                              array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+                            }
+                          }
+                         
+                    }
+                ?>
+    <?php endif; endforeach; ?>
 <script>
     var navData = <?php echo json_encode($navData) ?>; //change php env to js env
     function process(arr) {
@@ -370,6 +402,10 @@ endforeach;?>
         }
     })
     var NewformatData = newProcess(formatData)  //according to date delete repeat thing again
+    console.log(NewformatData)
+    NewformatData.sort(function(a, b){
+        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+    })
     function newProcess(arr) {
         const cache = [];
         for (const t of arr) {
@@ -460,6 +496,9 @@ endforeach;?>
       }
     })
     var NewformatAllData = newAllProcess(formatAllData)  //according to date delete repeat thing again
+    NewformatAllData.sort(function(a, b){
+        return a.dueDate - b.dueDate
+    })
     function newAllProcess(arr) {
       const cache = [];
       for (const t of arr) {
@@ -594,5 +633,73 @@ endforeach;?>
     if (BarOption && typeof BarOption === 'object') {
       BarMyChart.setOption(BarOption);
     }
-</script>
 
+
+    var advanceData = <?php echo json_encode($advanceData) ?>; //get data
+    console.log(advanceData)
+    function barProcess(arr) {
+      const cache = [];
+      for (const t of arr) { 
+          if (cache.find(c => c.name === t.name)) {   //delete repeat things
+            cache.find(c => c.name === t.name).value += 1
+          }else{
+            cache.push(t);
+          }
+      }
+      return cache;
+    }
+    var advanceBarData = barProcess(advanceData) 
+    
+    var advanceBar = document.getElementById("advanceBar");
+    var BarMyChart = echarts.init(advanceBar);
+    var BarOption;
+    BarOption  = {
+      title: {
+        text: 'Tasks Progress',
+        y: 'bottom',
+        x:'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        left: 'center'
+      },
+      color:['green','#b80c3c'],
+      series: [
+        {
+          type: 'pie',
+          radius: ['40%', '70%'],
+          data: advanceBarData,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2,
+            normal:{
+              label:{
+                position : 'inner',
+                formatter : function (params){
+                    if(params.percent){
+                        return (params.percent - 0) + '%';
+                    }else{
+                        return '';
+                    }
+                },
+                textStyle: {
+                    color: "#333",
+                    fontSize:14,
+                    fontWeight:'bold'
+                }
+              },
+              labelLine:{
+                show:true
+              }                     
+            }
+          },
+        }
+      ]
+    };
+    if (BarOption && typeof BarOption === 'object') {
+      BarMyChart.setOption(BarOption);
+    }
+</script>

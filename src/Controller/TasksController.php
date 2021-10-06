@@ -322,6 +322,7 @@ class TasksController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task->status_id = 2;
+            $task->complete_date = date("Y-m-d");
             if ($this->Tasks->save($task)) {
                 $this->Flash->success('The task has been saved.');
 
