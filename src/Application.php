@@ -110,7 +110,17 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new AuthenticationMiddleware($this))
 
             // Add authorization **after** authentication
-            ->add(new AuthorizationMiddleware($this))
+            ->add(new AuthorizationMiddleware($this, [
+                'unauthorizedHandler' => [
+                    'className' => 'Authorization.Redirect',
+                    'url' => '/user/login',
+                    'queryParam' => 'redirectUrl',
+                    'exceptions' => [
+                        \Authorization\Exception\MissingIdentityException::class,
+                        \Authorization\Exception\ForbiddenException::class
+                    ],
+                ],
+            ]))
 
 
             // Parse various types of encoded request bodies so that they are

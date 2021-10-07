@@ -43,6 +43,7 @@ class ErrorController extends AppController
      */
     public function beforeFilter(EventInterface $event)
     {
+
     }
 
     /**
@@ -60,6 +61,8 @@ class ErrorController extends AppController
         if ($this->response->getStatusCode() == 404){
             $this->viewBuilder()->setTemplate('error404');
         }
+
+
     }
 
     /**
