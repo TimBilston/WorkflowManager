@@ -57,5 +57,6 @@ class Task extends Entity
         'status' => true,
         'recurrence' => true,
         'subtasks' => true,
+        'complete_date'=> true,
     ];
 }

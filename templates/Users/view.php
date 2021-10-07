@@ -8,20 +8,16 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Edit My Details'), ['action' => 'edit', $user->id],  ['class' => 'button-24', 'role' => 'button']) ?>
             <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Create Task'), ['controller' => 'tasks', 'action' => 'add', '?' => ['userId' => $user->id]], ['class' => 'side-nav-item']) ?>
+
         </div>
     </aside>
     <div class="column-responsive column-80">
         <div class="users view content">
-            <h3><?= h($user->name) ?></h3>
+            <h3><?= 'Welcome! '.h($user->name) ?></h3>
             <table>
-                <tr>
-                    <th><?= __('Password') ?></th>
-                    <td><?= h($user->password) ?></td>
-                </tr>
                 <tr>
                     <th><?= __('Name') ?></th>
                     <td><?= h($user->name) ?></td>
@@ -54,3 +50,40 @@
         </div>
     </div>
 </div>
+
+<style>
+    .button-24 {
+        background:#b80c3c;
+        border: 1px solid #b80c3c;
+        border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+        box-sizing: border-box;
+        color: white !important;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 16px;
+        min-height: 40px;
+        outline: 0;
+        padding: 12px 14px;
+        text-align: center;
+        text-rendering: geometricprecision;
+        text-transform: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+    }
+
+    .button-24:hover,
+    .button-24:active {
+        background-color: initial;
+        background-position: 0 0;
+        color: black !important;
+    }
+
+    .button-24:active {
+        opacity: .5;
+    }
+</style>

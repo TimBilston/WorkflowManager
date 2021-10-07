@@ -58,6 +58,7 @@ $this->loadHelper('Authentication.Identity');
 
 if ($this->Identity->isLoggedIn()) {
     $currentUserName = $this->Identity->get('name');
+    $currentUserId = $this->Identity->get('id');
 }
 
 $subTasksCount = 0;
@@ -181,6 +182,7 @@ if (!empty($task->subtasks)) {
                 '<p class="desc" title='.$task->description.'>'.$task->description.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
                 '<p class="employee">'.$task->user->name.'</p>'.
+                '<p class="employee_id" style="visibility: hidden; display: none">'.$task->user->id.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
                 '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'.
                 //'<p>'.$this->element('viewTask',['taskID' => $task->id]).'</p >'.      //if u wanna to add inside the card just use like thie line !!!!!!!!!!!!!
@@ -195,6 +197,7 @@ if (!empty($task->subtasks)) {
 
         var html = '<?php echo  $html ?>'
         var currentUser = '<?php echo $currentUserName ?>'
+        var currentUserId = '<?php echo $currentUserId ?>'
         tasksTotal = 0
 
         //Reset card
@@ -236,7 +239,7 @@ if (!empty($task->subtasks)) {
             if ($(element).find('.status').text() != 'Completed'){
                 if($(element).find('.due_time').text() == Monday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#1").append(element)
                             tasksTotal++
 
@@ -259,7 +262,7 @@ if (!empty($task->subtasks)) {
                     }
                 }else if($(element).find('.due_time').text() == Tuesday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#2").append(element)
                             tasksTotal++
                             $NotCompleted += 1;
@@ -282,7 +285,7 @@ if (!empty($task->subtasks)) {
 
                 }else if($(element).find('.due_time').text() == Wednesday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#3").append(element)
                             tasksTotal++
 
@@ -306,7 +309,7 @@ if (!empty($task->subtasks)) {
 
                 }else if($(element).find('.due_time').text() == Thursday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#4").append(element)
                             tasksTotal++
 
@@ -331,7 +334,7 @@ if (!empty($task->subtasks)) {
 
                 }else if($(element).find('.due_time').text() == Friday){
                     if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee').text() == currentUser){
+                        if ($(element).find('.employee_id').text() == currentUserId){
                             $("#5").append(element)
                             tasksTotal++
 
@@ -798,6 +801,10 @@ if (!empty($task->subtasks)) {
         <li>
         <i class="fa fa-users"></i>
             <?= $this->Html->link(__('View Clients'), ['controller' => 'Clients'], ['class' => 'text']) ?>
+        </li>
+        <li>
+            <i class="fa fa-user-circle"></i>
+            <?= $this->Html->link(__('My Account'), ['controller' => 'Users',  'action' => 'view',  $currentUserId], ['class' => 'text']) ?>
         </li>
         <li>
         <i class="fa fa-sign-out"></i>

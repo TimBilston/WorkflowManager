@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Client;
 use App\Model\Entity\Task;
 use App\Model\Table\SubtasksTable;
 use phpDocumentor\Reflection\Types\Integer;
@@ -70,11 +71,27 @@ class TasksController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($clientId = null)
     {
         $task = $this->Tasks->newEmptyEntity();
+
+        //Client Name from clientId
+        if ($clientId != null){
+            $task->client_id = $clientId;
+            $clientName = $this->getTableLocator()->get('Clients')->get($clientId);
+            $this->set(compact('clientName'));
+        }
+        //Employee name from params
+        if ($this->request->getQueryParams('userId') != null){
+            $task->employee_id = $this->request->getQueryParams('userId');
+            $userName = $this->getTableLocator()->get('Users')->get($task->employee_id);
+            $this->set(compact('userName'));
+        }
+
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
+
+            $task->department_id = $this->getTableLocator()->get('Users')->get($task->employee_id)->department_id;
 
             if (!$task->due_date == null){
                 $task->due_date = $this->offsetWeekend($task->due_date);
@@ -267,7 +284,7 @@ class TasksController extends AppController
                 //subtasks---end
                 $this->Flash->success(__('The task has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The task could not be saved. Please, try again.'));
         }
@@ -296,7 +313,7 @@ class TasksController extends AppController
             $this->Flash->error(__('The task could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
 
     public function completeTask($id = null){
@@ -305,6 +322,7 @@ class TasksController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task->status_id = 2;
+            $task->complete_date = date("Y-m-d");
             if ($this->Tasks->save($task)) {
                 $this->Flash->success('The task has been saved.');
 
