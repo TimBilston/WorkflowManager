@@ -20,6 +20,8 @@ use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\Exception\ForbiddenException;
+use Authorization\Middleware\UnauthorizedHandler\RedirectHandler;
 use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -110,17 +112,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new AuthenticationMiddleware($this))
 
             // Add authorization **after** authentication
-            ->add(new AuthorizationMiddleware($this, [
-                'unauthorizedHandler' => [
-                    'className' => 'Authorization.Redirect',
-                    'url' => '/user/login',
-                    'queryParam' => 'redirectUrl',
-                    'exceptions' => [
-                        \Authorization\Exception\MissingIdentityException::class,
-                        \Authorization\Exception\ForbiddenException::class
-                    ],
-                ],
-            ]))
+            ->add(new AuthorizationMiddleware($this))
 
 
             // Parse various types of encoded request bodies so that they are
