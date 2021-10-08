@@ -54,16 +54,16 @@ use App\Model\Entity\Task;
   foreach ($query as $task) {
     if($task->status->name=='Over Due'){
       $BarOverDue += 1;
-      array_push($BarAllData, array('name'=>'OverDue', 'value'=>1));
+      array_push($BarAllData, array('name'=>'OverDue', 'value'=>1, 'itemStyle' => Array('color'=>'#ff7070')));
     }else if($task->status->name=='Completed'){
       $BarCompleted += 1;
-      array_push($BarAllData, array('name'=>'Completed', 'value'=>1));
+      array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'itemStyle' => Array('color'=>'#5470c6')));  
     }else if($task->status->name=='Attention Needed'){
       $BarAttentionNeeded += 1;
-      array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1));
+      array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'itemStyle' => Array('color'=>'#91cc75'))); 
     }else if($task->status->name=='In Progress'){
       $BarInProgress += 1;
-      array_push($BarAllData, array('name'=>'InProgress', 'value'=>1));
+      array_push($BarAllData, array('name'=>'InProgress', 'value'=>1, 'itemStyle' => Array('color'=>'#fac858')));
     }
   }
 
@@ -74,14 +74,14 @@ use App\Model\Entity\Task;
   foreach ($query as $task) {
     if($task->status->name=='Over Due'){
       $OverDue += 1;
-      array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+      array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
     }else if($task->status->name == 'Completed'){
       if(strtotime($task->complete_date) < strtotime($task->due_date)){
         $advance_e += 1;
-        array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+        array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
       }else if(strtotime($task->complete_date) > strtotime($task->due_date)){
         $overdue_e += 1;
-        array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+        array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
       }
     }
    
@@ -126,7 +126,7 @@ use App\Model\Entity\Task;
     width:100%;
     height:600px;
     margin-top:50px;
-   
+    border-bottom:1px solid #d9d9d9;
   }
   #advanceBar{
     width:100%;
@@ -365,8 +365,7 @@ use App\Model\Entity\Task;
       }
       return cache;
     }
-    var formatBarData = barProcess(BarAllData) 
-    
+    var formatBarData = barProcess(BarAllData)
     var totalBar = document.getElementById("totalBar");
     var BarMyChart = echarts.init(totalBar);
     var BarOption;
@@ -378,7 +377,8 @@ use App\Model\Entity\Task;
         trigger: 'item'
       },
       legend: {
-        left: 'center'
+        left: 'center',
+        data: ['InProgress', 'Completed', 'OverDue', 'AttentionNeeded']
       },
       series: [
         {
@@ -431,7 +431,7 @@ use App\Model\Entity\Task;
       return cache;
     }
     var advanceBarData = barProcess(advanceData) 
-    
+    console.log(advanceBarData)
     var advanceBar = document.getElementById("advanceBar");
     var BarMyChart = echarts.init(advanceBar);
     var BarOption;
@@ -443,9 +443,9 @@ use App\Model\Entity\Task;
         trigger: 'item'
       },
       legend: {
-        left: 'center'
+        left: 'center',
+        data: ['Later Delivery', 'Early delivery']
       },
-      color:['#b80c3c', 'green'],
       series: [
         {
           type: 'pie',
@@ -482,12 +482,6 @@ use App\Model\Entity\Task;
     if (BarOption && typeof BarOption === 'object') {
       BarMyChart.setOption(BarOption);
     }
-
-
-
-
-
-
 
     var tableData = <?php echo json_encode($tableData) ?>; //get data 
     var curDate = new Date().getTime()

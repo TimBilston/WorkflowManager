@@ -31,14 +31,15 @@ endforeach;?>
         box-shadow: 0 7px 14px 0 rgb(60 66 87 / 10%), 0 3px 6px 0 rgb(0 0 0 / 7%);
     }
     .echarts-box h1{
-        border-bottom:1px solid #d9d9d9;
     }
     .echarts-box .echarts-inner{
         display:flex;
     }
     .echarts-list{
-        width:600px;
+        width:100%;
         height:400px;
+        margin-top:40px;
+        border-bottom:1px solid #d9d9d9;
     }
 </style>
 <div class="users index content" onload="document.Employees.submit()">
@@ -244,9 +245,11 @@ endforeach;?>
         </div>
         <div class="echarts-inner"  style="margin-bottom:26px;">
             <div class="echarts-list" id="total"></div>
+        </div>
+        <div class="echarts-inner"  style="margin-bottom:26px;">
             <div class="echarts-list" id="overdue"></div>
         </div>
-        <div class="echarts-inner" style="border-top:1px solid #d9d9d9;padding-top:26px;">
+        <div class="echarts-inner" style="padding-top:26px;">
             <div class="echarts-list" id="totalBar"></div>
             <div class="echarts-list" id="advanceBar"></div>
         </div>
@@ -336,16 +339,16 @@ endforeach;?>
                         <?php // Initialises every task as an invisible card
                         if($task->status_id==3){
                             $BarOverDue += 1;
-                            array_push($BarAllData, array('name'=>'OverDue', 'value'=>1));
+                            array_push($BarAllData, array('name'=>'OverDue', 'value'=>1, 'itemStyle' => Array('color'=>'#ff7070')));
                         }else if($task->status_id==2){
                             $BarCompleted += 1;
-                            array_push($BarAllData, array('name'=>'Completed', 'value'=>1));
+                            array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'itemStyle' => Array('color'=>'#5470c6'))); 
                         }else if($task->status_id==4){
                             $BarAttentionNeeded += 1;
-                            array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1));
+                            array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'itemStyle' => Array('color'=>'#91cc75'))); 
                         }else if($task->status_id==1){
                             $BarInProgress += 1;
-                            array_push($BarAllData, array('name'=>'InProgress', 'value'=>1));
+                            array_push($BarAllData, array('name'=>'InProgress', 'value'=>1, 'itemStyle' => Array('color'=>'#fac858')));
                         }
                     }
                     ?>
@@ -366,14 +369,14 @@ endforeach;?>
                         <?php // Initialises every task as an invisible card
                          if($task->status_id==4){
                             $OverDue += 1;
-                            array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+                            array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                           }else if($task->status_id==2){
                             if(strtotime($task->complete_date) < strtotime($task->due_date)){
                               $advance_e += 1;
-                              array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+                              array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
                             }else if(strtotime($task->complete_date) > strtotime($task->due_date)){
                               $overdue_e += 1;
-                              array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date));
+                              array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                             }
                           }
                          
@@ -402,7 +405,6 @@ endforeach;?>
         }
     })
     var NewformatData = newProcess(formatData)  //according to date delete repeat thing again
-    console.log(NewformatData)
     NewformatData.sort(function(a, b){
         return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
     })
@@ -428,8 +430,8 @@ endforeach;?>
     option = {
         title: {
             text: 'total tasks',
-            y: 'bottom',
-            x:'center'
+            y: 'top',
+            x:'left'
         },
         tooltip: {
             trigger: 'axis'
@@ -520,8 +522,8 @@ endforeach;?>
     overDueOption = {
       title: {
           text: 'overdue tasks',
-          y: 'bottom',
-            x:'center'
+          y: 'top',
+            x:'left'
       },
       tooltip: {
           trigger: 'axis'
