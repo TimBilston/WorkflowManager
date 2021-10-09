@@ -567,8 +567,8 @@ if (!empty($task->subtasks)) {
         border-bottom: 1px solid rgb(184 12 60 / 16%);
         text-align: left;
         list-style: none;
-        height: 60px;
-        line-height:60px;
+        height: 80px;
+        line-height:80px;
         background: #FFFFFF;
         margin-bottom: 0rem;
         padding-left:20px;
