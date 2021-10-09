@@ -88,6 +88,7 @@ class TasksController extends AppController
             $this->set(compact('userName'));
         }
 
+
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
 
@@ -97,10 +98,10 @@ class TasksController extends AppController
                 $task->due_date = $this->offsetWeekend($task->due_date);
             }
 
+
             if ($task->recurrence_type != 'Never'){
                 $recurrenceTable = $this->getTableLocator()->get('Recurrences');
                 $recurrence = $recurrenceTable->newEmptyEntity();
-
                 $recurrence->recurrence = $task->recurrence_type;
                 $recurrence->no_of_recurrence = $task->no_of_recurrence;
                 if ($recurrenceTable->save($recurrence)) {
@@ -131,12 +132,12 @@ class TasksController extends AppController
                     $this->Flash->error(__('The subtask could contain figures. Please, try again.'));
                 }
                 //controllers for subtasks-----end
-                $this->Flash->success(__('The task has been saved.'));
 
                 //************************RECURRENCE FUNCTION***************************
                 $this->createRecurringTasks($task);
                 //************************RECURRENCE FUNCTION***************************
 
+                $this->Flash->success(__('The task has been saved.'));
 
                 return $this->redirect(['controller' => 'pages', 'action' => 'display']);
             }
@@ -157,6 +158,8 @@ class TasksController extends AppController
         for ($i = 0; $i < $task->no_of_recurrence; $i++) {
             $newTask = $this->Tasks->newEmptyEntity();
             $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
+            $newTask->department_id = $this->getTableLocator()->get('Users')->get($newTask->employee_id)->department_id;
+
             $newTask->recurrence_id = $task->recurrence_id;
             $newTask->id = $newIds + 1;
             $newIds += 1;

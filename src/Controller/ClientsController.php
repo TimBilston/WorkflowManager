@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
+
 /**
  * Clients Controller
  *
@@ -70,8 +72,8 @@ class ClientsController extends AppController
     public function add()
     {
         $this->Authorization->skipAuthorization();
-
         $client = $this->Clients->newEmptyEntity();
+
         if ($this->request->is('post')) {
             $client = $this->Clients->patchEntity($client, $this->request->getData());
             if ($this->Clients->save($client)) {
@@ -98,6 +100,7 @@ class ClientsController extends AppController
     public function edit($id = null)
     {
         $client = $this->Clients->newEmptyEntity();
+
         $this->Authorization->authorize($client);
 
 
