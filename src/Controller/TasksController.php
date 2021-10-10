@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\Client;
 use App\Model\Entity\Task;
 use App\Model\Table\SubtasksTable;
 use phpDocumentor\Reflection\Types\Integer;
@@ -102,7 +101,9 @@ class TasksController extends AppController
             $recurrenceTable = $this->getTableLocator()->get('Recurrences');
             $recurrence = $recurrenceTable->newEmptyEntity();
             $recurrence->recurrence = $task->recurrence_type;
-            $recurrence->no_of_recurrence = $task->no_of_recurrence;
+            if ($task->no_of_recurrence != null){
+                $recurrence->no_of_recurrence = $task->no_of_recurrence;
+            }
             if ($recurrenceTable->save($recurrence)) {
                 // The foreign key value was set automatically.
                 //echo $task->id;

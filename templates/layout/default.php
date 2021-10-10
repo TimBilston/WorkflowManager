@@ -30,7 +30,7 @@ $cakeDescription = '';
     <?= $this->Html->meta('icon') ?>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
-
+    <?= $this->Html->css(['tasks' , 'home', 'modal', 'buttons', 'bootstrap'])?>
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', 'custom']) ?>
 
     <?= $this->fetch('meta') ?>
@@ -51,7 +51,7 @@ $cakeDescription = '';
         </div>
     </main>
     <?php include('navigation.php') ?>
-    
+
 </body>
 </html>
 

@@ -5,8 +5,14 @@
  */
 use Cake\Routing\Router;
 $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');
-echo $this->Html->css(['tasks' , 'home', 'buttons', 'bootstrap' , 'Modal']);
-echo $this->Html->script(['jquery-1.4.1.js', 'bootstrap.min' ,'submit.js']);
+echo $this->Html->css(['tasks' , 'home', 'modal', 'buttons', 'bootstrap']);
+echo $this->Html->script(['jquery-1.4.1','bootstrap.min']);
+//set date range for +/- 3months current date to avoid lag. Tasks are formatted mm/dd/yy
+$d = date("m/d/y");
+$dPlus = strtotime("+4 months"); //(php is smart can interpret "3 months"
+$dMinus = strtotime("-4 months"); //(php is smart can interpret "3 months"
+$maxD = strtotime(date("m/d/y",$dPlus));//3months forwards
+$minD = strtotime(date("m/d/y",$dMinus));//3months backwards
 ?>
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,11 +20,12 @@ echo $this->Html->script(['jquery-1.4.1.js', 'bootstrap.min' ,'submit.js']);
 
 
 
-<?php foreach ($users as $user):
+<?php foreach ($users as $user): // THIS function appends the modals to the tasks. removed from the task creation because of bugs. (might be fixed now)
     foreach ($user->tasks as $task):
-        ?>
-        <div class = "modals" id="<?=$task->id?>" style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
-    <?php endforeach;
+      if ((strtotime($task->due_date) > $minD && strtotime($task->due_date) < $maxD)):  //Only check for +/- 2months. To avoid excessive lag whilst dealing with most circumstances ?>
+          <div class = "modals" id="<?=$task->id?>" style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
+      <?php endif;
+     endforeach;
 endforeach;?>
 
 <?php
@@ -169,13 +176,7 @@ endforeach;?>
         var Friday = "";
 
         var currentMonday = new Date();
-        window.onload = function() {
-            $('Employees').submit();
-            //gets the current Monday date and converts into a readable format
-            <!-- Outputs the Titles -->
-            currentMonday = getMonday(new Date());
-            changeDates(currentMonday);
-        }
+
 
         function getMonday(d) {
             d = new Date(d);
@@ -189,7 +190,6 @@ endforeach;?>
             result.setDate(result.getDate() + days);
             return result.getDate().toString() + ' ' + months[result.getMonth()] + ' ' + result.getFullYear().toString();
         }
-
         function getDateString(date, days) {
             var result = new Date(date);
             result.setDate(result.getDate() + days);
@@ -204,7 +204,7 @@ endforeach;?>
             elements = Array.prototype.slice.call(elements, 0);
             elements.sort(function(a, b){return a.id - b.id});
             let names = document.getElementsByClassName('names');//get array of names that exist.
-
+            console.log(elements.length);
             //const length = elements.length;
             let MD = getDateString(thisMonday, 0);
             let TuD = getDateString(thisMonday, 1);
@@ -214,7 +214,6 @@ endforeach;?>
             for(let i = 0; i < elements.length; i++){
                 //set every element to invisible to start
                 elements[i].style.display = "none";
-                console.log("hidden");
             }
             for(let j = 0; j < names.length; j++){
                 for (let i = 0; i < elements.length; i++) {
@@ -246,7 +245,6 @@ endforeach;?>
                                 break;
                             default:
                                 elements[i].style.display = "none";
-                                console.log("hide");
                         }
                     }
                 }
@@ -680,14 +678,17 @@ endforeach;?>
                 //Gets a specific employee ONLY, OR gets all employees if it set to 'blank' or not set
                 if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
                     foreach ($user->tasks as $task) :?>
-                        <!--Initialises every task as an invisible card?-->
-                        <li class="task-card" style = "display : none" id =<?=$task->id?>>
-                            <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
-                            <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
-                            <p class ="person"><?=$user->id?></p>
-                            <p class="desc" ><?=substr($task->description,0,20)?>...</p>
-                        </li>
-                            <?php endforeach;?>
+                        <?php
+                        if ((strtotime($task->due_date) > $minD && strtotime($task->due_date) < $maxD)): //Only check for +/- 2months. To avoid excessive lag whilst dealing with most circumstances ?>
+                            <!--Initialises every task as an invisible card?-->
+                            <li class="task-card" style = "display : none" id =<?=$task->id?>>
+                                <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
+                                <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
+                                <p class ="person"><?=$user->id?></p>
+                                <p class="desc" ><?=substr($task->description,0,20)?>...</p>
+                            </li>
+                        <?php endif ?>
+                    <?php endforeach;?>
                     <tr>
                         <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
                         <td id = "M_TD <?=$user->id?>"></td>
@@ -733,6 +734,7 @@ endforeach;?>
 <script>
     window.onload = function(){
         //gets the current Monday date and converts into a readable format
+        $('Employees').submit();
         currentMonday = getMonday(new Date());
         
         changeDates(currentMonday);
@@ -745,18 +747,10 @@ endforeach;?>
                 if (tasks[i].id === modals[j].id){
                     tasks[i].append(modals[j]);
                     modals[j].style.display = "block";
-                    console.log("appended");
                 }
             }
         }
+        changeDates(currentMonday);
     }
 </script>
    
-<script>
-    
-
-    
-
-
-    
-</script>

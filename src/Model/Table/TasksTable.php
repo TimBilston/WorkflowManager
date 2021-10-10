@@ -130,10 +130,11 @@ class TasksTable extends Table
         $validator
             ->integer('no_of_recurrence')
             ->requirePresence('no_of_recurrence', 'create')
+            ->nonNegativeInteger('no_of_recurrence', 'Must be positive number')
             ->notEmptyString('no_of_recurrence')
             ->add('no_of_recurrence', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^\d+$/'],
+                    'rule' => ['custom', '/^[0-9]\d*$/'],
                     'message' => 'Can only have positive whole integers',
                 ]
             ]);
