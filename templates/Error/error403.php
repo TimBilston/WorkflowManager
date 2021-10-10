@@ -9,7 +9,7 @@ $this->disableAutoLayout();
     <div>
         <h1 style="display: inline-block;">403</h1>
 
-        <img src="<?php echo $this->Url->image('lock.png')?>" style="width: 150px">
+        <img src="<?php echo $this->Url->image('lock.png')?>" style="width: 15%">
 
     </div>
 

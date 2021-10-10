@@ -35,7 +35,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
             <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>
 
-            <?= $this->element('addTask' , ['clientId' => $client->id])?>
+            <?= $this->element('addTask' , ['clientID' => $client->id])?>
 
         </div>
         </div>
