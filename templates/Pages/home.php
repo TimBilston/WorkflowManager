@@ -26,7 +26,7 @@ $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');
 use App\Model\Table\SubtasksTable;
 echo $this->Html->css(['tasks' , 'home', 'modal', 'buttons', 'bootstrap', 'kanban', 'milligram-modified', 'normalize.min','cake', 'custom']);
 echo $this->Html->script(['jquery-1.4.1','bootstrap.min']);
-
+$this->assign('title', 'Dashboard');
 
 $checkConnection = function (string $name) {
     $error = null;
