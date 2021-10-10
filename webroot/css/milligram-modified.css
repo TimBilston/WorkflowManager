@@ -318,9 +318,9 @@ select {
     border-radius: .4rem;
     box-shadow: none;
     box-sizing: inherit;
-    padding: .4rem 1.0rem;
-    width: 100%;
-    font-size: 0.8rem;
+    height: 3.8rem;
+    padding: .6rem 1.0rem;
+    width: auto;
 }
 
 input[type='email']:focus,

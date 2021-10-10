@@ -185,7 +185,6 @@ if (!empty($task->subtasks)) {
                 '<p class="due_time" style="visibility: hidden; display: none">'.$task->due_date.'</p>'.
                 '<p class="desc" title='.$task->description.'>'.$task->description.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
-                '<p class="employee">'.$task->user->name.'</p>'.
                 '<p class="employee_id" style="visibility: hidden; display: none">'.$task->user->id.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
                 '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'

@@ -13,7 +13,6 @@ use Cake\ORM\TableRegistry;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Datasource\FactoryLocator;
 
-
 echo $this->Html->css(['bootstrap' , 'Modal']);
 echo $this->Html->script(['jquery-1.4.1.js', 'bootstrap.min']);
 $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');

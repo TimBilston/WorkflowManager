@@ -27,7 +27,6 @@
             <fieldset>
                 <legend><?= __('Add Task') ?></legend>
                 <?= $this->element('addTaskForm') ?>
-
                 <?php
                     echo '<div class="input text">';
                     echo '<label>Sub Task</label>';
