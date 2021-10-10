@@ -111,7 +111,7 @@ endforeach;?>
     $advanceData = Array();//get overdue and total data from db
     $advance_e = 0;
     $overdue_e = 0;
-?>
+    ?>
     <?php foreach ($users as $user):?>
         <?php
             if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
@@ -252,7 +252,7 @@ endforeach;?>
         }
 
         function changeDates(currentMonday) {
-            console.log(currentMonday)
+            
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
             document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
@@ -268,7 +268,7 @@ endforeach;?>
             document.getElementById('Wed').innerHTML = Wednesday;
             document.getElementById('Thu').innerHTML = Thursday;
             document.getElementById('Fri').innerHTML = Friday;
-            console.log(new Date(currentMonday).getFullYear(), new Date(currentMonday).getMonth()+1)
+            
             doSomething();
             var navData = <?php echo json_encode($navData) ?>; //change php env to js env
             var allData = <?php echo json_encode($allData) ?>; //get data
@@ -277,6 +277,7 @@ endforeach;?>
             var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
             var advanceData = <?php echo json_encode($advanceData) ?>; //get data
             navData = navData.filter(item=>{
+                
                 if(item.dueDate.split("-")){
                     if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
                         return true
@@ -304,7 +305,7 @@ endforeach;?>
                     }
                 }
             })
-            console.log(advanceData)
+            
             SetNewformatAllData(allData)
             SetNewformatData(navData)
             SetFormatBarData(BarAllData)
