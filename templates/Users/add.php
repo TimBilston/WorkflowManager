@@ -5,6 +5,10 @@
  * @var \Cake\Collection\CollectionInterface|string[] $departments
  */
 ?>
+
+<!--<script src="/js/jquery.min.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -26,9 +30,33 @@
                     echo $this->Form->control('department_id', ['options' => $departments]);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Submit'), ['id' => 'btn_submit']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
 </div>
+
+<script>
+$(function () {
+    $('#btn_submit').click(function () {
+        var name = $('input[name="name"]').val();
+        var nameReg = /^[a-zA-Z]{1,20}$/;
+        if (!nameReg.test(name)) {
+            alert('name is invalid');
+            return false;
+        }
+        var last_name = $('input[name="last_name"]').val();
+        if (!nameReg.test(last_name)) {
+            alert('last name is invalid');
+            return false;
+        }
+    });
+});
+
+
+
+
+</script>
+
+
 
