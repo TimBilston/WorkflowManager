@@ -19,14 +19,15 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
 
-
-<?php foreach ($users as $user): // THIS function appends the modals to the tasks. removed from the task creation because of bugs. (might be fixed now)
-    foreach ($user->tasks as $task):
-      if ((strtotime($task->due_date) > $minD && strtotime($task->due_date) < $maxD)):  //Only check for +/- 2months. To avoid excessive lag whilst dealing with most circumstances ?>
-          <div class = "modals" id="<?=$task->id?>" style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
-      <?php endif;
-     endforeach;
-endforeach;?>
+<div style="display:none">
+    <?php foreach ($users as $user): // THIS function appends the modals to the tasks. removed from the task creation because of bugs. (might be fixed now)
+        foreach ($user->tasks as $task):
+          if ((strtotime($task->due_date) > $minD && strtotime($task->due_date) < $maxD)):  //Only check for +/- 2months. To avoid excessive lag whilst dealing with most circumstances ?>
+              <div class = "modals" id="<?=$task->id?>" style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
+          <?php endif;
+         endforeach;
+    endforeach;?>
+</div>
 
 <?php
     $navData = Array();
@@ -94,10 +95,10 @@ endforeach;?>
                         array_push($BarAllData, array('name'=>'OverDue', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                     }else if($task->status_id==2){
                         $BarCompleted += 1;
-                        array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#5470c6'))); 
+                        array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#5470c6')));
                     }else if($task->status_id==4){
                         $BarAttentionNeeded += 1;
-                        array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75'))); 
+                        array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
                     }else if($task->status_id==1){
                         $BarInProgress += 1;
                         array_push($BarAllData, array('name'=>'InProgress', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#fac858')));
@@ -131,7 +132,7 @@ endforeach;?>
                                 array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                             }
                         }
-                        
+
                 }
             ?>
 <?php endif; endforeach; ?>
@@ -252,7 +253,7 @@ endforeach;?>
         }
 
         function changeDates(currentMonday) {
-            
+
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
             document.getElementById('Month_Text').innerText = months[currentMonday.getMonth()] + " " + currentMonday.getFullYear().toString();
@@ -268,7 +269,7 @@ endforeach;?>
             document.getElementById('Wed').innerHTML = Wednesday;
             document.getElementById('Thu').innerHTML = Thursday;
             document.getElementById('Fri').innerHTML = Friday;
-            
+
             doSomething();
             var navData = <?php echo json_encode($navData) ?>; //change php env to js env
             var allData = <?php echo json_encode($allData) ?>; //get data
@@ -277,7 +278,7 @@ endforeach;?>
             var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
             var advanceData = <?php echo json_encode($advanceData) ?>; //get data
             navData = navData.filter(item=>{
-                
+
                 if(item.dueDate.split("-")){
                     if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
                         return true
@@ -305,7 +306,7 @@ endforeach;?>
                     }
                 }
             })
-            
+
             SetNewformatAllData(allData)
             SetNewformatData(navData)
             SetFormatBarData(BarAllData)
@@ -319,7 +320,7 @@ endforeach;?>
             currentMonday.setDate(currentMonday.getDate() + 7);
             changeDates(currentMonday);
         }
-       
+
         function SetNewformatData(navData){
             function process(arr) {
                 const cache = [];
@@ -414,7 +415,7 @@ endforeach;?>
                 myChart.setOption(option);
             }
         }
-        
+
         function SetNewformatAllData(allData){
             function allProcess(arr) {
                 const cache = [];
@@ -577,11 +578,11 @@ endforeach;?>
             }
         }
 
-        
+
         function SetAdvanceBarData(advanceData){
             function barProcess(arr) {
                 const cache = [];
-                for (const t of arr) { 
+                for (const t of arr) {
                     if (cache.find(c => c.name === t.name)) {   //delete repeat things
                         cache.find(c => c.name === t.name).value += 1
                     }else{
@@ -590,8 +591,8 @@ endforeach;?>
                 }
                 return cache;
             }
-            var advanceBarData = barProcess(advanceData) 
-            
+            var advanceBarData = barProcess(advanceData)
+
             var advanceBar = document.getElementById("advanceBar");
             var BarMyChart = echarts.init(advanceBar);
             var BarOption;
@@ -635,7 +636,7 @@ endforeach;?>
                         },
                         labelLine:{
                             show:true
-                        }                     
+                        }
                         }
                     },
                     }
@@ -737,7 +738,7 @@ endforeach;?>
         //gets the current Monday date and converts into a readable format
         $('Employees').submit();
         currentMonday = getMonday(new Date());
-        
+
         changeDates(currentMonday);
         doSomething();
         //appends the modals to the taskcards
@@ -754,4 +755,4 @@ endforeach;?>
         changeDates(currentMonday);
     }
 </script>
-   
+
