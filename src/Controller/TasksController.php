@@ -101,7 +101,9 @@ class TasksController extends AppController
             $recurrenceTable = $this->getTableLocator()->get('Recurrences');
             $recurrence = $recurrenceTable->newEmptyEntity();
             $recurrence->recurrence = $task->recurrence_type;
-            $recurrence->no_of_recurrence = $task->no_of_recurrence;
+            if ($task->no_of_recurrence != null){
+                $recurrence->no_of_recurrence = $task->no_of_recurrence;
+            }
             if ($recurrenceTable->save($recurrence)) {
                 // The foreign key value was set automatically.
                 //echo $task->id;
