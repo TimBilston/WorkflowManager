@@ -567,7 +567,7 @@ if (!empty($task->subtasks)) {
         border-bottom: 1px solid rgb(184 12 60 / 16%);
         text-align: left;
         list-style: none;
-        height: 80px;
+        height: 70px;
         line-height:80px;
         background: #FFFFFF;
         margin-bottom: 0rem;
@@ -598,6 +598,7 @@ if (!empty($task->subtasks)) {
         height:80px!important;
         padding:10px;
         box-sizing: border-box;
+        margin-bottom: 30px;
     }
     .logo img{
         width:100%;
