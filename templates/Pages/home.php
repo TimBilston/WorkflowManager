@@ -381,8 +381,7 @@ if (!empty($task->subtasks)) {
         })
         console.log(currentData)
         $("#tasksTotal").text(tasksTotal)
-        //loop through every task and append
-        $("card52").append(<?php $this->element('viewTask',['taskID' => $task->id])?>) // if u wanna add modal just like this
+
         currentData.forEach(item=>{
             if(item.value==0){
                 item.itemStyle.color = '#666'
