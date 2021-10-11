@@ -78,7 +78,6 @@ if (!empty($task->subtasks)) {
 
 <!DOCTYPE html>
 <html>
-<title> Dashboard </title>
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -88,6 +87,7 @@ if (!empty($task->subtasks)) {
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
 </head>
+
 <label class="switch" style="display:none">
     <input type="checkbox" id="toggle" onclick="toggleCheck()" value=true>
     <span class="slider round"></span>
@@ -677,6 +677,7 @@ endforeach;?>
 
 
     <div style="display: flex; flex-direction: row;padding-left:220px;">
+        <h1 style="position: absolute;right: 92.8rem;text-decoration: underline;">My Tasks</h1>
         <button onclick = "nextWeek()" style="margin: auto" class="dashboard"> < </button>
         <h1 id="Month_Text"> August 2021 </h1>
         <button onclick = "prevWeek()" style="margin: auto" class="dashboard"> > </button>
