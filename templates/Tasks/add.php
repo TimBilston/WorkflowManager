@@ -9,8 +9,7 @@
  * @var \Cake\Collection\CollectionInterface|string[] $recurrences
  */
 ?>
-
-<!--<script src="/jquery.min.js"></script>-->
+<!--<script src="/js/jquery.min.js"></script>-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <div class="row">
@@ -28,6 +27,7 @@
             <fieldset>
                 <legend><?= __('Add Task') ?></legend>
                 <?= $this->element('addTaskForm') ?>
+
                 <?php
                     echo '<div class="input text">';
                     echo '<label>Sub Task</label>';
@@ -48,6 +48,13 @@
     .sub_task_content {
         margin-left: 10px;
     }
+    .star {
+        color: #606c76;
+        margin-bottom: 10px;
+        display: inline-block;
+        text-indent: 10px;
+        font-size: 13px;
+    }
 
 </style>
 
@@ -57,5 +64,9 @@
             var title = $('input[name="title"]').val();
             window.open('/subtasks/add?title=' + title, 'sub_task_add');
         });
+
+
+        $('input[name="title"]').after('<span class="star">*cannot be empty or have any symbols </span>');
+        $('textarea[name="description"]').after('<span class="star">*cannot be empty or have any symbols </span>');
     });
 </script>

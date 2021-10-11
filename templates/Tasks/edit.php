@@ -59,7 +59,7 @@
                     echo '<label>Sub Task</label>';
                     echo '<div id="z_js_wrap_sub_task_item">';
 
-                    foreach ($subTasks as $k => $subTask) {
+                foreach ($subtasks as $k => $subTask) {
                         $isCompleteChecked = $subTask->is_complete ? ' checked' : '';
                         $isCompleteAdminChecked = $subTask->is_complete_admin ? ' checked' : '';
                         echo '<div class="z_js_sub_task_item">';
@@ -74,7 +74,6 @@
                     echo '</div>';
                     echo '</div>';
                     echo $this->Form->button(__('Edit SubTask'), ['type' => 'button', 'id' => 'add_sub_task']);
-
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
