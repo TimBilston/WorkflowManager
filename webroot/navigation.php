@@ -20,7 +20,7 @@
     </li>
     <li>
     <i class="fa fa-user-circle"></i>
-        <?= $this->Html->link(__('Manage Employees'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'text']) ?>
+        <?= $this->Html->link(__('View Employees'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'text']) ?>
     </li>
     <li>
             <i class="fa fa-bar-chart"></i>

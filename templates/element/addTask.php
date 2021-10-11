@@ -15,7 +15,10 @@ use Cake\ORM\TableRegistry;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Datasource\FactoryLocator;
 echo $this->Html->css(['bootstrap' , 'Modal']);
-
+$clientTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Clients');
+$client = $clientTable->find()->where(['Clients.id' => $clientID]);
+$client = $client->all();
+$client = $client->first();
 ?>
 <html lang="en">
 <meta charset="utf-8">
@@ -42,10 +45,9 @@ echo $this->Html->css(['bootstrap' , 'Modal']);
                         $task = $tasksTable->newEmptyEntity();
                         ?>
                         <?= $this->Form->end() ?>
-                        <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'add']]); ?>
+                        <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'add', $client->id]]); ?>
                         <fieldset>
-                            <?=
-                            $this->element('addTaskForm', ['clientID' => 'clientID']) ?>
+                            <?=$this->element('addTaskForm', ['clientID' => 'clientID']) ?>
                         </fieldset>
                         <?= $this->Form->submit(__('Submit')); ?>
                         <?= $this->Form->end() ?>
