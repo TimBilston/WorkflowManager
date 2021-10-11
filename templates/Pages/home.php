@@ -423,7 +423,7 @@ endforeach;?>
     }
     .w3-container {
         padding: 0.01em 16px;
-        width:100%;
+        width:1300px;
         z-index: 98;
     }
     .w3-padding-64 {
@@ -667,7 +667,7 @@ endforeach;?>
 
         };
     ?>
-    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; padding-left: 220px; background: #ffebeb; ">
+    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; background: #ffebeb; ">
         <b style="color:#000000"><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
     </footer>
 </html>
