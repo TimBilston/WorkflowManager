@@ -1,9 +1,5 @@
-<?php
-    $this->loadHelper('Authentication.Identity');
-    if ($this->Identity->isLoggedIn()) {
-    $currentUserId = $this->Identity->get('id');
-}
-?>
+
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
@@ -20,7 +16,7 @@
     </li>
     <li>
     <i class="fa fa-user-circle"></i>
-        <?= $this->Html->link(__('Manage Employees'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'text']) ?>
+        <?= $this->Html->link(__('View Employees'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'text']) ?>
     </li>
     <li>
             <i class="fa fa-bar-chart"></i>
@@ -30,12 +26,6 @@
     <i class="fa fa-users"></i>
         <?= $this->Html->link(__('View Clients'), ['controller' => 'Clients', 'action' => 'index'], ['class' => 'text']) ?>
     </li>
-
-    <li>
-        <i class="fa fa-user-circle"></i>
-        <?= $this->Html->link(__('My Account'), ['controller' => 'Users', 'action' => 'view', $currentUserId], ['class' => 'text']) ?>
-    </li>
-
     <li>
     <i class="fa fa-sign-out"></i>
         <?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'text']) ?>
@@ -59,17 +49,17 @@
 .rvnm-navbar-box.dark-ruby {
     background:#FFFFFF;
 }
+
 .rvnm-navbar-box.dark-ruby li{
     border-bottom: 1px solid rgb(184 12 60 / 16%);
     text-align: left;
     list-style: none;
-    height: 60px;
-    line-height:60px;
+    height: 70px;
+    line-height:80px;
     background: #FFFFFF;
     margin-bottom: 0rem;
     padding-left:20px;
 }
-
 
 .rvnm-navbar-box.dark-ruby li a{
     text-decoration: none;
@@ -94,10 +84,12 @@
     height:80px!important;
     padding:10px;
     box-sizing: border-box;
+    margin-bottom: 30px;
+
 }
 .logo img{
     width:100%;
-    height:80px!important;
+    height:180px!important;
     display:block;
     cursor: pointer;
 }

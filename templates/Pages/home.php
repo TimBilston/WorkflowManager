@@ -78,7 +78,6 @@ if (!empty($task->subtasks)) {
 
 <!DOCTYPE html>
 <html>
-<title> Dashboard </title>
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -463,8 +462,8 @@ endforeach;?>
         border-bottom: 1px solid rgb(184 12 60 / 16%);
         text-align: left;
         list-style: none;
-        height: 60px;
-        line-height:60px;
+        height: 70px;
+        line-height:80px;
         background: #FFFFFF;
         margin-bottom: 0rem;
         padding-left:20px;
@@ -494,6 +493,7 @@ endforeach;?>
         height:80px!important;
         padding:10px;
         box-sizing: border-box;
+        margin-bottom: 30px;
     }
     .logo img{
         width:100%;
@@ -579,6 +579,7 @@ endforeach;?>
 
 
     <div style="display: flex; flex-direction: row;padding-left:220px;">
+        <h1 style="position: absolute;right: 92.8rem;text-decoration: underline;">My Tasks</h1>
         <button onclick = "nextWeek()" style="margin: auto" class="dashboard"> < </button>
         <h1 id="Month_Text"> August 2021 </h1>
         <button onclick = "prevWeek()" style="margin: auto" class="dashboard"> > </button>
