@@ -14,7 +14,7 @@
             <?= $this->Html->link(__('New Department'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
-    <div class="column-responsive column-80">
+    <div class="column-responsive column-90">
         <div class="departments view content">
             <h3><?= h($department->name) ?></h3>
             <table>
@@ -28,7 +28,7 @@
                 </tr>
             </table>
             <div class="related">
-                <h4><?= __('Related Tasks') ?></h4>
+                <h4><?= __("Manager's Tasks") ?></h4>
                 <?php if (!empty($department->tasks)) : ?>
                 <div class="table-responsive">
                     <table>
@@ -41,7 +41,6 @@
                             <th><?= __('Employee Id') ?></th>
                             <th><?= __('Recurring') ?></th>
                             <th><?= __('Department Id') ?></th>
-                            <th><?= __('Status Id') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                         <?php foreach ($department->tasks as $tasks) : ?>
@@ -52,9 +51,8 @@
                             <td><?= h($tasks->start_date) ?></td>
                             <td><?= h($tasks->due_date) ?></td>
                             <td><?= h($tasks->employee_id) ?></td>
-                            <td><?= h($tasks->recurring) ?></td>
+                            <td><?= h($tasks->recurrence_type) ?></td>
                             <td><?= h($tasks->department_id) ?></td>
-                            <td><?= h($tasks->status_id) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Tasks', 'action' => 'view', $tasks->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'Tasks', 'action' => 'edit', $tasks->id]) ?>
@@ -73,7 +71,6 @@
                     <table>
                         <tr>
                             <th><?= __('Id') ?></th>
-                            <th><?= __('Password') ?></th>
                             <th><?= __('Name') ?></th>
                             <th><?= __('Last Name') ?></th>
                             <th><?= __('Phone') ?></th>
@@ -85,7 +82,6 @@
                         <?php foreach ($department->users as $users) : ?>
                         <tr>
                             <td><?= h($users->id) ?></td>
-                            <td><?= h($users->password) ?></td>
                             <td><?= h($users->name) ?></td>
                             <td><?= h($users->last_name) ?></td>
                             <td><?= h($users->phone) ?></td>
