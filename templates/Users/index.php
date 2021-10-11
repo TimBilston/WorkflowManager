@@ -720,16 +720,17 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
 
             </h1>
         </div>
+        <div class="echarts-inner" style="padding-top:26px;">
+            <div class="echarts-list" id="totalBar"></div>
+            <div class="echarts-list" id="advanceBar"></div>
+        </div>
         <div class="echarts-inner"  style="margin-bottom:26px;">
             <div class="echarts-list" id="total"></div>
         </div>
         <div class="echarts-inner"  style="margin-bottom:26px;">
             <div class="echarts-list" id="overdue"></div>
         </div>
-        <div class="echarts-inner" style="padding-top:26px;">
-            <div class="echarts-list" id="totalBar"></div>
-            <div class="echarts-list" id="advanceBar"></div>
-        </div>
+        
     </div>
 
 </div>
