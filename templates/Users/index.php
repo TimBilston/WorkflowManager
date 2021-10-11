@@ -13,6 +13,13 @@ $dPlus = strtotime("+4 months"); //(php is smart can interpret "3 months"
 $dMinus = strtotime("-4 months"); //(php is smart can interpret "3 months"
 $maxD = strtotime(date("m/d/y",$dPlus));//3months forwards
 $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
+
+$this->loadHelper('Authentication.Identity');
+if ($this->Identity->isLoggedIn()) {
+    $currentUserName = $this->Identity->get('name');
+    $currentUserId = $this->Identity->get('id');
+    $currentUserAccess = $this->Identity->get('department_id');
+}
 ?>
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -704,41 +711,43 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             </tbody>
         </table>
     </div>
-    <div class="echarts-box">
-        <div>
-            <h1>
-                <?php foreach ($users as $user):?>
-                    <?php
-                        if(isset($_GET['Employees'])){
-                            if($_GET['Employees']== $user->id){
-                                echo $user->name;
-                            }
-                        }
+<?php
+echo $currentUserId;
+echo $currentUserName;
+if(isset($_GET['Employees'])) :
+    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <=3): ?>
+<?php endif; endif;?>
+<div class="echarts-box">
+    <div>
+        <h1>
+            <?php foreach ($users as $user){
+                if(isset($_GET['Employees'])){
+                    if($_GET['Employees']== $user->id){
+                        echo $user->name;
+                    }
+                }
+            }
+            ?>
 
-                    ?>
-                <?php endforeach ?>
-
-            </h1>
-        </div>
-        <div class="echarts-inner"  style="margin-bottom:26px;">
-            <div class="echarts-list" id="total"></div>
-        </div>
-        <div class="echarts-inner"  style="margin-bottom:26px;">
-            <div class="echarts-list" id="overdue"></div>
-        </div>
-        <div class="echarts-inner" style="padding-top:26px;">
-            <div class="echarts-list" id="totalBar"></div>
-            <div class="echarts-list" id="advanceBar"></div>
-        </div>
+        </h1>
     </div>
-
+    <div class="echarts-inner"  style="margin-bottom:26px;">
+        <div class="echarts-list" id="total"></div>
+    </div>
+    <div class="echarts-inner"  style="margin-bottom:26px;">
+        <div class="echarts-list" id="overdue"></div>
+    </div>
+    <div class="echarts-inner" style="padding-top:26px;">
+        <div class="echarts-list" id="totalBar"></div>
+        <div class="echarts-list" id="advanceBar"></div>
+    </div>
 </div>
+
 <script>
     window.onload = function(){
         //gets the current Monday date and converts into a readable format
         $('Employees').submit();
         currentMonday = getMonday(new Date());
-
         changeDates(currentMonday);
         doSomething();
         //appends the modals to the taskcards
