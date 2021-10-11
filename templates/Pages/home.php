@@ -88,10 +88,7 @@ if (!empty($task->subtasks)) {
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
 </head>
-<label class="switch" style="display:none">
-    <input type="checkbox" id="toggle" onclick="toggleCheck()" value=true>
-    <span class="slider round"></span>
-</label>
+
 <script>
     var currentMonday = new Date();
     var tasksTotal = 0;
@@ -99,8 +96,6 @@ if (!empty($task->subtasks)) {
         //gets the current Monday date and converts into a readable format
         //  <!-- Outputs the Titles -->
         currentMonday = getMonday(new Date());
-        var checkBox = document.getElementById("toggle");
-        checkBox.checked = true;
         changeDates(currentMonday);
     }
 
@@ -234,131 +229,57 @@ if (!empty($task->subtasks)) {
         // $AttentionNeeded = 0;
         // $OverDue = 0;
         $(html).each((index,element)=>{
-            if ($(element).find('.status').text() != 'Completed'){
-                if($(element).find('.due_time').text() == Monday){
-                    if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee_id').text() == currentUserId){
-                            $("#1").append(element)
-                            tasksTotal++
-
-                            $NotCompleted += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Not Completed'){
-                                    item.value = $NotCompleted
-                                }
-                            })
-                        }
-                    } else {
+            if ($(element).find('.employee_id').text() == currentUserId) {
+                if ($(element).find('.status').text() != 'Completed') {
+                    if ($(element).find('.due_time').text() == Monday) {
                         $("#1").append(element)
                         tasksTotal++
                         $NotCompleted += 1;
-                        currentData.forEach(item=>{
-                            if(item.name == 'Not Completed'){
+                        currentData.forEach(item => {
+                            if (item.name == 'Not Completed') {
                                 item.value = $NotCompleted
                             }
                         })
-                    }
-                }else if($(element).find('.due_time').text() == Tuesday){
-                    if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee_id').text() == currentUserId){
-                            $("#2").append(element)
-                            tasksTotal++
-                            $NotCompleted += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Not Completed'){
-                                    item.value = $NotCompleted
-                                }
-                            })
-                        }
-                    } else {
+                    } else if ($(element).find('.due_time').text() == Tuesday) {
                         $("#2").append(element)
                         tasksTotal++
                         $NotCompleted += 1;
-                        currentData.forEach(item=>{
-                            if(item.name == 'Not Completed'){
+                        currentData.forEach(item => {
+                            if (item.name == 'Not Completed') {
                                 item.value = $NotCompleted
                             }
                         })
-                    }
-
-                }else if($(element).find('.due_time').text() == Wednesday){
-                    if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee_id').text() == currentUserId){
-                            $("#3").append(element)
-                            tasksTotal++
-
-                            $NotCompleted += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Not Completed'){
-                                    item.value = $NotCompleted
-                                }
-                            })
-                        }
-                    } else {
+                    } else if ($(element).find('.due_time').text() == Wednesday) {
                         $("#3").append(element)
                         tasksTotal++
                         $NotCompleted += 1;
-                        currentData.forEach(item=>{
-                            if(item.name == 'Not Completed'){
+                        currentData.forEach(item => {
+                            if (item.name == 'Not Completed') {
                                 item.value = $NotCompleted
                             }
                         })
-                    }
-
-                }else if($(element).find('.due_time').text() == Thursday){
-                    if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee_id').text() == currentUserId){
-                            $("#4").append(element)
-                            tasksTotal++
-
-                            $NotCompleted += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Not Completed'){
-                                    item.value = $NotCompleted
-                                }
-                            })
-                        }
-                    } else {
+                    } else if ($(element).find('.due_time').text() == Thursday) {
                         $("#4").append(element)
                         tasksTotal++
-
                         $NotCompleted += 1;
-                        currentData.forEach(item=>{
-                            if(item.name == 'Not Completed'){
+                        currentData.forEach(item => {
+                            if (item.name == 'Not Completed') {
                                 item.value = $NotCompleted
                             }
                         })
-                    }
-
-                }else if($(element).find('.due_time').text() == Friday){
-                    if (document.getElementById('toggle').checked){
-                        if ($(element).find('.employee_id').text() == currentUserId){
-                            $("#5").append(element)
-                            tasksTotal++
-
-                            $NotCompleted += 1;
-                            currentData.forEach(item=>{
-                                if(item.name == 'Not Completed'){
-                                    item.value = $NotCompleted
-                                }
-                            })
-                        }
-                    } else {
+                    } else if ($(element).find('.due_time').text() == Friday) {
                         $("#5").append(element)
                         tasksTotal++
-
                         $NotCompleted += 1;
-                        currentData.forEach(item=>{
-                            if(item.name == 'Not Completed'){
+                        currentData.forEach(item => {
+                            if (item.name == 'Not Completed') {
                                 item.value = $NotCompleted
                             }
                         })
                     }
-
                 }
             }else{
                 console.log("333")
-                if (document.getElementById('toggle').checked){
                     if ($(element).find('.employee').text() == currentUser){
                         $Completed += 1;
                         currentData.forEach(item=>{
@@ -367,14 +288,6 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                } else {
-                    $Completed += 1;
-                    currentData.forEach(item=>{
-                        if(item.name == 'Completed'){
-                            item.value = $Completed
-                        }
-                    })
-                }
             }
         })
         console.log(currentData)
@@ -480,17 +393,7 @@ if (!empty($task->subtasks)) {
             }
         }
     }
-    function toggleCheck(){
-        var checkBox = document.getElementById("toggle");
-        checkBox.checked = true;
-        if (checkBox.checked == true){
-            currentMonday = getMonday(new Date());
-            changeDates(currentMonday);
-        } else {
-            currentMonday = getMonday(new Date());
-            changeDates(currentMonday);
-        }
-    }
+
     function nextWeek(){
         currentMonday.setDate(currentMonday.getDate() - 7);
         changeDates(currentMonday);
