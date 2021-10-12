@@ -4,10 +4,17 @@
  * @var \App\Model\Entity\Task[]|\Cake\Collection\CollectionInterface $tasks
  */
 ?>
+<aside class="column">
+    <div class="side-nav">
+        <?= $this->Html->link(__('Add Task'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+        <h4 class="heading"> <?=__('List Tasks') ?></h4>
+    </div>
+</aside>
 <div class="tasks index content">
     <?= $this->Html->link(__('New Task'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Tasks') ?></h3>
     <div class="table-responsive">
+
         <table>
             <thead>
                 <tr>
