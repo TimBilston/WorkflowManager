@@ -278,7 +278,7 @@ if (!empty($task->subtasks)) {
                     }
                 }else{
                     if ($(element).find('.due_time').text() == Monday) {
-                        
+
                         $Completed += 1;
                         currentData.forEach(item => {
                             if (item.name == 'Completed') {
@@ -707,7 +707,7 @@ endforeach;?>
         </li>
         <li>
         <i class="fa fa-user-circle"></i>
-            <?= $this->Html->link(__('Manage Employees'), ['controller' => 'Users'], ['class' => 'text']) ?>
+            <?= $this->Html->link(__('View Employees'), ['controller' => 'Users'], ['class' => 'text']) ?>
         </li>
         <li>
             <i class="fa fa-bar-chart"></i>

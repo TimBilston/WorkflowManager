@@ -62,7 +62,7 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
 
 <?php
     $allData = Array();
-    $OverDue = 0;
+    $Overdue = 0;
     $allTotal = 0;
 ?>
 <?php foreach ($users as $user):?>
@@ -73,11 +73,11 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             ?>
             <?php // Initialises every task as an invisible card
             if($task->status_id==3){
-                $OverDue += 1;
-                array_push($allData, array('name'=>'OverDue', 'value'=>1, 'dueDate'=> $task->due_date));
+                $Overdue += 1;
+                array_push($allData, array('name'=>'Overdue', 'value'=>1, 'dueDate'=> $task->due_date));
                 }
                 $allTotal += 1;
-                array_push($allData, array('name'=>'Total', 'value'=>1, 'dueDate'=> $task->due_date));
+                array_push($allData, array('name'=>'In Progress', 'value'=>1, 'dueDate'=> $task->due_date));
             }
         ?>
 <?php endif; endforeach; ?>
@@ -86,7 +86,7 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
     $BarAllData = Array(); // get all task ratio
     $BarInProgress = 0;
     $BarCompleted = 0;
-    $BarOverDue = 0;
+    $BarOverdue = 0;
     $BarAttentionNeeded = 0;
 ?>
     <?php foreach ($users as $user):?>
@@ -97,8 +97,8 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
                     ?>
                     <?php // Initialises every task as an invisible card
                     if($task->status_id==3){
-                        $BarOverDue += 1;
-                        array_push($BarAllData, array('name'=>'OverDue', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                        $BarOverdue += 1;
+                        array_push($BarAllData, array('name'=>'Overdue', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                     }else if($task->status_id==2){
                         $BarCompleted += 1;
                         array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#5470c6')));
@@ -107,7 +107,7 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
                         array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
                     }else if($task->status_id==1){
                         $BarInProgress += 1;
-                        array_push($BarAllData, array('name'=>'InProgress', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#fac858')));
+                        array_push($BarAllData, array('name'=>'In Progress', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#fac858')));
                     }
                 }
                 ?>
@@ -127,15 +127,15 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
                     ?>
                     <?php // Initialises every task as an invisible card
                         if($task->status_id==3){
-                            $OverDue += 1;
-                            array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                            $Overdue += 1;
+                            array_push($advanceData, array('name'=>'Later Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                         }else if($task->status_id==2){
                             if(strtotime($task->complete_date) < strtotime($task->due_date)){
                                 $advance_e += 1;
-                                array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
+                                array_push($advanceData, array('name'=>'Early Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
                             }else if(strtotime($task->complete_date) > strtotime($task->due_date)){
                                 $overdue_e += 1;
-                                array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                                array_push($advanceData, array('name'=>'Later Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                             }
                         }
 
@@ -372,7 +372,7 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
 
             option = {
                 title: {
-                    text: 'total tasks',
+                    text: 'Total Task Completion (Daily)',
                     y: 'top',
                     x:'left'
                 },
@@ -436,8 +436,8 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             }
             var formatAllData = allProcess(allData)
             formatAllData.forEach(item=>{    //add default value
-                if(item.name == "OverDue"){
-                    item['OverDue'] = item.value
+                if(item.name == "Overdue"){
+                    item['Overdue'] = item.value
                 }else{
                     item['Total'] = item.value
                 }
@@ -450,10 +450,10 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
                 const cache = [];
                 for (const t of arr) {
                     if (cache.find(c => c.dueDate === t.dueDate)) {
-                        if(cache.find(c => c.dueDate === t.dueDate).name == 'OverDue'){
+                        if(cache.find(c => c.dueDate === t.dueDate).name == 'Overdue'){
                             cache.find(c => c.dueDate === t.dueDate)['Total']  = t.Total
                         }else{
-                            cache.find(c => c.dueDate === t.dueDate)['OverDue']  = t.OverDue
+                            cache.find(c => c.dueDate === t.dueDate)['Overdue']  = t.Overdue
                         }
                     }else{
                         cache.push(t);
@@ -463,10 +463,10 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             }
             var overdue = document.getElementById("overdue");
             var overdueMyChart = echarts.init(overdue);
-            var overDueOption;
-            overDueOption = {
+            var overdueOption;
+            overdueOption = {
                 title: {
-                    text: 'overdue tasks',
+                    text: 'Overdue Tasks (Daily)',
                     y: 'top',
                     x:'left'
                 },
@@ -474,7 +474,7 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['Total', 'OverDue']
+                    data: ['In Progress', 'Overdue']
                 },
                 calculable: true,
                 xAxis: [
@@ -491,9 +491,9 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
                 ],
                 series: [
                     {
-                        name: 'OverDue',
+                        name: 'Overdue',
                         type: 'bar',
-                        data: NewformatAllData.map(i=>i.OverDue || 0),
+                        data: NewformatAllData.map(i=>i.Overdue || 0),
                         itemStyle:{
                             color:'#b80c3c'
                         },
@@ -512,8 +512,8 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
                     }
                 ]
             }
-            if (overDueOption && typeof overDueOption === 'object') {
-                overdueMyChart.setOption(overDueOption);
+            if (overdueOption && typeof overdueOption === 'object') {
+                overdueMyChart.setOption(overdueOption);
             }
         }
 
@@ -536,7 +536,7 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             var BarOption;
             BarOption  = {
                 title: {
-                    text: 'All Task Ratio',
+                    text: 'Task Completion Ratio',
                     y: 'bottom',
                     x:'center'
                 },
@@ -604,7 +604,7 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             var BarOption;
             BarOption  = {
                 title: {
-                    text: 'Tasks Progress',
+                    text: 'Task Delivery Ratio',
                     y: 'bottom',
                     x:'center'
                 },
