@@ -251,7 +251,6 @@ class TasksController extends AppController
 
 
 
-
             if ($this->Tasks->save($task)) {
                 //subtasks controllers for edit func----start
                 $sub_task_contents = $this->request->getData('sub_task_content', []);
