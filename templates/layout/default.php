@@ -29,7 +29,8 @@ $cakeDescription = '';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', 'custom']) ?>
 
@@ -51,7 +52,7 @@ $cakeDescription = '';
         </div>
     </main>
     <?php include('navigation.php') ?>
-    
+
 </body>
 </html>
 

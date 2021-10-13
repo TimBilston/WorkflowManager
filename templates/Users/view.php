@@ -60,7 +60,7 @@
         color: white !important;
         cursor: pointer;
         display: inline-block;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-family: "Lato", sans-serif;
         font-size: 16px;
         line-height: 16px;
         min-height: 40px;

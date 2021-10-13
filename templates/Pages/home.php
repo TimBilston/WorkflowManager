@@ -179,11 +179,11 @@ if (!empty($task->subtasks)) {
             $html .= '<li class="drag-item" id="card'.$task->id.'">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time" style="visibility: hidden; display: none">'.$task->due_date.'</p>'.
-                '<p class="desc" title='.$task->description.'>'.$task->description.'</p>'.
+                '<p class="desc" style="visibility: hidden; display: none" title='.$task->description.'>'.$task->description.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
                 '<p class="employee">'.$task->user->name.'</p>'.
                 '<p class="employee_id" style="visibility: hidden; display: none">'.$task->user->id.'</p>'.
-                '<p class="status">'.$task->status->name.'</p>'.
+                '<p class="status" style="visibility: hidden; display: none">'.$task->status->name.'</p>'.
                 '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'.
                 //'<p>'.$this->element('viewTask',['taskID' => $task->id]).'</p >'.      //if u wanna to add inside the card just use like thie line !!!!!!!!!!!!!
                 '<div class="wrapper">'.
@@ -580,7 +580,7 @@ if (!empty($task->subtasks)) {
         height: 100%;
         color: #353C48;
         font-size:16px;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-family: "Lato", sans-serif;
         letter-spacing:0px;
         padding-left:8px;
         font-weight:bold;

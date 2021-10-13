@@ -5,6 +5,7 @@
 }
 ?>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <nav id="navbar" class="rvnm-navbar-box dark-ruby">
@@ -75,7 +76,7 @@
     height: 100%;
     color: #353C48;
     font-size:16px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Lato", sans-serif;
     letter-spacing:0px;
     padding-left:8px;
     font-weight:bold;

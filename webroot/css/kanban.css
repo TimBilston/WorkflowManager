@@ -152,6 +152,13 @@ ul {
     overflow: hidden;
     color: #343434
 }
+.drag-item label{
+    font-size:14px;
+    margin:6px 0;
+    color: #343434;
+    box-sizing: border-box;
+    padding-left:30px;
+}
 
 .drag-item .person{
     background: url('../img/client.png') no-repeat 6px center;
