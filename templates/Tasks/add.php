@@ -15,11 +15,10 @@
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
+            <h4 class="heading"><?= __('Add Task') ?></h4>
             <?= $this->Html->link(__('List Tasks'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
-
     <div class="column-responsive column-80">
         <div class="tasks form content">
             <?= $this->Form->create($task) ?>
@@ -65,8 +64,8 @@
             window.open('/subtasks/add?title=' + title, 'sub_task_add');
         });
 
-
-        $('input[name="title"]').after('<span class="star">*cannot be empty or have any symbols </span>');
-        $('textarea[name="description"]').after('<span class="star">*cannot be empty or have any symbols </span>');
     });
+
+ //   $('input[name="title"]').after('<span class="star">*cannot be empty or have any symbols </span>');
+ //   $('textarea[name="description"]').after('<span class="star">*cannot be empty or have any symbols </span>');
 </script>
