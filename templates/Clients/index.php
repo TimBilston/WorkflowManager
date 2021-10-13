@@ -10,7 +10,7 @@ $this->loadHelper('Authentication.Identity');
 <div style="padding-top: 10%">
     <link rel="stylesheet" href="webroot/css/buttons.css">
     <h1 class="clients_title"><?= __('Full List of Clients') ?></h1>
-    <div class="clients index content" style="padding: 3%">
+    <div class="clients index content">
         <?= $this->Html->link(__('New Client'), ['action' => 'add'], ['class' => 'button new_client']) ?>
         <div class="table-responsive">
             <table>
