@@ -276,17 +276,45 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                }
-            }else{
-                console.log("333")
-                    if ($(element).find('.employee').text() == currentUser){
+                }else{
+                    if ($(element).find('.due_time').text() == Monday) {
+                        
                         $Completed += 1;
-                        currentData.forEach(item=>{
-                            if(item.name == 'Completed'){
+                        currentData.forEach(item => {
+                            if (item.name == 'Completed') {
+                                item.value = $Completed
+                            }
+                        })
+                    } else if ($(element).find('.due_time').text() == Tuesday) {
+                        $Completed += 1;
+                        currentData.forEach(item => {
+                            if (item.name == 'Completed') {
+                                item.value = $Completed
+                            }
+                        })
+                    } else if ($(element).find('.due_time').text() == Wednesday) {
+                        $Completed += 1;
+                        currentData.forEach(item => {
+                            if (item.name == 'Completed') {
+                                item.value = $Completed
+                            }
+                        })
+                    } else if ($(element).find('.due_time').text() == Thursday) {
+                        $Completed += 1;
+                        currentData.forEach(item => {
+                            if (item.name == 'Completed') {
+                                item.value = $Completed
+                            }
+                        })
+                    } else if ($(element).find('.due_time').text() == Friday) {
+                        $Completed += 1;
+                        currentData.forEach(item => {
+                            if (item.name == 'Completed') {
                                 item.value = $Completed
                             }
                         })
                     }
+                }
             }
         })
         console.log(currentData)
@@ -707,7 +735,7 @@ endforeach;?>
                 </label>
             </div>
         </li>
-        <div id="container" style="width:220px;height: 400px"></div>
+        <div id="container" style="width:220px;height: 300px"></div>
     </nav>
     <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; background: #ffebeb; ">
         <b style="color:#000000"><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
