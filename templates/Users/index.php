@@ -24,7 +24,13 @@ if ($this->Identity->isLoggedIn()) {
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-
+<style>
+    .names a {
+        color: #000;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
 
 <div style="display:none">
     <?php foreach ($users as $user): // THIS function appends the modals to the tasks. removed from the task creation because of bugs. (might be fixed now)
@@ -668,7 +674,7 @@ if ($this->Identity->isLoggedIn()) {
                             <?php endforeach ?>
                         </select>
                         <input type="submit" value="Submit">
-                        <?= $this->Html->link(__('New User'), ['action' => 'add'], ['class' => 'button new_user']) ?>
+                        <?= $this->Html->link(__('New Employee'), ['action' => 'add'], ['class' => 'button new_user']) ?>
                     </div>
                 </form>
             </div>
@@ -699,7 +705,7 @@ if ($this->Identity->isLoggedIn()) {
                         <?php endif ?>
                     <?php endforeach;?>
                     <tr>
-                        <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h($user->name) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
+                        <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h(ucfirst($user->name)) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
                         <td id = "M_TD <?=$user->id?>"></td>
                         <td id = "Tu_TD <?=$user->id?>"></td>
                         <td id = "W_TD <?=$user->id?>"></td>
@@ -740,6 +746,19 @@ if(isset($_GET['Employees'])) :
     <div class="echarts-inner" style="padding-top:26px;">
         <div class="echarts-list" id="totalBar"></div>
         <div class="echarts-list" id="advanceBar"></div>
+            </h1>
+        </div>
+        <div class="echarts-inner" style="padding-top:26px;">
+            <div class="echarts-list" id="totalBar"></div>
+            <div class="echarts-list" id="advanceBar"></div>
+        </div>
+        <div class="echarts-inner"  style="margin-bottom:26px;">
+            <div class="echarts-list" id="total"></div>
+        </div>
+        <div class="echarts-inner"  style="margin-bottom:26px;">
+            <div class="echarts-list" id="overdue"></div>
+        </div>
+
     </div>
 </div>
 
