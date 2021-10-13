@@ -19,8 +19,8 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <style>
     .names a {
-        color: #000;
-        text-decoration: none;
+        color: #0071BC;
+        text-decoration: underline;
         font-weight: bold;
     }
 </style>
