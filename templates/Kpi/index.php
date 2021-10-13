@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -57,10 +57,10 @@ use App\Model\Entity\Task;
       array_push($BarAllData, array('name'=>'OverDue', 'value'=>1, 'itemStyle' => Array('color'=>'#ff7070')));
     }else if($task->status->name=='Completed'){
       $BarCompleted += 1;
-      array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'itemStyle' => Array('color'=>'#5470c6')));  
+      array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'itemStyle' => Array('color'=>'#5470c6')));
     }else if($task->status->name=='Attention Needed'){
       $BarAttentionNeeded += 1;
-      array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'itemStyle' => Array('color'=>'#91cc75'))); 
+      array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'itemStyle' => Array('color'=>'#91cc75')));
     }else if($task->status->name=='In Progress'){
       $BarInProgress += 1;
       array_push($BarAllData, array('name'=>'InProgress', 'value'=>1, 'itemStyle' => Array('color'=>'#fac858')));
@@ -84,7 +84,7 @@ use App\Model\Entity\Task;
         array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
       }
     }
-   
+
   }
 
 
@@ -132,11 +132,11 @@ use App\Model\Entity\Task;
     width:100%;
     height:600px;
     margin-top:50px;
-   
+
   }
   .table-box{
     position: fixed;
-    right:0;
+    right:40px;
     top:100px;
   }
   .table-box table{
@@ -176,7 +176,7 @@ use App\Model\Entity\Task;
   var navData = <?php echo json_encode($navData) ?>; //change php env to js env
   function process(arr) {
     const cache = [];
-    for (const t of arr) { 
+    for (const t of arr) {
         if (cache.find(c => c.name === t.name && c.dueDate === t.dueDate)) {   //delete repeat thing, if duedate and task name are same , value ++
           cache.find(c => c.name === t.name && c.dueDate === t.dueDate).value += 1
         }else{
@@ -185,8 +185,8 @@ use App\Model\Entity\Task;
     }
     return cache;
   }
-  var formatData = process(navData)   
-  formatData.forEach(item=>{    //add default value 
+  var formatData = process(navData)
+  formatData.forEach(item=>{    //add default value
     if(item.name == "Completed"){
       item['Completed'] = item.value
     }else{
@@ -261,10 +261,10 @@ use App\Model\Entity\Task;
     if (option && typeof option === 'object') {
         myChart.setOption(option);
     }
-    var allData = <?php echo json_encode($allData) ?>; //get data 
+    var allData = <?php echo json_encode($allData) ?>; //get data
     function allProcess(arr) {
       const cache = [];
-      for (const t of arr) { 
+      for (const t of arr) {
           if (cache.find(c => c.name === t.name && c.dueDate === t.dueDate)) {   //delete repeat things
             cache.find(c => c.name === t.name && c.dueDate === t.dueDate).value += 1
           }else{
@@ -273,8 +273,8 @@ use App\Model\Entity\Task;
       }
       return cache;
     }
-    var formatAllData = allProcess(allData) 
-    formatAllData.forEach(item=>{    //add default value 
+    var formatAllData = allProcess(allData)
+    formatAllData.forEach(item=>{    //add default value
       if(item.name == "OverDue"){
         item['OverDue'] = item.value
       }else{
@@ -353,10 +353,10 @@ use App\Model\Entity\Task;
 
 
 
-    var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data 
+    var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
     function barProcess(arr) {
       const cache = [];
-      for (const t of arr) { 
+      for (const t of arr) {
           if (cache.find(c => c.name === t.name)) {   //delete repeat things
             cache.find(c => c.name === t.name).value += 1
           }else{
@@ -407,7 +407,7 @@ use App\Model\Entity\Task;
               },
               labelLine:{
                 show:true
-              }                     
+              }
             }
           },
         }
@@ -421,7 +421,7 @@ use App\Model\Entity\Task;
     var advanceData = <?php echo json_encode($advanceData) ?>; //get data
     function barProcess(arr) {
       const cache = [];
-      for (const t of arr) { 
+      for (const t of arr) {
           if (cache.find(c => c.name === t.name)) {   //delete repeat things
             cache.find(c => c.name === t.name).value += 1
           }else{
@@ -430,7 +430,7 @@ use App\Model\Entity\Task;
       }
       return cache;
     }
-    var advanceBarData = barProcess(advanceData) 
+    var advanceBarData = barProcess(advanceData)
     console.log(advanceBarData)
     var advanceBar = document.getElementById("advanceBar");
     var BarMyChart = echarts.init(advanceBar);
@@ -473,7 +473,7 @@ use App\Model\Entity\Task;
               },
               labelLine:{
                 show:true
-              }                     
+              }
             }
           },
         }
@@ -483,7 +483,7 @@ use App\Model\Entity\Task;
       BarMyChart.setOption(BarOption);
     }
 
-    var tableData = <?php echo json_encode($tableData) ?>; //get data 
+    var tableData = <?php echo json_encode($tableData) ?>; //get data
     var curDate = new Date().getTime()
     var tableDataByTime = tableData.map(item=>{
       if(new Date(item.dueDate).getTime() > curDate){
