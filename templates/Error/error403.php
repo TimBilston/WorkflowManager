@@ -5,14 +5,21 @@ $this->disableAutoLayout();
 ?>
 <html>
 <a href="" class="fa fa-arrow-left"></a>
-<div class="error">
-    <h1>404</h1>
-    <p>We're sorry but it looks like that page doesn't exist anymore.</p>
+<div class="error container">
+    <div>
+        <h1 style="display: inline-block;">403</h1>
+
+        <img src="<?php echo $this->Url->image('lock.png')?>" style="width: 15%">
+
+    </div>
+
+    <p>You do not have permission to visit this page. Please go back</p>
     <button class="button" style="vertical-align:middle" onclick="history.go(-1)"><span>Go back</span></button>
 </div>
 </html>
 
 <style>
+
     body,
     html {
         padding: 0;

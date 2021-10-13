@@ -38,6 +38,7 @@ class PagesController extends AppController
      *
      * @param \Cake\Event\EventInterface $event
      * @return Response|void|null
+     *
      */
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
@@ -87,5 +88,6 @@ class PagesController extends AppController
             }
             throw new NotFoundException();
         }
+
     }
 }

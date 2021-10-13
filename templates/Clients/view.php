@@ -10,7 +10,7 @@ $currentDate = date('d/m/y');
 ?>
 <style>
     .collapsible {
-        background-color: #777;
+        background-color: #777;!important;
         color: white;
         cursor: pointer;
         width: 100%;
@@ -21,7 +21,7 @@ $currentDate = date('d/m/y');
     }
 
     .active, .collapsible:hover {
-        background-color: #555;
+        background-color: #b80c3c;
     }
 
     .test {
@@ -51,6 +51,7 @@ $currentDate = date('d/m/y');
             <?= $this->Form->postLink(__('Delete Client'), ['action' => 'delete', $client->id], ['confirm' => __('Are you sure you want to delete # {0}?', $client->id), 'class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('List Clients'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('New Client'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Create Task'), ['controller' => 'tasks', 'action' => 'add' , $client->id], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
@@ -91,34 +92,29 @@ $currentDate = date('d/m/y');
                 ?>)</button>
             <div class="test" style = "active">
                 <div class="related">
-
                     <?php if (!empty($client->tasks)) : ?>
                             <table>
                                 <thead>
                                 <tr>
                                     <th><?= __('Title') ?></th>
                                     <th><?= __('Description') ?></th>
-                                    <th><?= __('Start Date') ?></th>
                                     <th><?= __('Due Date') ?></th>
                                     <th><?= __('Employee') ?></th>
                                     <th><?= __('Department Id') ?></th>
-                                    <th><?= __('Status Id') ?></th>
                                     <th class="actions"><?= __('Actions') ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php foreach ($client->tasks as $tasks):?>
                                     <?php
-                                    if(strtotime($tasks->due_date) >= strtotime($currentDate) || $tasks->status_id =='3'):
+                                    if($tasks->status_id =='3'):
                                     ?>
                                     <tr>
                                         <td><?= h($tasks->title) ?></td>
                                         <td><?= h($tasks->description) ?></td>
-                                        <td><?= h($tasks->start_date) ?></td>
-                                        <td><?= h($tasks->due_date) ?></td>
+                                        <td><?= Date('d/m/y',strtotime($tasks->due_date)) ?></td>
                                         <td><?= $client->has('user') ? $this->Html->link($client->user->name, ['controller' => 'Users', 'action' => 'view', $client->user->id]) : '' ?></td>
                                         <td><?= $client->has('department') ? $this->Html->link($client->tasks->department->name, ['controller' => 'Departments', 'action' => 'view', $client->tasks->department->id]) : '' ?></td>
-                                        <td><?= $client->has('status') ? $this->Html->link($client->$tasks->status->name, ['controller' => 'Status', 'action' => 'view', $client->status->id]) : '' ?></td>
 
                                         <td class="actions">
                                             <?= $this->Html->link(__('View'), ['controller' => 'Tasks', 'action' => 'view', $tasks->id]) ?>
@@ -133,6 +129,7 @@ $currentDate = date('d/m/y');
                     <?php endif; ?>
                 </div>
         </div>
+
             <button class="collapsible">Current Tasks (<?php $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['client_id' => $client->id, 'status_id' => 1])->count();
                 echo $query;
                 ?>) </button>
@@ -146,11 +143,9 @@ $currentDate = date('d/m/y');
                                 <tr>
                                     <th><?= __('Title') ?></th>
                                     <th><?= __('Description') ?></th>
-                                    <th><?= __('Start Date') ?></th>
                                     <th><?= __('Due Date') ?></th>
                                     <th><?= __('Employee') ?></th>
                                     <th><?= __('Department Id') ?></th>
-                                    <th><?= __('Status Id') ?></th>
                                     <th class="actions"><?= __('Actions') ?></th>
                                 </tr>
                                 </thead>
@@ -160,16 +155,14 @@ $currentDate = date('d/m/y');
                                     <?php
                                      //compares current date to see if overdue, and status is ongoing (not completed)
                                     $currentDate = date('d/m/y');
-                                    if(strtotime($tasks->due_date) <= strtotime($currentDate) && $tasks->status_id == '1'):
+                                    if($tasks->status_id == '1')://if tasks status is current
                                         ?>
                                     <tr>
                                         <td><?= h($tasks->title) ?></td>
                                         <td><?= h($tasks->description) ?></td>
-                                        <td><?= h($tasks->start_date) ?></td>
-                                        <td><?= h($tasks->due_date) ?></td>
+                                        <td><?= Date('d/m/y',strtotime($tasks->due_date)) ?></td>
                                         <td><?= $client->has('user') ? $this->Html->link($client->user->name, ['controller' => 'Users', 'action' => 'view', $client->user->id]) : '' ?></td>
                                         <td><?= $client->has('department') ? $this->Html->link($client->tasks->department->name, ['controller' => 'Departments', 'action' => 'view', $client->tasks->department->id]) : '' ?></td>
-                                        <td><?= $client->has('status') ? $this->Html->link($client->$tasks->status->name, ['controller' => 'Status', 'action' => 'view', $client->status->id]) : '' ?></td>
 
                                         <td class="actions">
                                             <?= $this->Html->link(__('View'), ['controller' => 'Tasks', 'action' => 'view', $tasks->id]) ?>
@@ -196,11 +189,9 @@ $currentDate = date('d/m/y');
                                 <tr>
                                     <th><?= __('Title') ?></th>
                                     <th><?= __('Description') ?></th>
-                                    <th><?= __('Start Date') ?></th>
                                     <th><?= __('Due Date') ?></th>
                                     <th><?= __('Employee') ?></th>
                                     <th><?= __('Department Id') ?></th>
-                                    <th><?= __('Status Id') ?></th>
                                     <th class="actions"><?= __('Actions') ?></th>
                                 </tr>
                                 </thead>
@@ -213,11 +204,9 @@ $currentDate = date('d/m/y');
                                     <tr>
                                         <td><?= h($tasks->title) ?></td>
                                         <td><?= h($tasks->description) ?></td>
-                                        <td><?= h($tasks->start_date) ?></td>
-                                        <td><?= h($tasks->due_date) ?></td>
+                                        <td><?= Date('d/m/y',strtotime($tasks->due_date)) ?></td>
                                         <td><?= $client->has('user') ? $this->Html->link($client->user->name, ['controller' => 'Users', 'action' => 'view', $client->user->id]) : '' ?></td>
                                         <td><?= $client->has('department') ? $this->Html->link($client->tasks->department->name, ['controller' => 'Departments', 'action' => 'view', $client->tasks->department->id]) : '' ?></td>
-                                        <td><?= $client->has('status') ? $this->Html->link($client->$tasks->status->name, ['controller' => 'Status', 'action' => 'view', $client->status->id]) : '' ?></td>
 
                                         <td class="actions">
                                             <?= $this->Html->link(__('View'), ['controller' => 'Tasks', 'action' => 'view', $tasks->id]) ?>
@@ -233,7 +222,7 @@ $currentDate = date('d/m/y');
                     <?php endif; ?>
                 </div>
             </div>
-
+            <?= $this->element('addTask' , ['clientID' => $client->id])?>
         </div>
     </div>
 </div>

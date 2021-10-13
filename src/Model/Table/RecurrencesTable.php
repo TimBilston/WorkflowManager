@@ -86,6 +86,7 @@ class RecurrencesTable extends Table
             ->requirePresence('no_of_recurrence', 'create')
             ->notEmptyString('no_of_recurrence');
 
+
         return $validator;
     }
 }

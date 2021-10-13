@@ -20,6 +20,8 @@ use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\Exception\ForbiddenException;
+use Authorization\Middleware\UnauthorizedHandler\RedirectHandler;
 use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
 

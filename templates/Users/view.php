@@ -4,18 +4,20 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
-<div class="row">
+
+<div class="row" style="padding-top: 10%">
     <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Change Password'), ['action' => 'edit', $user->id],  ['class' => 'button-24', 'role' => 'button']) ?>
-            <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+        <div class="side-nav" style="padding-top: 35%">
+            <h4 class="heading"><?= __('Options') ?></h4>
+            <?= $this->Html->link(__('Edit My Details'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('View Employees'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Create Task'), ['controller' => 'tasks', 'action' => 'add', '?' => ['userId' => $user->id]], ['class' => 'side-nav-item']) ?>
 
         </div>
     </aside>
     <div class="column-responsive column-80">
-        <div class="users view content">
-            <h3><?= 'Welcome! '.h($user->name) ?></h3>
+        <h3><?= '<b>Welcome! </b>'.h($user->name) ?></h3>
+        <div class="users view content" style="padding: 3%">
             <table>
                 <tr>
                     <th><?= __('Name') ?></th>
@@ -40,10 +42,6 @@
                 <tr>
                     <th><?= __('Id') ?></th>
                     <td><?= $this->Number->format($user->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($user->created) ?></td>
                 </tr>
             </table>
         </div>

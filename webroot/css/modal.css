@@ -8,12 +8,14 @@
 
 .task-modal-content{
     padding-left: 20px;
+    overflow: hidden;
 }
 .task-modal-content p{
-    font-size: 14px;
+    font-size: 15px;
     padding-left: 45px;
-    margin-bottom: 20px;
-    font-weight: 300;
+    margin-bottom: 22px;
+    margin-top: 10px;
+    font-weight: 400;
 }
 .task-modal-content h4{
     text-transform: capitalize;
@@ -78,6 +80,7 @@
     font-weight: 600;
     font-size: 11px;
     padding: 0px;
+    background: none;
 }
 .linkButton:hover{
     color: #0071BC;

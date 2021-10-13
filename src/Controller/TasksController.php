@@ -70,30 +70,46 @@ class TasksController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($clientId = null)
     {
         $task = $this->Tasks->newEmptyEntity();
+
+        //Client Name from clientId
+        if ($clientId != null){
+            $task->client_id = $clientId;
+            $clientName = $this->getTableLocator()->get('Clients')->get($clientId);
+            $this->set(compact('clientName'));
+        }
+        //Employee name from params
+        if ($this->request->getQueryParams('userId') != null){
+            $task->employee_id = $this->request->getQueryParams('userId');
+            $userName = $this->getTableLocator()->get('Users')->get($task->employee_id);
+            $this->set(compact('userName'));
+        }
+
+
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
+
+            $task->department_id = $this->getTableLocator()->get('Users')->get($task->employee_id)->department_id;
 
             if (!$task->due_date == null){
                 $task->due_date = $this->offsetWeekend($task->due_date);
             }
 
-            if ($task->recurrence_type != 'Never'){
-                $recurrenceTable = $this->getTableLocator()->get('Recurrences');
-                $recurrence = $recurrenceTable->newEmptyEntity();
 
-                $recurrence->recurrence = $task->recurrence_type;
+            $recurrenceTable = $this->getTableLocator()->get('Recurrences');
+            $recurrence = $recurrenceTable->newEmptyEntity();
+            $recurrence->recurrence = $task->recurrence_type;
+            if ($task->no_of_recurrence != null){
                 $recurrence->no_of_recurrence = $task->no_of_recurrence;
-                if ($recurrenceTable->save($recurrence)) {
-                    // The foreign key value was set automatically.
-                    echo $task->id;
-                }
-                $task->recurrence_id = $recurrence->id;
-            } else {
-                $task->recurrence_id = null;
             }
+            if ($recurrenceTable->save($recurrence)) {
+                // The foreign key value was set automatically.
+                //echo $task->id;
+            }
+            $task->recurrence_id = $recurrence->id;
+
 
             if ($this->Tasks->save($task)) {
                 //controllers for subtasks-----start
@@ -114,12 +130,12 @@ class TasksController extends AppController
                     $this->Flash->error(__('The subtask could contain figures. Please, try again.'));
                 }
                 //controllers for subtasks-----end
-                $this->Flash->success(__('The task has been saved.'));
 
                 //************************RECURRENCE FUNCTION***************************
                 $this->createRecurringTasks($task);
                 //************************RECURRENCE FUNCTION***************************
 
+                $this->Flash->success(__('The task has been saved.'));
 
                 return $this->redirect(['controller' => 'pages', 'action' => 'display']);
             }
@@ -140,6 +156,8 @@ class TasksController extends AppController
         for ($i = 0; $i < $task->no_of_recurrence; $i++) {
             $newTask = $this->Tasks->newEmptyEntity();
             $newTask = $this->Tasks->patchEntity($newTask, $this->request->getData());
+            $newTask->department_id = $this->getTableLocator()->get('Users')->get($newTask->employee_id)->department_id;
+
             $newTask->recurrence_id = $task->recurrence_id;
             $newTask->id = $newIds + 1;
             $newIds += 1;
@@ -207,37 +225,28 @@ class TasksController extends AppController
                 $task->due_date = $this->offsetWeekend($task->due_date);
             }
 
-            if ($task->recurrence_type == 'Never'){
-                if ($task->recurrence_id != null){
-                    $task->recurrence_id = null;
-                }
-            } else{
-                $recurrenceTable = $this->getTableLocator()->get('Recurrences');
-                $recurrence = $recurrenceTable->get($task->recurrence_id);
-                if ($task->recurrence_type != $recurrence->recurrence){
+            $recurrenceTable = $this->getTableLocator()->get('Recurrences');
+            $recurrence = $recurrenceTable->get($task->recurrence_id);
+            if ($task->recurrence_type != $recurrence->recurrence || $task->no_of_recurrence != $recurrence->no_of_recurrence){
 
-                    $recurrence->recurrence = $task->recurrence_type;
-                    $recurrence->no_of_recurrence = $task->no_of_recurrence;
+                $recurrence->recurrence = $task->recurrence_type;
+                $recurrence->no_of_recurrence = $task->no_of_recurrence;
 
+                $query = $this->Tasks->find('all')
+                    ->where(['Tasks.recurrence_id =' => $task->recurrence_id]);
+                $results = $query->all();
+                $tasksGroup = $results->toList();
 
-                    $query = $this->Tasks->find('all')
-                        ->where(['Tasks.recurrence_id =' => $task->recurrence_id]);
-                    $results = $query->all();
-                    $tasksGroup = $results->toList();
-
-                    foreach ($tasksGroup as $value){
-                        if ($value->due_date > $task->due_date){
-                            $this->Tasks->delete($value);
-                        }
-
+                foreach ($tasksGroup as $value){
+                    if ($value->due_date > $task->due_date){
+                        $this->Tasks->delete($value);
                     }
-
-                    if ($recurrenceTable->save($recurrence)) {
-                        // The foreign key value was set automatically.
-                        echo $task->id;
-                    }
-                    $this->createRecurringTasks($task);
                 }
+                if ($recurrenceTable->save($recurrence)) {
+                    // The foreign key value was set automatically.
+                    //echo $task->id;
+                }
+                $this->createRecurringTasks($task);
             }
 
 
@@ -290,13 +299,26 @@ class TasksController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $task = $this->Tasks->get($id);
+
+        $query = $this->Tasks->find('all')
+            ->where(['Tasks.recurrence_id =' => $task->recurrence_id]);
+        $taskRecurrenceId = $task->recurrence_id;
+
         if ($this->Tasks->delete($task)) {
             $this->Flash->success(__('The task has been deleted.'));
+
+
+            if ($query->isEmpty()){
+                $recurrenceTable = $this->getTableLocator()->get('Recurrences');
+                $recurrenceEntity = $recurrenceTable->get($taskRecurrenceId);
+                $recurrenceTable->delete($recurrenceEntity);
+            }
+
         } else {
             $this->Flash->error(__('The task could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect($this->referer());
+        return $this->redirect(['controller' => 'pages', 'action' => 'display']);
     }
 
     public function completeTask($id = null){
@@ -305,6 +327,7 @@ class TasksController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task->status_id = 2;
+            $task->complete_date = date("Y-m-d");
             if ($this->Tasks->save($task)) {
                 $this->Flash->success('The task has been saved.');
 

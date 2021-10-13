@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
+
 /**
  * Clients Controller
  *
@@ -59,7 +61,12 @@ class ClientsController extends AppController
             'contain' => ['Users', 'Tasks'],
         ]);
 
-        $this->set(compact('client'));
+        $users = $this->Clients->Users->find('list', ['limit' => 200]);
+        //$task = $this->Clients->Tasks->find('list', ['limit' => 200]);
+        $departments = $this->Clients->Tasks->Departments->find('list', ['limit' => 200]);
+        $clients = $this->Clients->find('list', ['limit' => 200]);
+        $status = $this->Clients->Tasks->Status->find('list', ['limit' => 200]);
+        $this->set(compact('client', 'users', 'departments', 'clients', 'status'));
     }
 
     /**
@@ -70,8 +77,8 @@ class ClientsController extends AppController
     public function add()
     {
         $this->Authorization->skipAuthorization();
-
         $client = $this->Clients->newEmptyEntity();
+
         if ($this->request->is('post')) {
             $client = $this->Clients->patchEntity($client, $this->request->getData());
             if ($this->Clients->save($client)) {
@@ -82,6 +89,7 @@ class ClientsController extends AppController
             $this->Flash->error(__('The client could not be saved. Please, try again.'));
         }
         $users = $this->Clients->Users->find('list', ['limit' => 200]);
+        //$task = $this->Clients->Tasks->find('list', ['limit' => 200]);
         $departments = $this->Clients->Tasks->Departments->find('list', ['limit' => 200]);
         $clients = $this->Clients->find('list', ['limit' => 200]);
         $status = $this->Clients->Tasks->Status->find('list', ['limit' => 200]);
@@ -98,6 +106,7 @@ class ClientsController extends AppController
     public function edit($id = null)
     {
         $client = $this->Clients->newEmptyEntity();
+
         $this->Authorization->authorize($client);
 
 
