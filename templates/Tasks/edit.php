@@ -36,7 +36,7 @@
             <fieldset>
                 <legend><?= __('Edit Task') ?></legend>
                 <?php
-                    echo $this->Form->control('title');
+                    echo $this->Form->label('title');
                     echo $this->Form->control('description');
                     echo $this->Form->control('start_date');
                     echo $this->Form->control('due_date');
@@ -50,7 +50,7 @@
                         'Quarterly' => 'Quarterly',
                         'Annually' => 'Annually'
                     ]);
-                    echo $this->Form->control('no_of_recurrence');
+                    echo $this->Form->control('no_of_recurrence', ['default' => 0, 'error' => false, 'class' => 'someClass']);
                     echo $this->Form->control('department_id', ['options' => $departments]);
                     echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
                     echo $this->Form->control('status_id', ['options' => $status]);

@@ -24,7 +24,7 @@
             <?= $this->Form->create($task) ?>
 
             <fieldset>
-                <legend><?= __('Add Task') ?></legend>
+                <h2 class="tasks"><?= __('Add Task') ?></h2>
                 <?= $this->element('addTaskForm') ?>
 
                 <?php

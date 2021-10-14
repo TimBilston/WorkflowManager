@@ -32,15 +32,15 @@ use App\Model\Entity\Task;
   }
 
   $allData = Array();//get overdue and total data from db
-  $OverDue = 0;
+  $Overdue = 0;
   $allTotal = 0;
   foreach ($query as $task) {
     if($task->status->name=='Over Due'){
-      $OverDue += 1;
-      array_push($allData, array('name'=>'OverDue', 'value'=>1, 'dueDate'=> $task->due_date));
+      $Overdue += 1;
+      array_push($allData, array('name'=>'Overdue', 'value'=>1, 'dueDate'=> $task->due_date));
     }
     $allTotal += 1;
-    array_push($allData, array('name'=>'Total', 'value'=>1, 'dueDate'=> $task->due_date));
+    array_push($allData, array('name'=>'In Progress', 'value'=>1, 'dueDate'=> $task->due_date));
   }
 
 
@@ -49,21 +49,21 @@ use App\Model\Entity\Task;
   $BarAllData = Array(); // get all task ratio
   $BarInProgress = 0;
   $BarCompleted = 0;
-  $BarOverDue = 0;
+  $BarOverdue = 0;
   $BarAttentionNeeded = 0;
   foreach ($query as $task) {
     if($task->status->name=='Over Due'){
-      $BarOverDue += 1;
-      array_push($BarAllData, array('name'=>'OverDue', 'value'=>1, 'itemStyle' => Array('color'=>'#ff7070')));
+      $BarOverdue += 1;
+      array_push($BarAllData, array('name'=>'Overdue', 'value'=>1, 'itemStyle' => Array('color'=>'#ff7070')));
     }else if($task->status->name=='Completed'){
       $BarCompleted += 1;
       array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'itemStyle' => Array('color'=>'#5470c6')));
     }else if($task->status->name=='Attention Needed'){
       $BarAttentionNeeded += 1;
-      array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'itemStyle' => Array('color'=>'#91cc75')));
+      array_push($BarAllData, array('name'=>'Attention Needed', 'value'=>1, 'itemStyle' => Array('color'=>'#91cc75')));
     }else if($task->status->name=='In Progress'){
       $BarInProgress += 1;
-      array_push($BarAllData, array('name'=>'InProgress', 'value'=>1, 'itemStyle' => Array('color'=>'#fac858')));
+      array_push($BarAllData, array('name'=>'In Progress', 'value'=>1, 'itemStyle' => Array('color'=>'#fac858')));
     }
   }
 
@@ -73,15 +73,15 @@ use App\Model\Entity\Task;
 
   foreach ($query as $task) {
     if($task->status->name=='Over Due'){
-      $OverDue += 1;
-      array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+      $Overdue += 1;
+      array_push($advanceData, array('name'=>'Late Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
     }else if($task->status->name == 'Completed'){
       if(strtotime($task->complete_date) < strtotime($task->due_date)){
         $advance_e += 1;
-        array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
+        array_push($advanceData, array('name'=>'Early Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
       }else if(strtotime($task->complete_date) > strtotime($task->due_date)){
         $overdue_e += 1;
-        array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+        array_push($advanceData, array('name'=>'Late Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
       }
     }
 
@@ -167,8 +167,8 @@ use App\Model\Entity\Task;
   <div class="table-box">
     <table class="table" cellpadding="0">
       <tr>
-        <th>Task Name</th>
-        <th>Time Remain</th>
+        <th>Task</th>
+        <th>Remaining Time</th>
       </tr>
   </table>
   </div>
@@ -218,7 +218,7 @@ use App\Model\Entity\Task;
 
     option = {
         title: {
-            text: 'total tasks',
+            text: 'Total Tasks',
         },
         tooltip: {
             trigger: 'axis'
@@ -275,8 +275,8 @@ use App\Model\Entity\Task;
     }
     var formatAllData = allProcess(allData)
     formatAllData.forEach(item=>{    //add default value
-      if(item.name == "OverDue"){
-        item['OverDue'] = item.value
+      if(item.name == "Overdue"){
+        item['Overdue'] = item.value
       }else{
         item['Total'] = item.value
       }
@@ -289,10 +289,10 @@ use App\Model\Entity\Task;
       const cache = [];
       for (const t of arr) {
           if (cache.find(c => c.dueDate === t.dueDate)) {
-            if(cache.find(c => c.dueDate === t.dueDate).name == 'OverDue'){
+            if(cache.find(c => c.dueDate === t.dueDate).name == 'Overdue'){
               cache.find(c => c.dueDate === t.dueDate)['Total']  = t.Total
             }else{
-              cache.find(c => c.dueDate === t.dueDate)['OverDue']  = t.OverDue
+              cache.find(c => c.dueDate === t.dueDate)['Overdue']  = t.Overdue
             }
           }else{
             cache.push(t);
@@ -305,13 +305,13 @@ use App\Model\Entity\Task;
     var overDueOption;
     overDueOption = {
       title: {
-          text: 'overdue tasks',
+          text: 'Overdue Tasks',
       },
       tooltip: {
           trigger: 'axis'
       },
       legend: {
-          data: ['Total', 'OverDue']
+          data: ['Total', 'Overdue']
       },
       calculable: true,
       xAxis: [
@@ -328,9 +328,9 @@ use App\Model\Entity\Task;
       ],
       series: [
           {
-              name: 'OverDue',
+              name: 'Overdue',
               type: 'bar',
-              data: NewformatAllData.map(i=>i.OverDue || 0),
+              data: NewformatAllData.map(i=>i.Overdue || 0),
               itemStyle:{
                 color:'#b80c3c'
               },
@@ -371,14 +371,14 @@ use App\Model\Entity\Task;
     var BarOption;
     BarOption  = {
       title: {
-        text: 'All Task Ratio',
+        text: 'Total Task Completion Ratio',
       },
       tooltip: {
         trigger: 'item'
       },
       legend: {
         left: 'center',
-        data: ['InProgress', 'Completed', 'OverDue', 'AttentionNeeded']
+        data: ['In Progress', 'Completed', 'Overdue', 'Attention Needed']
       },
       series: [
         {
@@ -437,14 +437,14 @@ use App\Model\Entity\Task;
     var BarOption;
     BarOption  = {
       title: {
-        text: 'Tasks Progress',
+        text: 'Task Delivery Ratio',
       },
       tooltip: {
         trigger: 'item'
       },
       legend: {
         left: 'center',
-        data: ['Later Delivery', 'Early delivery']
+        data: ['Late Completion', 'Early Completion']
       },
       series: [
         {

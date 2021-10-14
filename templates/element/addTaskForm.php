@@ -1,26 +1,31 @@
 <?php
-
-echo $this->Form->control('title', ['error' => false]);
+echo $this->Form->label('Title*');
+echo $this->Form->control('title', ['error' => false, 'label' => false]);
 echo $this->Form->error('title', ['class' => 'error-message']);
 
-echo $this->Form->control('description', ['type' => 'textarea', 'error' => false]);
+echo $this->Form->label('Description*');
+echo $this->Form->control('description', ['type' => 'textarea', 'error' => false, 'label' => false]);
 echo $this->Form->error('description', ['class' => 'error-message']);
 
 echo '<div class="row">';
 echo '<div class="date">';
-echo $this->Form->control('start_date');
+echo $this->Form->label('Start Date*');
+echo $this->Form->control('start_date', ['label' => false]);
+
 echo '</div>';
 echo '<div class="date">';
-echo $this->Form->control('due_date', ['error' => false]);
+echo $this->Form->label('Due Date*');
+echo $this->Form->control('due_date', ['error' => false, 'label' => false]);
 echo $this->Form->error('due_date', ['class' => 'error-message']);
 echo '</div>';
 echo '</div>';
 
+echo $this->Form->label('Employee*');
 if (!isset($userName)){
-    echo $this->Form->control('employee_id', ['options' => $users]);
+    echo $this->Form->control('employee_id', ['options' => $users, 'label' => false]);
 } else {
     if ($task->employee_id == null) {
-        echo $this->Form->control('employee_id', ['options' => $users]);
+        echo $this->Form->control('employee_id', ['options' => $users, 'label' => false]);
     } else {
         echo  $this->Form->label('Employee Name: '.$userName->name);
     }
@@ -36,8 +41,8 @@ echo $this->Form->select('recurrence_type', [
     'Annually' => 'Annually'
 ]);
 
-
-echo $this->Form->control('no_of_recurrence', ['default' => 0, 'error' => false]);
+echo $this->Form->label('Number of Repeats');
+echo $this->Form->control('no_of_recurrence', ['default' => 0, 'error' => false, 'class' => 'someClass', 'label' => false]);
 echo $this->Form->error('no_of_recurrence', ['wrap' => 'label', null, 'class' => 'error-message']);
 
 

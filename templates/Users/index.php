@@ -26,8 +26,8 @@ if ($this->Identity->isLoggedIn()) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <style>
     .names a {
-        color: #000;
-        text-decoration: none;
+        color: #0071BC;
+        text-decoration: underline;
         font-weight: bold;
     }
 </style>
@@ -69,7 +69,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php
     $allData = Array();
-    $OverDue = 0;
+    $Overdue = 0;
     $allTotal = 0;
 ?>
 <?php foreach ($users as $user):?>
@@ -80,11 +80,11 @@ if ($this->Identity->isLoggedIn()) {
             ?>
             <?php // Initialises every task as an invisible card
             if($task->status_id==3){
-                $OverDue += 1;
-                array_push($allData, array('name'=>'OverDue', 'value'=>1, 'dueDate'=> $task->due_date));
+                $Overdue += 1;
+                array_push($allData, array('name'=>'Overdue', 'value'=>1, 'dueDate'=> $task->due_date));
                 }
                 $allTotal += 1;
-                array_push($allData, array('name'=>'Total', 'value'=>1, 'dueDate'=> $task->due_date));
+                array_push($allData, array('name'=>'In Progress', 'value'=>1, 'dueDate'=> $task->due_date));
             }
         ?>
 <?php endif; endforeach; ?>
@@ -93,7 +93,7 @@ if ($this->Identity->isLoggedIn()) {
     $BarAllData = Array(); // get all task ratio
     $BarInProgress = 0;
     $BarCompleted = 0;
-    $BarOverDue = 0;
+    $BarOverdue = 0;
     $BarAttentionNeeded = 0;
 ?>
     <?php foreach ($users as $user):?>
@@ -104,8 +104,8 @@ if ($this->Identity->isLoggedIn()) {
                     ?>
                     <?php // Initialises every task as an invisible card
                     if($task->status_id==3){
-                        $BarOverDue += 1;
-                        array_push($BarAllData, array('name'=>'OverDue', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                        $BarOverdue += 1;
+                        array_push($BarAllData, array('name'=>'Overdue', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                     }else if($task->status_id==2){
                         $BarCompleted += 1;
                         array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#5470c6')));
@@ -114,7 +114,7 @@ if ($this->Identity->isLoggedIn()) {
                         array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
                     }else if($task->status_id==1){
                         $BarInProgress += 1;
-                        array_push($BarAllData, array('name'=>'InProgress', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#fac858')));
+                        array_push($BarAllData, array('name'=>'In Progress', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#fac858')));
                     }
                 }
                 ?>
@@ -134,15 +134,15 @@ if ($this->Identity->isLoggedIn()) {
                     ?>
                     <?php // Initialises every task as an invisible card
                         if($task->status_id==3){
-                            $OverDue += 1;
-                            array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                            $Overdue += 1;
+                            array_push($advanceData, array('name'=>'Later Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                         }else if($task->status_id==2){
                             if(strtotime($task->complete_date) < strtotime($task->due_date)){
                                 $advance_e += 1;
-                                array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
+                                array_push($advanceData, array('name'=>'Early Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
                             }else if(strtotime($task->complete_date) > strtotime($task->due_date)){
                                 $overdue_e += 1;
-                                array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                                array_push($advanceData, array('name'=>'Later Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                             }
                         }
 
@@ -284,46 +284,49 @@ if ($this->Identity->isLoggedIn()) {
             document.getElementById('Fri').innerHTML = Friday;
 
             doSomething();
-            var navData = <?php echo json_encode($navData) ?>; //change php env to js env
-            var allData = <?php echo json_encode($allData) ?>; //get data
-            var currentYear = new Date(currentMonday).getFullYear();
-            var currentMonth = new Date(currentMonday).getMonth()+1;
-            var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
-            var advanceData = <?php echo json_encode($advanceData) ?>; //get data
-            navData = navData.filter(item=>{
 
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            allData = allData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            BarAllData = BarAllData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            advanceData = advanceData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
+            if (document.getElementById('kpitoggle').getAttribute('value')=='true') {
+                var navData = <?php echo json_encode($navData) ?>; //change php env to js env
+                var allData = <?php echo json_encode($allData) ?>; //get data
+                var currentYear = new Date(currentMonday).getFullYear();
+                var currentMonth = new Date(currentMonday).getMonth() + 1;
+                var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
+                var advanceData = <?php echo json_encode($advanceData) ?>; //get data
+                navData = navData.filter(item => {
 
-            SetNewformatAllData(allData)
-            SetNewformatData(navData)
-            SetFormatBarData(BarAllData)
-            SetAdvanceBarData(advanceData)
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                allData = allData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                BarAllData = BarAllData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                advanceData = advanceData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+
+                SetNewformatAllData(allData)
+                SetNewformatData(navData)
+                SetFormatBarData(BarAllData)
+                SetAdvanceBarData(advanceData)
+            }
         }
         function nextWeek(){
             currentMonday.setDate(currentMonday.getDate() - 7);
@@ -379,7 +382,7 @@ if ($this->Identity->isLoggedIn()) {
 
             option = {
                 title: {
-                    text: 'total tasks',
+                    text: 'Total Task Completion (Daily)',
                     y: 'top',
                     x:'left'
                 },
@@ -443,8 +446,8 @@ if ($this->Identity->isLoggedIn()) {
             }
             var formatAllData = allProcess(allData)
             formatAllData.forEach(item=>{    //add default value
-                if(item.name == "OverDue"){
-                    item['OverDue'] = item.value
+                if(item.name == "Overdue"){
+                    item['Overdue'] = item.value
                 }else{
                     item['Total'] = item.value
                 }
@@ -457,10 +460,10 @@ if ($this->Identity->isLoggedIn()) {
                 const cache = [];
                 for (const t of arr) {
                     if (cache.find(c => c.dueDate === t.dueDate)) {
-                        if(cache.find(c => c.dueDate === t.dueDate).name == 'OverDue'){
+                        if(cache.find(c => c.dueDate === t.dueDate).name == 'Overdue'){
                             cache.find(c => c.dueDate === t.dueDate)['Total']  = t.Total
                         }else{
-                            cache.find(c => c.dueDate === t.dueDate)['OverDue']  = t.OverDue
+                            cache.find(c => c.dueDate === t.dueDate)['Overdue']  = t.Overdue
                         }
                     }else{
                         cache.push(t);
@@ -470,10 +473,10 @@ if ($this->Identity->isLoggedIn()) {
             }
             var overdue = document.getElementById("overdue");
             var overdueMyChart = echarts.init(overdue);
-            var overDueOption;
-            overDueOption = {
+            var overdueOption;
+            overdueOption = {
                 title: {
-                    text: 'overdue tasks',
+                    text: 'Overdue Tasks (Daily)',
                     y: 'top',
                     x:'left'
                 },
@@ -481,7 +484,7 @@ if ($this->Identity->isLoggedIn()) {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['Total', 'OverDue']
+                    data: ['In Progress', 'Overdue']
                 },
                 calculable: true,
                 xAxis: [
@@ -498,9 +501,9 @@ if ($this->Identity->isLoggedIn()) {
                 ],
                 series: [
                     {
-                        name: 'OverDue',
+                        name: 'Overdue',
                         type: 'bar',
-                        data: NewformatAllData.map(i=>i.OverDue || 0),
+                        data: NewformatAllData.map(i=>i.Overdue || 0),
                         itemStyle:{
                             color:'#b80c3c'
                         },
@@ -519,8 +522,8 @@ if ($this->Identity->isLoggedIn()) {
                     }
                 ]
             }
-            if (overDueOption && typeof overDueOption === 'object') {
-                overdueMyChart.setOption(overDueOption);
+            if (overdueOption && typeof overdueOption === 'object') {
+                overdueMyChart.setOption(overdueOption);
             }
         }
 
@@ -543,7 +546,7 @@ if ($this->Identity->isLoggedIn()) {
             var BarOption;
             BarOption  = {
                 title: {
-                    text: 'All Task Ratio',
+                    text: 'Task Completion Ratio',
                     y: 'bottom',
                     x:'center'
                 },
@@ -611,7 +614,7 @@ if ($this->Identity->isLoggedIn()) {
             var BarOption;
             BarOption  = {
                 title: {
-                    text: 'Tasks Progress',
+                    text: 'Task Delivery Ratio',
                     y: 'bottom',
                     x:'center'
                 },
@@ -664,11 +667,11 @@ if ($this->Identity->isLoggedIn()) {
         <table>
             <thead><!--Form for selecting drop down user, sets user id in URL -->
             <div class="custom-select">
-                <form id="Employees">
+                <form id="Employeesform">
                     <label for="Employees">Select an Employee:</label>
                     <div style="display: inline-flex"> <!--groups so they can be on same line-->
                         <select name="Employees" id="Employees">
-                            <option value ="blank"></option>
+                            <option selected value ="blank" ></option>
                             <?php foreach ($users as $user):?>
                             <option value ="<?=$user->id?>"><?=$user->name?></option>
                             <?php endforeach ?>
@@ -718,35 +721,26 @@ if ($this->Identity->isLoggedIn()) {
         </table>
     </div>
 <?php
-echo $currentUserId;
-echo $currentUserName;
-if(isset($_GET['Employees'])) :
-    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <=3): ?>
-<?php endif; endif;?>
-<div class="echarts-box">
+if(isset($_GET['Employees'])) {
+    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <= 3) {
+        echo '<p id = "kpitoggle" style = "display:none" value="true"></p>';
+    } else {
+        echo '<p id = "kpitoggle" style = "display:none" value="false"></p>';
+    }
+} ?>
+<div class="echarts-box" id = "echarts">
     <div>
         <h1>
             <?php foreach ($users as $user){
-                if(isset($_GET['Employees'])){
-                    if($_GET['Employees']== $user->id){
-                        echo $user->name;
+                if(isset($_GET['Employees'])) {
+                    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <= 3) {
+                        if ($_GET['Employees'] == $user->id) {
+                            echo $user->name;
+                        }
                     }
                 }
             }
             ?>
-
-            </h1>
-        </div>
-        <div class="echarts-inner" style="padding-top:26px;">
-            <div class="echarts-list" id="totalBar"></div>
-            <div class="echarts-list" id="advanceBar"></div>
-        </div>
-        <div class="echarts-inner"  style="margin-bottom:26px;">
-            <div class="echarts-list" id="total"></div>
-        </div>
-        <div class="echarts-inner"  style="margin-bottom:26px;">
-            <div class="echarts-list" id="overdue"></div>
-        </div>
 
         </h1>
     </div>
@@ -759,13 +753,23 @@ if(isset($_GET['Employees'])) :
     <div class="echarts-inner" style="padding-top:26px;">
         <div class="echarts-list" id="totalBar"></div>
         <div class="echarts-list" id="advanceBar"></div>
+        <div class="echarts-inner" style="padding-top:26px;">
+            <div class="echarts-list" id="totalBar"></div>
+            <div class="echarts-list" id="advanceBar"></div>
+        </div>
+        <div class="echarts-inner"  style="margin-bottom:26px;">
+            <div class="echarts-list" id="total"></div>
+        </div>
+        <div class="echarts-inner"  style="margin-bottom:26px;">
+            <div class="echarts-list" id="overdue"></div>
+        </div>
     </div>
 </div>
 
 <script>
     window.onload = function(){
+        refresh();
         //gets the current Monday date and converts into a readable format
-        $('Employees').submit();
         currentMonday = getMonday(new Date());
         changeDates(currentMonday);
         doSomething();
@@ -781,6 +785,30 @@ if(isset($_GET['Employees'])) :
             }
         }
         changeDates(currentMonday);
+        checkKPIs();
+
+    }
+    function checkKPIs(){
+        let value = document.getElementById('kpitoggle').getAttribute('value');
+        if(value == 'true'){
+            document.getElementById('echarts').style.display = "block";
+        }
+        else{
+            document.getElementById('echarts').style.display = "none";
+        }
+    }
+
+    function refresh(){
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.has('Employees')){
+
+        }
+        else{
+            document.getElementById("Employeesform").submit();
+        }
+
     }
 </script>
 

@@ -16,7 +16,7 @@
         </div>
     </aside>
     <div class="column-responsive column-80">
-        <h3><?= '<b>Welcome! </b>'.h($user->name) ?></h3>
+        <h3><?= '<b>My Profile: </b>'.h($user->name) ?></h3>
         <div class="users view content" style="padding: 3%">
             <table>
                 <tr>

@@ -48,13 +48,14 @@
 }
 .viewBtn{
     border: 1px solid #d9d9d9;
-    font-size: 11px;
+    font-size: 15px;
     color: #3a3a3a;
     background-color:#FFFFFF;
-    height: 2.2rem;
+    height: 2.5rem;
     line-height: 1.2rem;
     text-decoration: none;
-    text-align: right;
+    text-align: center;
+    display: inline-block;
     padding: 4px 8px;
     border-radius: 4px;
     transition: all 0.1s linear;
