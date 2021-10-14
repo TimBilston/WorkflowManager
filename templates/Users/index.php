@@ -26,8 +26,8 @@ if ($this->Identity->isLoggedIn()) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <style>
     .names a {
-        color: #000;
-        text-decoration: none;
+        color: #0071BC;
+        text-decoration: underline;
         font-weight: bold;
     }
 </style>
@@ -69,7 +69,7 @@ if ($this->Identity->isLoggedIn()) {
 
 <?php
     $allData = Array();
-    $OverDue = 0;
+    $Overdue = 0;
     $allTotal = 0;
 ?>
 <?php foreach ($users as $user):?>
@@ -80,11 +80,11 @@ if ($this->Identity->isLoggedIn()) {
             ?>
             <?php // Initialises every task as an invisible card
             if($task->status_id==3){
-                $OverDue += 1;
-                array_push($allData, array('name'=>'OverDue', 'value'=>1, 'dueDate'=> $task->due_date));
+                $Overdue += 1;
+                array_push($allData, array('name'=>'Overdue', 'value'=>1, 'dueDate'=> $task->due_date));
                 }
                 $allTotal += 1;
-                array_push($allData, array('name'=>'Total', 'value'=>1, 'dueDate'=> $task->due_date));
+                array_push($allData, array('name'=>'In Progress', 'value'=>1, 'dueDate'=> $task->due_date));
             }
         ?>
 <?php endif; endforeach; ?>
@@ -93,7 +93,7 @@ if ($this->Identity->isLoggedIn()) {
     $BarAllData = Array(); // get all task ratio
     $BarInProgress = 0;
     $BarCompleted = 0;
-    $BarOverDue = 0;
+    $BarOverdue = 0;
     $BarAttentionNeeded = 0;
 ?>
     <?php foreach ($users as $user):?>
@@ -104,8 +104,8 @@ if ($this->Identity->isLoggedIn()) {
                     ?>
                     <?php // Initialises every task as an invisible card
                     if($task->status_id==3){
-                        $BarOverDue += 1;
-                        array_push($BarAllData, array('name'=>'OverDue', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                        $BarOverdue += 1;
+                        array_push($BarAllData, array('name'=>'Overdue', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                     }else if($task->status_id==2){
                         $BarCompleted += 1;
                         array_push($BarAllData, array('name'=>'Completed', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#5470c6')));
@@ -114,7 +114,7 @@ if ($this->Identity->isLoggedIn()) {
                         array_push($BarAllData, array('name'=>'AttentionNeeded', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
                     }else if($task->status_id==1){
                         $BarInProgress += 1;
-                        array_push($BarAllData, array('name'=>'InProgress', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#fac858')));
+                        array_push($BarAllData, array('name'=>'In Progress', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#fac858')));
                     }
                 }
                 ?>
@@ -134,15 +134,15 @@ if ($this->Identity->isLoggedIn()) {
                     ?>
                     <?php // Initialises every task as an invisible card
                         if($task->status_id==3){
-                            $OverDue += 1;
-                            array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                            $Overdue += 1;
+                            array_push($advanceData, array('name'=>'Later Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                         }else if($task->status_id==2){
                             if(strtotime($task->complete_date) < strtotime($task->due_date)){
                                 $advance_e += 1;
-                                array_push($advanceData, array('name'=>'Early delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
+                                array_push($advanceData, array('name'=>'Early Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#91cc75')));
                             }else if(strtotime($task->complete_date) > strtotime($task->due_date)){
                                 $overdue_e += 1;
-                                array_push($advanceData, array('name'=>'Later Delivery', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
+                                array_push($advanceData, array('name'=>'Later Completion', 'value'=>1, 'dueDate'=> $task->due_date, 'itemStyle' => Array('color'=>'#ff7070')));
                             }
                         }
 
@@ -379,7 +379,7 @@ if ($this->Identity->isLoggedIn()) {
 
             option = {
                 title: {
-                    text: 'total tasks',
+                    text: 'Total Task Completion (Daily)',
                     y: 'top',
                     x:'left'
                 },
@@ -443,8 +443,8 @@ if ($this->Identity->isLoggedIn()) {
             }
             var formatAllData = allProcess(allData)
             formatAllData.forEach(item=>{    //add default value
-                if(item.name == "OverDue"){
-                    item['OverDue'] = item.value
+                if(item.name == "Overdue"){
+                    item['Overdue'] = item.value
                 }else{
                     item['Total'] = item.value
                 }
@@ -457,10 +457,10 @@ if ($this->Identity->isLoggedIn()) {
                 const cache = [];
                 for (const t of arr) {
                     if (cache.find(c => c.dueDate === t.dueDate)) {
-                        if(cache.find(c => c.dueDate === t.dueDate).name == 'OverDue'){
+                        if(cache.find(c => c.dueDate === t.dueDate).name == 'Overdue'){
                             cache.find(c => c.dueDate === t.dueDate)['Total']  = t.Total
                         }else{
-                            cache.find(c => c.dueDate === t.dueDate)['OverDue']  = t.OverDue
+                            cache.find(c => c.dueDate === t.dueDate)['Overdue']  = t.Overdue
                         }
                     }else{
                         cache.push(t);
@@ -470,10 +470,10 @@ if ($this->Identity->isLoggedIn()) {
             }
             var overdue = document.getElementById("overdue");
             var overdueMyChart = echarts.init(overdue);
-            var overDueOption;
-            overDueOption = {
+            var overdueOption;
+            overdueOption = {
                 title: {
-                    text: 'overdue tasks',
+                    text: 'Overdue Tasks (Daily)',
                     y: 'top',
                     x:'left'
                 },
@@ -481,7 +481,7 @@ if ($this->Identity->isLoggedIn()) {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['Total', 'OverDue']
+                    data: ['In Progress', 'Overdue']
                 },
                 calculable: true,
                 xAxis: [
@@ -498,9 +498,9 @@ if ($this->Identity->isLoggedIn()) {
                 ],
                 series: [
                     {
-                        name: 'OverDue',
+                        name: 'Overdue',
                         type: 'bar',
-                        data: NewformatAllData.map(i=>i.OverDue || 0),
+                        data: NewformatAllData.map(i=>i.Overdue || 0),
                         itemStyle:{
                             color:'#b80c3c'
                         },
@@ -519,8 +519,8 @@ if ($this->Identity->isLoggedIn()) {
                     }
                 ]
             }
-            if (overDueOption && typeof overDueOption === 'object') {
-                overdueMyChart.setOption(overDueOption);
+            if (overdueOption && typeof overdueOption === 'object') {
+                overdueMyChart.setOption(overdueOption);
             }
         }
 
@@ -543,7 +543,7 @@ if ($this->Identity->isLoggedIn()) {
             var BarOption;
             BarOption  = {
                 title: {
-                    text: 'All Task Ratio',
+                    text: 'Task Completion Ratio',
                     y: 'bottom',
                     x:'center'
                 },
@@ -611,7 +611,7 @@ if ($this->Identity->isLoggedIn()) {
             var BarOption;
             BarOption  = {
                 title: {
-                    text: 'Tasks Progress',
+                    text: 'Task Delivery Ratio',
                     y: 'bottom',
                     x:'center'
                 },
