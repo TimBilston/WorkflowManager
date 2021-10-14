@@ -13,6 +13,13 @@ $dPlus = strtotime("+4 months"); //(php is smart can interpret "3 months"
 $dMinus = strtotime("-4 months"); //(php is smart can interpret "3 months"
 $maxD = strtotime(date("m/d/y",$dPlus));//3months forwards
 $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
+
+$this->loadHelper('Authentication.Identity');
+if ($this->Identity->isLoggedIn()) {
+    $currentUserName = $this->Identity->get('name');
+    $currentUserId = $this->Identity->get('id');
+    $currentUserAccess = $this->Identity->get('department_id');
+}
 ?>
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -277,46 +284,49 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             document.getElementById('Fri').innerHTML = Friday;
 
             doSomething();
-            var navData = <?php echo json_encode($navData) ?>; //change php env to js env
-            var allData = <?php echo json_encode($allData) ?>; //get data
-            var currentYear = new Date(currentMonday).getFullYear();
-            var currentMonth = new Date(currentMonday).getMonth()+1;
-            var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
-            var advanceData = <?php echo json_encode($advanceData) ?>; //get data
-            navData = navData.filter(item=>{
 
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            allData = allData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            BarAllData = BarAllData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            advanceData = advanceData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
+            if (document.getElementById('kpitoggle').getAttribute('value')=='true') {
+                var navData = <?php echo json_encode($navData) ?>; //change php env to js env
+                var allData = <?php echo json_encode($allData) ?>; //get data
+                var currentYear = new Date(currentMonday).getFullYear();
+                var currentMonth = new Date(currentMonday).getMonth() + 1;
+                var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
+                var advanceData = <?php echo json_encode($advanceData) ?>; //get data
+                navData = navData.filter(item => {
 
-            SetNewformatAllData(allData)
-            SetNewformatData(navData)
-            SetFormatBarData(BarAllData)
-            SetAdvanceBarData(advanceData)
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                allData = allData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                BarAllData = BarAllData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                advanceData = advanceData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+
+                SetNewformatAllData(allData)
+                SetNewformatData(navData)
+                SetFormatBarData(BarAllData)
+                SetAdvanceBarData(advanceData)
+            }
         }
         function nextWeek(){
             currentMonday.setDate(currentMonday.getDate() - 7);
@@ -710,22 +720,39 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             </tbody>
         </table>
     </div>
-    <div class="echarts-box">
-        <div>
-            <h1>
-                <?php foreach ($users as $user):?>
-                    <?php
-                        if(isset($_GET['Employees'])){
-                            if($_GET['Employees']== $user->id){
-                                echo $user->name;
-                            }
+<?php
+if(isset($_GET['Employees'])) {
+    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <= 3) {
+        echo '<p id = "kpitoggle" style = "display:none" value="true"></p>';
+    } else {
+        echo '<p id = "kpitoggle" style = "display:none" value="false"></p>';
+    }
+} ?>
+<div class="echarts-box" id = "echarts">
+    <div>
+        <h1>
+            <?php foreach ($users as $user){
+                if(isset($_GET['Employees'])) {
+                    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <= 3) {
+                        if ($_GET['Employees'] == $user->id) {
+                            echo $user->name;
                         }
+                    }
+                }
+            }
+            ?>
 
-                    ?>
-                <?php endforeach ?>
-
-            </h1>
-        </div>
+        </h1>
+    </div>
+    <div class="echarts-inner"  style="margin-bottom:26px;">
+        <div class="echarts-list" id="total"></div>
+    </div>
+    <div class="echarts-inner"  style="margin-bottom:26px;">
+        <div class="echarts-list" id="overdue"></div>
+    </div>
+    <div class="echarts-inner" style="padding-top:26px;">
+        <div class="echarts-list" id="totalBar"></div>
+        <div class="echarts-list" id="advanceBar"></div>
         <div class="echarts-inner" style="padding-top:26px;">
             <div class="echarts-list" id="totalBar"></div>
             <div class="echarts-list" id="advanceBar"></div>
@@ -736,16 +763,14 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
         <div class="echarts-inner"  style="margin-bottom:26px;">
             <div class="echarts-list" id="overdue"></div>
         </div>
-
     </div>
-
 </div>
+
 <script>
     window.onload = function(){
         //gets the current Monday date and converts into a readable format
         $('Employees').submit();
         currentMonday = getMonday(new Date());
-
         changeDates(currentMonday);
         doSomething();
         //appends the modals to the taskcards
@@ -760,6 +785,16 @@ $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
             }
         }
         changeDates(currentMonday);
+        checkKPIs();
+    }
+    function checkKPIs(){
+        let value = document.getElementById('kpitoggle').getAttribute('value');
+        if(value == 'true'){
+            document.getElementById('echarts').style.display = "block";
+        }
+        else{
+            document.getElementById('echarts').style.display = "none";
+        }
     }
 </script>
 
