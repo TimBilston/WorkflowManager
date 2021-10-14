@@ -33,7 +33,7 @@ $client = $client->first();
     <div class="modal-dialog" style="width:600px">
         <div class="modal-content" >
             <div class="modal-header">
-                <h3 class="modal-title">Add Task</h3>
+                <h2 class="modal-title">Add Task</h2>
             </div>
             <div class="modal-body">
                <!-- GETS THE ADD TASK TEMPLATE ELEMENT templates/element/addTask -->
