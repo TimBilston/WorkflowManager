@@ -46,7 +46,7 @@ $cakeDescription = '';
 
     </nav>
     <main class="main">
-        <div class="container">
+        <div class="pages">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
         </div>

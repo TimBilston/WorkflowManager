@@ -24,7 +24,7 @@ use Cake\ORM\TableRegistry;
 use App\Model\Entity\Task;
 $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');
 use App\Model\Table\SubtasksTable;
-echo $this->Html->css(['tasks' , 'home', 'modal', 'buttons', 'bootstrap', 'kanban', 'milligram-modified', 'normalize.min','cake', 'custom']);
+echo $this->Html->css(['tasks' , 'home', 'modal', 'buttons', 'bootstrap', 'kanban', 'custom']);
 echo $this->Html->script(['jquery-1.4.1','bootstrap.min']);
 $this->assign('title', 'Dashboard');
 
@@ -413,6 +413,7 @@ if (!empty($task->subtasks)) {
                     }
                     clone.style.display = "flex";
                     clone.style.flexDirection = "column";
+                    clone.style.align = "center";
                     clone.style.flexWrap = "wrap";
                     clone.style.alignContent = "flex-end";
                     tasks[i].appendChild(clone);
