@@ -30,7 +30,7 @@ $cakeDescription = '';
 
     <!--<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">-->
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <?= $this->Html->css(['tasks' , 'home', 'modal', 'buttons', 'bootstrap'])?>
+    <?= $this->Html->css(['tasks' , 'home', 'modal', 'buttons', 'bootstrap', 'default'])?>
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', 'custom']) ?>
 
     <?= $this->fetch('meta') ?>
@@ -38,20 +38,18 @@ $cakeDescription = '';
     <?= $this->fetch('script') ?>
 </head>
 
-<?php include('navigation.php') ?>
+<body id="mainBody">
 
-<body>
     <nav class="top-nav">
-
+        <?php include('navigation.php') ?>
     </nav>
+
     <main class="main">
-        <div class="pages">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-        </div>
+
+        <?= $this->Flash->render() ?>
+        <?= $this->fetch('content') ?>
+
     </main>
-
-
 </body>
 </html>
 

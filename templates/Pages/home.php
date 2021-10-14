@@ -608,7 +608,7 @@ endforeach;?>
 
 
     <div style="display: flex; flex-direction: row;">
-        <h1 style="position: absolute;left: 15rem;text-decoration: underline;">My Tasks</h1>
+        <h1 style="left: 15rem;text-decoration: underline;">My Tasks</h1>
         <button onclick = "nextWeek()" style="margin: auto" class="dashboard"> < </button>
         <h1 id="Month_Text"> August 2021 </h1>
         <button onclick = "prevWeek()" style="margin: auto" class="dashboard"> > </button>

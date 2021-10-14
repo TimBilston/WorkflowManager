@@ -4,7 +4,7 @@
 
 body {
     color: #3a3a3a;
-    font-family: "Lato";
+    font-family: "Lato"!important;
     font-weight: 300;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -73,6 +73,7 @@ ul {
     margin: 0;
     text-transform: uppercase;
     font-weight: 600;
+    font-family: Montserrat;
     color: #fff;
 }
 

@@ -5,7 +5,7 @@
  */
 use Cake\Routing\Router;
 $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');
-echo $this->Html->css(['tasks' , 'home', 'modal', 'buttons', 'bootstrap']);
+echo $this->Html->css(['userIndex']);
 echo $this->Html->script(['jquery-1.4.1','bootstrap.min']);
 //set date range for +/- 3months current date to avoid lag. Tasks are formatted mm/dd/yy
 $d = date("m/d/y");
@@ -170,9 +170,9 @@ if ($this->Identity->isLoggedIn()) {
         border-bottom:1px solid #d9d9d9;
     }
 </style>
-<div class="users index content" onload="document.Employees.submit()">
+<div class="users index content" onload="document.Employees.submit()" style="width: 70vw">
 
-    <div style="display: flex; flex-direction: row">
+    <div id = "headerMonths">
         <button onclick = "nextWeek()" style="margin: auto" class="employee_view"> < </button>
         <h1 id="Month_Text"> August 2021 </h1>
         <!--<h1 id="misc"></h1> -->
@@ -663,25 +663,26 @@ if ($this->Identity->isLoggedIn()) {
             }
         }
     </script>
-
-        <table>
+        <table id="employeeTable">
             <thead><!--Form for selecting drop down user, sets user id in URL -->
-            <div class="custom-select">
+            <div>
                 <form id="Employeesform">
                     <label for="Employees">Select an Employee:</label>
-                    <div style="display: inline-flex"> <!--groups so they can be on same line-->
-                        <select name="Employees" id="Employees">
-                            <option selected value ="blank" ></option>
-                            <?php foreach ($users as $user):?>
-                            <option value ="<?=$user->id?>"><?=$user->name?></option>
-                            <?php endforeach ?>
-                        </select>
-                        <input type="submit" value="Submit">
-                        <?= $this->Html->link(__('New Employee'), ['action' => 'add'], ['class' => 'button new_user']) ?>
+                    <div id="selectDiv"> <!--groups so they can be on same line-->
+                        <div id="selectLeft">
+                            <select name="Employees" id="Employees">
+                                <option selected value ="blank" ></option>
+                                <?php foreach ($users as $user):?>
+                                <option value ="<?=$user->id?>"><?=$user->name?></option>
+                                <?php endforeach ?>
+                            </select>
+                            <input type="submit" value="Submit">
+                        </div>
+                        <div id="newEmp"><?= $this->Html->link(__('New Employee'), ['action' => 'add'], ['class' => 'button new_user']) ?></div>
                     </div>
                 </form>
             </div>
-                <tr>
+                <tr id = "headerDays">
                     <th class="text-center"><?= $this->Paginator->sort('name') ?></th>
                     <th class="text-center" id = "Mon"></th>
                     <th class="text-center" id = "Tue"></th>

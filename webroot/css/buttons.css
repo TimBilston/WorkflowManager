@@ -57,14 +57,11 @@ button.dashboard {
 }
 
 .new_user {
-    float: right;
     /*margin-left: 68rem;*/
     background-color: #b80c3c;
     border: 0.1rem solid #b80c3c;
     height: 3.5rem;
     line-height: 3.5rem;
-    position: absolute;
-    right: 3rem;
 }
 
 .new_client {

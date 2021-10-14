@@ -11,9 +11,7 @@ body {
     -webkit-font-smoothing: antialiased;
 
 }
-.custom-select{
-    width: fit-content;
-}
+
 .custom-select input{
     background-color: #b80c3c;
 }

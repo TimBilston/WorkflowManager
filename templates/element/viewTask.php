@@ -92,7 +92,6 @@ $task = $task->first();
 
                                     <!--Subtasks below-->
                                     <h4><?= __('Related Subtasks') ?></h4>
-                                    <!-- <?=$this->element('viewCode',['taskEntity' => $task,])?>-->
                                 </fieldset>
                                 <div class = "editform"><?=$this->Form->button(__('Submit'))?></div>
                                 <?= $this->Form->end() ?>
