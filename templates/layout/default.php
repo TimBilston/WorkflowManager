@@ -19,7 +19,6 @@ $cakeDescription = '';
 <!DOCTYPE html>
 <html>
 
-
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +38,7 @@ $cakeDescription = '';
     <?= $this->fetch('script') ?>
 </head>
 
-
+<?php include('navigation.php') ?>
 
 <body>
     <nav class="top-nav">
@@ -51,7 +50,7 @@ $cakeDescription = '';
             <?= $this->fetch('content') ?>
         </div>
     </main>
-    <?php include('navigation.php') ?>
+
 
 </body>
 </html>

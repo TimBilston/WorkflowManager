@@ -284,46 +284,49 @@ if ($this->Identity->isLoggedIn()) {
             document.getElementById('Fri').innerHTML = Friday;
 
             doSomething();
-            var navData = <?php echo json_encode($navData) ?>; //change php env to js env
-            var allData = <?php echo json_encode($allData) ?>; //get data
-            var currentYear = new Date(currentMonday).getFullYear();
-            var currentMonth = new Date(currentMonday).getMonth()+1;
-            var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
-            var advanceData = <?php echo json_encode($advanceData) ?>; //get data
-            navData = navData.filter(item=>{
 
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            allData = allData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            BarAllData = BarAllData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
-            advanceData = advanceData.filter(item=>{
-                if(item.dueDate.split("-")){
-                    if(item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth){
-                        return true
-                    }
-                }
-            })
+            if (document.getElementById('kpitoggle').getAttribute('value')=='true') {
+                var navData = <?php echo json_encode($navData) ?>; //change php env to js env
+                var allData = <?php echo json_encode($allData) ?>; //get data
+                var currentYear = new Date(currentMonday).getFullYear();
+                var currentMonth = new Date(currentMonday).getMonth() + 1;
+                var BarAllData = <?php echo json_encode($BarAllData) ?>; //get data
+                var advanceData = <?php echo json_encode($advanceData) ?>; //get data
+                navData = navData.filter(item => {
 
-            SetNewformatAllData(allData)
-            SetNewformatData(navData)
-            SetFormatBarData(BarAllData)
-            SetAdvanceBarData(advanceData)
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                allData = allData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                BarAllData = BarAllData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+                advanceData = advanceData.filter(item => {
+                    if (item.dueDate.split("-")) {
+                        if (item.dueDate.split("-")[0] == currentYear && item.dueDate.split("-")[1] == currentMonth) {
+                            return true
+                        }
+                    }
+                })
+
+                SetNewformatAllData(allData)
+                SetNewformatData(navData)
+                SetFormatBarData(BarAllData)
+                SetAdvanceBarData(advanceData)
+            }
         }
         function nextWeek(){
             currentMonday.setDate(currentMonday.getDate() - 7);
@@ -718,18 +721,22 @@ if ($this->Identity->isLoggedIn()) {
         </table>
     </div>
 <?php
-echo $currentUserId;
-echo $currentUserName;
-if(isset($_GET['Employees'])) :
-    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <=3): ?>
-<?php endif; endif;?>
-<div class="echarts-box">
+if(isset($_GET['Employees'])) {
+    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <= 3) {
+        echo '<p id = "kpitoggle" style = "display:none" value="true"></p>';
+    } else {
+        echo '<p id = "kpitoggle" style = "display:none" value="false"></p>';
+    }
+} ?>
+<div class="echarts-box" id = "echarts">
     <div>
         <h1>
             <?php foreach ($users as $user){
-                if(isset($_GET['Employees'])){
-                    if($_GET['Employees']== $user->id){
-                        echo $user->name;
+                if(isset($_GET['Employees'])) {
+                    if ($_GET['Employees'] == $currentUserId || $currentUserAccess <= 3) {
+                        if ($_GET['Employees'] == $user->id) {
+                            echo $user->name;
+                        }
                     }
                 }
             }
@@ -746,8 +753,6 @@ if(isset($_GET['Employees'])) :
     <div class="echarts-inner" style="padding-top:26px;">
         <div class="echarts-list" id="totalBar"></div>
         <div class="echarts-list" id="advanceBar"></div>
-            </h1>
-        </div>
         <div class="echarts-inner" style="padding-top:26px;">
             <div class="echarts-list" id="totalBar"></div>
             <div class="echarts-list" id="advanceBar"></div>
@@ -758,7 +763,6 @@ if(isset($_GET['Employees'])) :
         <div class="echarts-inner"  style="margin-bottom:26px;">
             <div class="echarts-list" id="overdue"></div>
         </div>
-
     </div>
 </div>
 
@@ -781,6 +785,16 @@ if(isset($_GET['Employees'])) :
             }
         }
         changeDates(currentMonday);
+        checkKPIs();
+    }
+    function checkKPIs(){
+        let value = document.getElementById('kpitoggle').getAttribute('value');
+        if(value == 'true'){
+            document.getElementById('echarts').style.display = "block";
+        }
+        else{
+            document.getElementById('echarts').style.display = "none";
+        }
     }
 </script>
 
