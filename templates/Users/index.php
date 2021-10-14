@@ -667,11 +667,11 @@ if ($this->Identity->isLoggedIn()) {
         <table>
             <thead><!--Form for selecting drop down user, sets user id in URL -->
             <div class="custom-select">
-                <form id="Employees">
+                <form id="Employeesform">
                     <label for="Employees">Select an Employee:</label>
                     <div style="display: inline-flex"> <!--groups so they can be on same line-->
                         <select name="Employees" id="Employees">
-                            <option value ="blank"></option>
+                            <option selected value ="blank" ></option>
                             <?php foreach ($users as $user):?>
                             <option value ="<?=$user->id?>"><?=$user->name?></option>
                             <?php endforeach ?>
@@ -768,8 +768,8 @@ if(isset($_GET['Employees'])) {
 
 <script>
     window.onload = function(){
+        refresh();
         //gets the current Monday date and converts into a readable format
-        $('Employees').submit();
         currentMonday = getMonday(new Date());
         changeDates(currentMonday);
         doSomething();
@@ -786,6 +786,7 @@ if(isset($_GET['Employees'])) {
         }
         changeDates(currentMonday);
         checkKPIs();
+
     }
     function checkKPIs(){
         let value = document.getElementById('kpitoggle').getAttribute('value');
@@ -795,6 +796,19 @@ if(isset($_GET['Employees'])) {
         else{
             document.getElementById('echarts').style.display = "none";
         }
+    }
+
+    function refresh(){
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.has('Employees')){
+
+        }
+        else{
+            document.getElementById("Employeesform").submit();
+        }
+
     }
 </script>
 
