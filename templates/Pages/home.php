@@ -705,9 +705,9 @@ endforeach;?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
- $(function(){
-        let container = `<div id="container" style="width:220px;height: 300px"></div>`
-        $("#navbar").append(container)
-    })
+$(function(){
+    let container = `<div id="container" style="width:220px;height: 300px"></div>`
+    $("#navbar").append(container)
+})
 
 </script>
