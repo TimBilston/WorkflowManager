@@ -85,7 +85,8 @@ if (!empty($task->subtasks)) {
     <?= $this->Html->meta('icon') ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-
+<!--    <script type = "text/javascript" src = "js/jquery-1.4.1.js" ></script>-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <script>
@@ -174,17 +175,30 @@ if (!empty($task->subtasks)) {
             if (!$task->client == null){
                 $clientName = 'Client: '.$task->client->name;
             }
-            $html .= '<li class="drag-item" id="'.$task->id.'">'.
+
+
+
+            if ($task->status->name == 'Completed') {
+                $bgColor = '#a0da92';
+            } else {
+                $bgColor = '';
+            }
+
+            $html .= '<li class="drag-item" id="'.$task->id.'" style="background-color: ' . $bgColor . '">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time" style="visibility: hidden; display: none">'.$task->due_date.'</p>'.
                 '<p class="desc" title='.$task->description.'>'.$task->description.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
                 '<p class="employee_id" style="visibility: hidden; display: none">'.$task->user->id.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
-                '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>'
-                //'<p>'.$this->element('viewTask',['taskID' => $task->id]).'</p >'.      //if u wanna to add inside the card just use like thie line !!!!!!!!!!!!!
-                .$this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id]).
-                '</li>';
+                '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>';
+
+            if ($task->status->name != 'Completed') {
+                $html .= $this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id], ['class' => 'submit_complete', 'type' => 'button']);
+            }
+
+            //'<p>'.$this->element('viewTask',['taskID' => $task->id]).'</p >'.      //if u wanna to add inside the card just use like thie line !!!!!!!!!!!!!
+            $html .= '</li>';
     } ?>
 
         var html = '<?php echo  $html?>'
@@ -276,9 +290,10 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     }
-                }else{
+                }
+                else{
                     if ($(element).find('.due_time').text() == Monday) {
-
+                        $("#1").append(element);
                         $Completed += 1;
                         currentData.forEach(item => {
                             if (item.name == 'Completed') {
@@ -286,6 +301,7 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     } else if ($(element).find('.due_time').text() == Tuesday) {
+                        $("#2").append(element);
                         $Completed += 1;
                         currentData.forEach(item => {
                             if (item.name == 'Completed') {
@@ -293,6 +309,7 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     } else if ($(element).find('.due_time').text() == Wednesday) {
+                        $("#3").append(element);
                         $Completed += 1;
                         currentData.forEach(item => {
                             if (item.name == 'Completed') {
@@ -300,6 +317,7 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     } else if ($(element).find('.due_time').text() == Thursday) {
+                        $("#4").append(element);
                         $Completed += 1;
                         currentData.forEach(item => {
                             if (item.name == 'Completed') {
@@ -307,6 +325,7 @@ if (!empty($task->subtasks)) {
                             }
                         })
                     } else if ($(element).find('.due_time').text() == Friday) {
+                        $("#5").append(element);
                         $Completed += 1;
                         currentData.forEach(item => {
                             if (item.name == 'Completed') {
@@ -696,13 +715,28 @@ endforeach;?>
 
         };
     ?>
-    
+
+<script>
+    $(function() {
+        $(document).on('click', '.submit_complete', function () {
+            var form = $(this).parents('form');
+            $(this).parents('.drag-item').css('background-color', '#a0da92');
+            $(this).hide();
+
+            $.ajax({
+                url: form.attr('action')
+                , type: 'POST'
+                , data: form.serialize()
+            });
+        });
+    });
+</script>
+
     <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; background: #ffebeb; ">
         <b style="color:#000000"><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> tasks</b>
     </footer>
 </html>
-<script type = "text/javascript" src = "js/jquery-1.4.1.js" ></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 
 $(function(){
