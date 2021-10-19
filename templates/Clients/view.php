@@ -7,42 +7,9 @@
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Locator\LocatorAwareTrait;
 $currentDate = date('d/m/y');
+echo $this->Html->css(['collapsible']);
 ?>
-<style>
-    .collapsible {
-        background-color: #777;!important;
-        color: white;
-        cursor: pointer;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-    }
 
-    .active, .collapsible:hover {
-        background-color: #b80c3c;
-    }
-
-    .test {
-        padding: 0 18px;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-        background-color: #f1f1f1;
-    }
-    .collapsible:after {
-        content: '\02795'; /* Unicode character for "plus" sign (+) */
-        font-size: 13px;
-        color: white;
-        float: right;
-        margin-left: 5px;
-    }
-
-    .active:after {
-        content: "\2796"; /* Unicode character for "minus" sign (-) */
-    }
-</style>
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -226,19 +193,5 @@ $currentDate = date('d/m/y');
         </div>
     </div>
 </div>
-<script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+<?php echo $this->Html->script(['collapsible']);?>
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.maxHeight){
-                content.style.maxHeight = null;
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        });
-    }
-</script>

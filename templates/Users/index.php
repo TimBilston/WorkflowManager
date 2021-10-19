@@ -9,8 +9,8 @@ echo $this->Html->css(['userIndex']);
 echo $this->Html->script(['jquery-1.4.1','bootstrap.min']);
 //set date range for +/- 3months current date to avoid lag. Tasks are formatted mm/dd/yy
 $d = date("m/d/y");
-$dPlus = strtotime("+4 months"); //(php is smart can interpret "3 months"
-$dMinus = strtotime("-4 months"); //(php is smart can interpret "3 months"
+$dPlus = strtotime("+4 months"); //(php is smart can interpret "4 months"
+$dMinus = strtotime("-4 months"); //(php is smart can interpret "4 months"
 $maxD = strtotime(date("m/d/y",$dPlus));//3months forwards
 $minD = strtotime(date("m/d/y",$dMinus));//3months backwards
 
@@ -765,7 +765,7 @@ if(isset($_GET['Employees'])) {
     <div class="echarts-inner"  style="margin-bottom:26px;">
         <div class="echarts-list" id="overdue"></div>
     </div>
-    
+
 </div>
 
 <script>

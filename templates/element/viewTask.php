@@ -2,10 +2,11 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Task $task
- * @var \Cake\Collection\CollectionInterface|string[] $users
- * @var \Cake\Collection\CollectionInterface|string[] $departments
- * @var \Cake\Collection\CollectionInterface|string[] $clients
- * @var \Cake\Collection\CollectionInterface|string[] $status
+ * @var string[]|\Cake\Collection\CollectionInterface $user2
+ * @var string[]|\Cake\Collection\CollectionInterface $departments
+ * @var string[]|\Cake\Collection\CollectionInterface $clients
+ * @var string[]|\Cake\Collection\CollectionInterface $status
+ * @var string[]|\Cake\Collection\CollectionInterface $recurrences
  */
 use App\Model\Entity\Task;
 use Cake\ORM\Table;
@@ -39,8 +40,8 @@ $task = $task->first();
                     <aside class="column">
                         <div class="side-nav">
                             <h4 class="heading"><?= __('Actions') ?></h4>
-                            <button class = "linkButton" onclick = "editForm()">Edit Task</button>
-                            <!--replaced with editFORM<?= $this->Html->link(__('Edit Task'), ['action' => 'edit', $task->id], ['class' => 'side-nav-item']) ?>-->
+                            <?= $this->Html->link(__('Edit Task'), ['controller' => 'Tasks', 'action' => 'edit', $task->id], ['class' => 'side-nav-item']) ?>
+                            <!--<button class = "linkButton" onclick = "editForm()">Edit Task</button>-->
                             <?= $this->Form->postLink(__('Delete Task'), ['controller' => 'Tasks', 'action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id), 'class' => 'side-nav-item']) ?>
                         </div>
                     </aside>
@@ -83,7 +84,12 @@ $task = $task->first();
                                     </div>
                                     <div class ="employee"><h4>Assigned Employee</h4></div>
                                         <p class = "displayform"><?=h($task->user->name)?></p>
-                                      <div class="person"><h4>Client</h4></div>
+                                    <?php
+                                    $usersTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Users');
+                                    $allUsers = $usersTable->find()->all();
+                                    ?>
+                                    <div class = "editform"><?=$this->Form->control('employee_id', ['options' => $allUsers->extract('name'), 'label'=>false])?></div>
+                                    <div class="person"><h4>Client</h4></div>
                                         <p class = "displayform"><?php if(isset($task->client)){echo h($task->client->name);}else{echo "No Client";}?></p>
                                         <div class = "editform"><?=$this->Form->control('client_id', ['options' => $clients, 'empty' => true, 'label'=>false])?></div>
                                     <div class="status"><h4>Status</h4></div>
