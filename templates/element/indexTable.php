@@ -24,7 +24,7 @@
                 <td><?= h($task->title) ?></td>
                 <td><?= h($task->description) ?></td>
                 <!--<td><?= h($task->start_date) ?></td>-->
-                <td><?= h($task->due_date) ?></td>
+                <td><?= Date('d/m/y',strtotime($task->due_date)) ?></td>
                 <td><?= $task->has('client') ? $this->Html->link($task->client->name, ['controller' => 'Clients', 'action' => 'view', $task->client->id]) : '' ?></td>
                 <td><?= $task->has('user') ? $this->Html->link($task->user->name, ['controller' => 'Users', 'action' => 'view', $task->user->id]) : '' ?></td>
                 <td><?= h($task->recurrence_type) ?></td>
