@@ -106,7 +106,6 @@ class ClientsController extends AppController
     public function edit($id = null)
     {
         $client = $this->Clients->newEmptyEntity();
-
         $this->Authorization->authorize($client);
 
 

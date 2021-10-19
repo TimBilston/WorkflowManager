@@ -32,14 +32,13 @@ class DepartmentsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
-    {
-
-
-        $departments = $this->paginate($this->Departments);
-
-        $this->set(compact('departments'));
-    }
+//    public function index()
+//    {
+//
+//        $departments = $this->paginate($this->Departments);
+//
+//        $this->set(compact('departments'));
+//    }
 
     /**
      * View method
@@ -65,6 +64,7 @@ class DepartmentsController extends AppController
     public function add()
     {
         $department = $this->Departments->newEmptyEntity();
+        $this->Authorization->authorize($department);
         if ($this->request->is('post')) {
             $department = $this->Departments->patchEntity($department, $this->request->getData());
             if ($this->Departments->save($department)) {
@@ -86,11 +86,15 @@ class DepartmentsController extends AppController
      */
     public function edit($id = null)
     {
+        $department = $this->Departments->newEmptyEntity();
+        $this->Authorization->authorize($department);
+
         $department = $this->Departments->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $department = $this->Departments->patchEntity($department, $this->request->getData());
+
             if ($this->Departments->save($department)) {
                 $this->Flash->success(__('The department has been saved.'));
 
@@ -112,6 +116,7 @@ class DepartmentsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $department = $this->Departments->get($id);
+        $this->Authorization->authorize($department);
         if ($this->Departments->delete($department)) {
             $this->Flash->success(__('The department has been deleted.'));
         } else {

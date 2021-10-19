@@ -15,9 +15,10 @@
         <div class="status form content">
             <?= $this->Form->create($status) ?>
             <fieldset>
-                <legend><?= __('Add Status') ?></legend>
+                <legend><?= __('Add a new Status') ?></legend>
                 <?php
-                    echo $this->Form->control('name');
+                    echo $this->Form->label('New status name:');
+                    echo $this->Form->control('name', ['label' => false]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

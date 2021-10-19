@@ -28,17 +28,16 @@ class StatusController extends AppController
         $this->Authorization->skipAuthorization();
 
     }
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $status = $this->paginate($this->Status);
-
-        $this->set(compact('status'));
-    }
+//    /**
+//     * Index method
+//     *
+//     * @return \Cake\Http\Response|null|void Renders view
+//     */
+//    public function index()
+//    {
+//        $status = $this->paginate($this->Status);
+//        $this->set(compact('status'));
+//    }
 
     /**
      * View method
@@ -64,6 +63,7 @@ class StatusController extends AppController
     public function add()
     {
         $status = $this->Status->newEmptyEntity();
+        $this->Authorization->authorize($status);
         if ($this->request->is('post')) {
             $status = $this->Status->patchEntity($status, $this->request->getData());
             if ($this->Status->save($status)) {
@@ -90,6 +90,7 @@ class StatusController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $status = $this->Status->patchEntity($status, $this->request->getData());
+            $this->Authorization->authorize($status);
             if ($this->Status->save($status)) {
                 $this->Flash->success(__('The status has been saved.'));
 
@@ -111,6 +112,7 @@ class StatusController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $status = $this->Status->get($id);
+        $this->Authorization->authorize($status);
         if ($this->Status->delete($status)) {
             $this->Flash->success(__('The status has been deleted.'));
         } else {

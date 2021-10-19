@@ -3,20 +3,33 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+
+$this->loadHelper('Authentication.Identity');
+if ($this->Identity->isLoggedIn()) {
+    $currentUserId = $this->Identity->get('id');
+}
 ?>
 
 <div class="row" style="padding-top: 10%">
     <aside class="column">
         <div class="side-nav" style="padding-top: 35%">
             <h4 class="heading"><?= __('Options') ?></h4>
-            <?= $this->Html->link(__('Edit My Details'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']) ?>
+            <?php if ($currentUserId == $user->id){
+                echo $this->Html->link(__('Edit My Details'), ['action' => 'edit', $user->id], ['class' => 'side-nav-item']);
+            } ?>
+
             <?= $this->Html->link(__('View Employees'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('Create Task'), ['controller' => 'tasks', 'action' => 'add', '?' => ['userId' => $user->id]], ['class' => 'side-nav-item']) ?>
 
         </div>
     </aside>
     <div class="column-responsive column-80">
-        <h3><?= '<b>My Profile: </b>'.h($user->name) ?></h3>
+        <?php if ($currentUserId == $user->id): ?>
+            <h3><?= '<b>My Profile: </b>'.h($user->name) ?></h3>
+        <?php else: ?>
+            <h3><?= '<b>Current Profile: </b>'.h($user->name) ?></h3>
+        <?php endif; ?>
+
         <div class="users view content" style="padding: 3%">
             <table>
                 <tr>

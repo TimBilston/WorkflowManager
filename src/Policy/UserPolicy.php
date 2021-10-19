@@ -66,6 +66,7 @@ class UserPolicy
 
     protected function isManager(IdentityInterface $user)
     {
+        // Manager Id is 2
         return $user->getOriginalData()->get('department_id') == 2;
     }
 }
