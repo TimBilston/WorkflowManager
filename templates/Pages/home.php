@@ -191,7 +191,7 @@ if (!empty($task->subtasks)) {
                 '<p class="person">'.$clientName.'</p>'.
                 '<p class="employee_id" style="visibility: hidden; display: none">'.$task->user->id.'</p>'.
                 '<p class="status">'.$task->status->name.'</p>'.
-                '<p class="task_process">' . $completeCount . '/' . $subTasksCount . '</p>';
+                '<p class="task_process" style="visibility: hidden; display: none">' . $completeCount . '/' . $subTasksCount . '</p>';
 
             if ($task->status->name != 'Completed') {
                 $html .= $this->Form->postButton(__('Complete'), ['controller' => 'tasks', 'action' => 'completeTask', $task->id], ['class' => 'submit_complete', 'type' => 'button']);
