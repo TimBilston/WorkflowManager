@@ -12,11 +12,8 @@ $this->Html->css('cake.css')
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Task'), ['action' => 'edit', $task->id], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Edit Task'), ['controller' => 'tasks', 'action' => 'edit', $task->id], ['class' => 'side-nav-item']) ?>
             <?= $this->Form->postLink(__('Delete This Task Only'), ['action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id), 'class' => 'side-nav-item']) ?>
-
-            <?= $this->Form->postLink(__('Delete All Recurring Tasks'), ['controller' => 'recurrences', 'action' => 'delete', $task->recurrence_id],
-                ['confirm' => __('Are you sure you want to delete delete all tasks related in this recurrence, even previous dates?', $task->id), 'class' => 'side-nav-item']) ?>
 
             <?= $this->Html->link(__('List Tasks'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('New Task'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>

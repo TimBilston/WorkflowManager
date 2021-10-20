@@ -39,14 +39,14 @@ $client = $client->first();
                <!-- GETS THE ADD TASK TEMPLATE ELEMENT templates/element/addTask -->
                 <div class="column-responsive">
                     <div class="tasks form content">
-                        <div
+
                         <?php
                         $tasksTable = \Cake\ORM\TableRegistry::getTableLocator()->get('Tasks');
                         $task = $tasksTable->newEmptyEntity();
                         ?>
                         <?= $this->Form->end() ?>
                         <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'add', $client->id]]); ?>
-                        <fieldset>
+                        <fieldset style="">
                             <?=$this->element('addTaskForm', ['clientID' => 'clientID']) ?>
                         </fieldset>
                         <?= $this->Form->submit(__('Submit')); ?>

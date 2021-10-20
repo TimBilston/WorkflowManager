@@ -159,8 +159,9 @@ class TasksController extends AppController
             $newTask->department_id = $this->getTableLocator()->get('Users')->get($newTask->employee_id)->department_id;
 
             $newTask->recurrence_id = $task->recurrence_id;
-            $newTask->id = $newIds + 1;
             $newIds += 1;
+            $newTask->id = $newIds;
+
 
             if ($task->recurrence_type == 'Quarterly') {
                 $newTask->due_date = $this->offsetWeekend($changingDate->addMonth(3));
@@ -218,6 +219,7 @@ class TasksController extends AppController
         $task = $this->Tasks->get($id, [
             'contain' => [],
         ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $task = $this->Tasks->patchEntity($task, $this->request->getData());
 
@@ -238,15 +240,18 @@ class TasksController extends AppController
                 $tasksGroup = $results->toList();
 
                 foreach ($tasksGroup as $value){
-                    if ($value->due_date > $task->due_date){
+                    // Status_id 2 = Completed
+                    if ($value->due_date > $task->due_date && $value->status_id != 2){
                         $this->Tasks->delete($value);
                     }
                 }
+
                 if ($recurrenceTable->save($recurrence)) {
                     // The foreign key value was set automatically.
                     //echo $task->id;
                 }
                 $this->createRecurringTasks($task);
+
             }
 
 
@@ -274,6 +279,8 @@ class TasksController extends AppController
                     $this->Tasks->Subtasks->save($subTaskEntity);
                 }
                 //subtasks---end
+
+
                 $this->Flash->success(__('The task has been saved.'));
 
                 return $this->redirect($this->referer());
