@@ -36,10 +36,21 @@
             <fieldset>
                 <legend><?= __('Edit Task') ?></legend>
                 <?php
-                    echo $this->Form->control('title');
-                    echo $this->Form->control('description');
-                    echo $this->Form->control('start_date');
-                    echo $this->Form->control('due_date');
+                    echo $this->Form->control('title', ['error' => false]);
+                    echo $this->Form->error('title', ['class' => 'error-message']);
+
+                    echo $this->Form->control('description', ['error' => false]);
+                    echo $this->Form->error('description', ['class' => 'error-message']);
+
+                    echo '<div class="row">';
+                        echo '<div class="marginText">';
+                            echo $this->Form->control('start_date', ['error' => false]);
+                        echo '</div>';
+                        echo '<div class="marginText">';
+                            echo $this->Form->control('due_date', ['error' => false]);
+                            echo $this->Form->error('due_date', ['class' => 'error-message']);
+                        echo '</div>';
+                    echo '</div>';
                     echo $this->Form->control('employee_id', ['options' => $users]);
                     echo $this->Form->label('Repeat');
                     echo $this->Form->select('recurrence_type', [
@@ -50,11 +61,14 @@
                         'Quarterly' => 'Quarterly',
                         'Annually' => 'Annually'
                     ]);
+
                     echo $this->Form->control('no_of_recurrence', ['default' => 0, 'error' => false, 'class' => 'someClass']);
+                    echo $this->Form->error('no_of_recurrence', ['wrap' => 'label', null, 'class' => 'error-message']);
+
                     echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
                     echo $this->Form->control('status_id', ['options' => $status]);
 
-                    echo '<div class="input text">';
+/*                    echo '<div class="input text">';
                     echo '<label>Sub Task</label>';
                     echo '<div id="z_js_wrap_sub_task_item">';
 
@@ -72,7 +86,7 @@
 
                     echo '</div>';
                     echo '</div>';
-                    echo $this->Form->button(__('Edit SubTask'), ['type' => 'button', 'id' => 'add_sub_task']);
+                    echo $this->Form->button(__('Edit SubTask'), ['type' => 'button', 'id' => 'add_sub_task']);*/
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
@@ -80,6 +94,14 @@
         </div>
     </div>
 </div>
+
+<style>
+    .marginText{
+        margin: auto;
+    }
+    .error-message {
+        color: red;
+</style>
 
 <script>
     $(function () {

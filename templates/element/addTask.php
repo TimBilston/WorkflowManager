@@ -46,7 +46,7 @@ $client = $client->first();
                         ?>
                         <?= $this->Form->end() ?>
                         <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'add', $client->id]]); ?>
-                        <fieldset style="">
+                        <fieldset>
                             <?=$this->element('addTaskForm', ['clientID' => 'clientID']) ?>
                         </fieldset>
                         <?= $this->Form->submit(__('Submit')); ?>
@@ -63,7 +63,9 @@ $client = $client->first();
 </div>
 </div>
 <style>
-    .date{margin: auto;}
+    .date{
+        margin: auto;
+    }
 </style>
 </html>
 <script>

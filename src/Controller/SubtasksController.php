@@ -74,7 +74,7 @@ class SubtasksController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The subtask could not be saved. Please, try again.'));
+            //$this->Flash->error(__('The subtask could not be saved. Please, try again.'));
         }
         $tasks = $this->Subtasks->Tasks->find('list', ['limit' => 200]);
         $status = $this->Subtasks->Status->find('list', ['limit' => 200]);

@@ -80,9 +80,5 @@ echo $this->Form->button(__('Add SubTask'), ['type' => 'button', 'id' => 'add_su
 .error-message {
     color: red;
 }
-.center {
-    text-align: center;
-    border: 3px solid green;
-}
 
 </style>

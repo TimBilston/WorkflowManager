@@ -114,19 +114,19 @@ use App\Model\Entity\Task;
   #total{
     width:100%;
     height:600px;
-    border-bottom:1px solid #d9d9d9;
+    /* border-bottom:1px solid #d9d9d9;*/
   }
   #overdue{
     width:100%;
     height:600px;
     margin-top:50px;
-    border-bottom:1px solid #d9d9d9;
+      /* border-bottom:1px solid #d9d9d9;*/
   }
   #totalBar{
     width:100%;
     height:600px;
     margin-top:50px;
-    border-bottom:1px solid #d9d9d9;
+      /* border-bottom:1px solid #d9d9d9;*/
   }
   #advanceBar{
     width:100%;
@@ -160,8 +160,8 @@ use App\Model\Entity\Task;
 }
 </style>
 <body>
-  <div id="total"></div>
-  <div id="overdue"></div>
+  <div id="total" style="margin: auto"></div>
+  <div id="overdue" style="margin: auto"></div>
   <div id="totalBar"></div>
   <div id="advanceBar"></div>
   <div class="table-box">
