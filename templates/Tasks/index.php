@@ -3,6 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Task[]|\Cake\Collection\CollectionInterface $tasks
  */
+use Cake\ORM\TableRegistry;
+echo $this->Html->css(['collapsible']);
 ?>
 
 <div class="row">
@@ -12,54 +14,34 @@
             <h4 class="heading"> <?=__('List Tasks') ?></h4>
         </div>
     </aside>
-    <div class="column-responsive column-80">
+    <div class="column-responsive column-80" style="min-width: 68vw;">
         <div class="tasks index content">
             <?= $this->Html->link(__('New Task'), ['action' => 'add'], ['class' => 'button float-right']) ?>
             <h3><?= __('Tasks') ?></h3>
             <div class="table-responsive">
+                <button class="collapsible">Overdue Tasks (<?php
+                    $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['status_id'=>3])->count();
+                    echo $query;
+                    ?>)</button>
+                <div class="test">
+                    <?=$this->element('indexTable',['status' => '3']);?>
+                </div>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th><?= $this->Paginator->sort('id') ?></th>
-                            <th><?= $this->Paginator->sort('title') ?></th>
-                            <th><?= $this->Paginator->sort('description') ?></th>
-                            <th><?= $this->Paginator->sort('start_date') ?></th>
-                            <th><?= $this->Paginator->sort('due_date') ?></th>
-                            <th><?= $this->Paginator->sort('employee_id') ?></th>
-                            <th><?= $this->Paginator->sort('recurrence_type') ?></th>
-                            <th><?= $this->Paginator->sort('no_of_recurrence') ?></th>
-                            <th><?= $this->Paginator->sort('department_id') ?></th>
-                            <th><?= $this->Paginator->sort('client_id') ?></th>
-                            <th><?= $this->Paginator->sort('status_id') ?></th>
-                            <th><?= $this->Paginator->sort('recurrence_id') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($tasks as $task): ?>
-                        <tr>
-                            <td><?= $this->Number->format($task->id) ?></td>
-                            <td><?= h($task->title) ?></td>
-                            <td><?= h($task->description) ?></td>
-                            <td><?= h($task->start_date) ?></td>
-                            <td><?= h($task->due_date) ?></td>
-                            <td><?= $task->has('user') ? $this->Html->link($task->user->name, ['controller' => 'Users', 'action' => 'view', $task->user->id]) : '' ?></td>
-                            <td><?= h($task->recurrence_type) ?></td>
-                            <td><?= $this->Number->format($task->no_of_recurrence) ?></td>
-                            <td><?= $task->has('department') ? $this->Html->link($task->department->name, ['controller' => 'Departments', 'action' => 'view', $task->department->id]) : '' ?></td>
-                            <td><?= $task->has('client') ? $this->Html->link($task->client->name, ['controller' => 'Clients', 'action' => 'view', $task->client->id]) : '' ?></td>
-                            <td><?= $task->has('status') ? $this->Html->link($task->status->name, ['controller' => 'Status', 'action' => 'view', $task->status->id]) : '' ?></td>
-                            <td><?= $task->has('recurrence') ? $this->Html->link($task->recurrence->id, ['controller' => 'Recurrences', 'action' => 'view', $task->recurrence->id]) : '' ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['action' => 'view', $task->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $task->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                <button class="collapsible">Current Tasks (<?php
+                    $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['status_id'=>1])->count();
+                    echo $query;
+                    ?>)</button>
+                <div class="test">
+                    <?=$this->element('indexTable',['status' => '1']);?>
+                </div>
+
+                <button class="collapsible">Completed Tasks (<?php
+                    $query = TableRegistry::getTableLocator()->get('Tasks')->find()->where(['status_id'=>2])->count();
+                    echo $query;
+                    ?>)</button>
+                <div class="test">
+                    <?=$this->element('indexTable',['status' => '2']);?>
+                </div>
             </div>
             <div class="paginator">
                 <ul class="pagination">
@@ -74,3 +56,4 @@
         </div>
     </div>
 </div>
+<?php echo $this->Html->script(['collapsible']);?>
