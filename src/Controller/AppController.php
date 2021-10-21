@@ -26,6 +26,7 @@ use Cake\Controller\Controller;
  *
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
  */
+
 class AppController extends Controller
 {
 
@@ -57,7 +58,7 @@ class AppController extends Controller
         $this->loadComponent('Authentication.Authentication');
 
         $this->loadComponent('Authorization.Authorization');
-
+        $this->loadComponent('Modal');
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html

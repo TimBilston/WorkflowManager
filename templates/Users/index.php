@@ -769,8 +769,8 @@ if(isset($_GET['Employees'])) {
 </div>
 
 <script>
+    refresh();
     window.onload = function(){
-        refresh();
         //gets the current Monday date and converts into a readable format
         currentMonday = getMonday(new Date());
         changeDates(currentMonday);
@@ -788,7 +788,6 @@ if(isset($_GET['Employees'])) {
         }
         changeDates(currentMonday);
         checkKPIs();
-
     }
     function checkKPIs(){
         let value = document.getElementById('kpitoggle').getAttribute('value');
@@ -800,7 +799,7 @@ if(isset($_GET['Employees'])) {
         }
     }
 
-    function refresh(){
+    function refresh(){ //auto submits the selector. Bugs if left un-submitted
         const queryString = window.location.search;
         console.log(queryString);
         const urlParams = new URLSearchParams(queryString);

@@ -18,7 +18,6 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-    background-color: #f1f1f1;
 }
 .collapsible:after {
     content: '\02795'; /* Unicode character for "plus" sign (+) */
@@ -30,4 +29,15 @@
 
 .active:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+.tasksTable{
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+.tasksTable tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+.tasksTable td{
+    padding: 8px;
 }
