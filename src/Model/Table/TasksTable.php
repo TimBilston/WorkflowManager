@@ -90,7 +90,7 @@ class TasksTable extends Table
             ->notEmptyString('title')
             ->add('title', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
+                    'rule' => ['custom', '/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/'],
                     'message' => 'Title can not be empty or have any symbols',
                 ]
             ]);
@@ -102,8 +102,8 @@ class TasksTable extends Table
             ->notEmptyString('description')
             ->add('description', [
                 'nosymbol' => [
-                    'rule' => ['custom', '/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/'],
-                    'message' => 'Description can not have any symbols',
+                    'rule' => ['custom', '/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/'],
+                    'message' => 'Description can not be empty or have any symbols',
                 ]
             ]);
 

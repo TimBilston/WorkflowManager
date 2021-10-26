@@ -55,7 +55,6 @@ endif;
 
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
-
 $this->loadHelper('Authentication.Identity');
 
 if ($this->Identity->isLoggedIn()) {
@@ -88,6 +87,114 @@ if (!empty($task->subtasks)) {
 <!--    <script type = "text/javascript" src = "js/jquery-1.4.1.js" ></script>-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+
+<?php
+$query = TableRegistry::getTableLocator()->get('Users')->find();// get all data from UserTable
+$query->contain(['Tasks']);
+foreach ($query as $user):
+    foreach ($user->tasks as $task):
+        ?>
+        <div class = "modals" id="<?=$task->id?>"style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
+    <?php endforeach;
+endforeach;?>
+
+<div style="display: flex; flex-direction: row;">
+    <h1 style="left: 15rem;text-decoration: underline;">My Tasks</h1>
+    <button onclick = "nextWeek()" style="margin: auto" class="dashboard"> < </button>
+    <h1 id="Month_Text"> August 2021 </h1>
+    <button onclick = "prevWeek()" style="margin: auto" class="dashboard"> > </button>
+</div>
+
+
+<div class="drag-container">
+
+
+    <ul class="drag-list">
+        <!-- Monday -->
+        <li class="drag-column drag-column-on-hold">
+                <span class="drag-column-header">
+                    <h2 id="Monday"></h2>
+                    <!--<svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
+                </span>
+
+            <div class="drag-options" id="options1"></div>
+
+            <ul class="drag-inner-list" id="1">
+
+            </ul>
+        </li>
+        <li class="drag-column drag-column-in-progress">
+                <span class="drag-column-header">
+                    <h2 id = "Tuesday"></h2>
+                    <!--<svg class="drag-header-more" data-target="options2" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
+                </span>
+            <div class="drag-options" id="options2"></div>
+            <ul class="drag-inner-list" id="2">
+
+            </ul>
+        </li>
+        <li class="drag-column drag-column-needs-review">
+                <span class="drag-column-header">
+                    <h2 id = "Wednesday"></h2>
+                    <!--<svg data-target="options3" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
+                </span>
+            <div class="drag-options" id="options3"></div>
+            <ul class="drag-inner-list" id="3">
+            </ul>
+        </li>
+        <li class="drag-column drag-column-approved">
+                <span class="drag-column-header">
+                    <h2 id = "Thursday"></h2>
+                    <!--<svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
+                </span>
+            <div class="drag-options" id="options4"></div>
+            <ul class="drag-inner-list" id="4">
+
+            </ul>
+        </li>
+        <li class="drag-column drag-column-on-hold">
+                <span class="drag-column-header">
+                    <h2 id = "Friday"></h2>
+                    <!--<svg data-target="options5" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
+                </span>
+            <div class="drag-options" id="options5"></div>
+            <ul class="drag-inner-list" id="5">
+
+            </ul>
+        </li>
+
+    </ul>
+</div>
+<?php
+$allTasks = TableRegistry::getTableLocator()->get('Tasks')->find()->where([]);
+$allTasks->contain(['Status']);
+$navData = array(
+    array('name'=>'Completed', 'value'=>0, 'itemStyle'=>array('color'=>'green')),
+    array('name'=>'Not Completed', 'value'=>0,'itemStyle'=>array('color'=>'#b80c3c'))
+);
+$NotCompleted = 0;
+$Completed = 0;
+foreach ($allTasks as $task){
+    if($task->status_id == 2){
+        $Completed += 1;
+        $navData[0]['value'] = $Completed;
+        $navData[0]['name'] = 'Completed';
+    }else{
+        $NotCompleted += 1;
+        $navData[1]['value'] = $NotCompleted;
+        $navData[1]['name'] = 'Not Completed';
+    }
+
+};
+?>
+
+<!-- Footer showing total tasks in a week  -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; background: #ffebeb; ">
+    <b style="color:#000000"><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> Tasks</b>
+</footer>
+
+</html>
+
 
 <script>
     var currentMonday = new Date();
@@ -149,17 +256,7 @@ if (!empty($task->subtasks)) {
         $query->contain(['Subtasks']);
 
         foreach ($query as $task) {
-            //creates each task as a draggable item and sets some info up
-
-//            $html .= '<li class="drag-item"><p><h1>'.
-//                $task->title.'</h1></p><p class="due_time">'.
-//                $task->due_date.'</p><p>'.
-//                $task->description.'</p><p>'.
-//                $task->user->name.'</p><p>'.
-//                '</p><p class = "button"> '.
-
-//                $this->Html->link(__('View'), ['controller' => 'tasks', 'action' => 'view', $task->id]).' </p ></li>';
-
+            //creates each task and sets some info up
             $subTasksCount = 0;
             $completeCount = 0;
             if (!empty($task->subtasks)) {
@@ -175,8 +272,6 @@ if (!empty($task->subtasks)) {
             if (!$task->client == null){
                 $clientName = 'Client: '.$task->client->name;
             }
-
-
 
             if ($task->status->name == 'Completed') {
                 $bgColor = '#a0da92';
@@ -409,6 +504,7 @@ if (!empty($task->subtasks)) {
         }
 
     }
+
     function appendModals(){
         //appends the modals to the taskcards
         let tasks = document.getElementsByClassName("drag-item");
@@ -449,16 +545,28 @@ if (!empty($task->subtasks)) {
         currentMonday.setDate(currentMonday.getDate() + 7);
         changeDates(currentMonday);
     }
+
+    // Complete function changes task's status to complete
+    $(function() {
+        $(document).on('click', '.submit_complete', function () {
+            var form = $(this).parents('form');
+            $(this).parents('.drag-item').css('background-color', '#a0da92');
+            $(this).hide();
+
+            $.ajax({
+                url: form.attr('action')
+                , type: 'POST'
+                , data: form.serialize()
+            });
+        });
+    });
+
+    $(function(){
+        let container = `<div id="container" style="width:220px;height: 300px"></div>`
+        $("#navbar").append(container)
+    })
 </script>
-<?php
-$query = TableRegistry::getTableLocator()->get('Users')->find();// get all data from UserTable
-$query->contain(['Tasks']);
-foreach ($query as $user):
-    foreach ($user->tasks as $task):
-        ?>
-        <div class = "modals" id="<?=$task->id?>"style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
-    <?php endforeach;
-endforeach;?>
+
 
 <style>
     .w3-light-grey, .w3-hover-light-grey:hover, .w3-light-gray, .w3-hover-light-gray:hover {
@@ -489,8 +597,6 @@ endforeach;?>
         display: table;
         clear: both;
     }
-</style>
-<style>
 
     .rvnm-navbar-box {
         position:fixed;
@@ -551,198 +657,6 @@ endforeach;?>
     }
 
 
-    /* The switch - the box around the slider */
-    .switch {
-        position: relative;
-        display: inline-block;
-        top: 2px;
-
-        margin-left: auto;
-        margin-right: 10px;
-        width: 40px;
-        height: 24px;
-    }
-
-    /* Hide default HTML checkbox */
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    /* The slider */
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 16px;
-        width: 16px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    input:checked + .slider {
-        background-color: #2196F3;
-    }
-
-    input:focus + .slider {
-        box-shadow: 0 0 1px #2196F3;
-    }
-
-    input:checked + .slider:before {
-        -webkit-transform: translateX(16px);
-        -ms-transform: translateX(16px);
-        transform: translateX(16px);
-    }
-
-    /* Rounded sliders */
-    .slider.round {
-        border-radius: 22px;
-    }
-
-    .slider.round:before {
-        border-radius: 50%;
-    }
-
-
 </style>
 
-<!--    <?//= $this->Html->link(__('New Task'), ['controller' => 'tasks', 'action' => 'add'], ['class' => 'button6']) ?>-->
-<!--    <?//= $this->Html->link(__('View Users'), ['controller' => 'Users'], ['class' => 'button6']) ?>-->
-<!--    <?//= $this->Html->link(__('Create new user'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'button6']) ?>-->
 
-
-    <div style="display: flex; flex-direction: row;">
-        <h1 style="left: 15rem;text-decoration: underline;">My Tasks</h1>
-        <button onclick = "nextWeek()" style="margin: auto" class="dashboard"> < </button>
-        <h1 id="Month_Text"> August 2021 </h1>
-        <button onclick = "prevWeek()" style="margin: auto" class="dashboard"> > </button>
-    </div>
-
-
-    <div class="drag-container">
-
-
-        <ul class="drag-list">
-            <!-- Monday -->
-            <li class="drag-column drag-column-on-hold">
-                <span class="drag-column-header">
-                    <h2 id="Monday"></h2>
-                    <!--<svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
-                </span>
-
-                <div class="drag-options" id="options1"></div>
-
-                <ul class="drag-inner-list" id="1">
-
-                </ul>
-            </li>
-            <li class="drag-column drag-column-in-progress">
-                <span class="drag-column-header">
-                    <h2 id = "Tuesday"></h2>
-                    <!--<svg class="drag-header-more" data-target="options2" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
-                </span>
-                <div class="drag-options" id="options2"></div>
-                <ul class="drag-inner-list" id="2">
-
-                </ul>
-            </li>
-            <li class="drag-column drag-column-needs-review">
-                <span class="drag-column-header">
-                    <h2 id = "Wednesday"></h2>
-                    <!--<svg data-target="options3" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
-                </span>
-                <div class="drag-options" id="options3"></div>
-                <ul class="drag-inner-list" id="3">
-                </ul>
-            </li>
-            <li class="drag-column drag-column-approved">
-                <span class="drag-column-header">
-                    <h2 id = "Thursday"></h2>
-                    <!--<svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
-                </span>
-                <div class="drag-options" id="options4"></div>
-                <ul class="drag-inner-list" id="4">
-
-                </ul>
-            </li>
-            <li class="drag-column drag-column-on-hold">
-                <span class="drag-column-header">
-                    <h2 id = "Friday"></h2>
-                    <!--<svg data-target="options5" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>-->
-                </span>
-                <div class="drag-options" id="options5"></div>
-                <ul class="drag-inner-list" id="5">
-
-                </ul>
-            </li>
-
-        </ul>
-    </div>
-    <?php
-        $allTasks = TableRegistry::getTableLocator()->get('Tasks')->find()->where([]);
-        $allTasks->contain(['Status']);
-        $navData = array(
-            array('name'=>'Completed', 'value'=>0, 'itemStyle'=>array('color'=>'green')),
-            array('name'=>'Not Completed', 'value'=>0,'itemStyle'=>array('color'=>'#b80c3c'))
-        );
-        $NotCompleted = 0;
-        $Completed = 0;
-        foreach ($allTasks as $task){
-            if($task->status_id == 2){
-                $Completed += 1;
-                $navData[0]['value'] = $Completed;
-                $navData[0]['name'] = 'Completed';
-            }else{
-                $NotCompleted += 1;
-                $navData[1]['value'] = $NotCompleted;
-                $navData[1]['name'] = 'Not Completed';
-            }
-
-        };
-    ?>
-
-<script>
-    $(function() {
-        $(document).on('click', '.submit_complete', function () {
-            var form = $(this).parents('form');
-            $(this).parents('.drag-item').css('background-color', '#a0da92');
-            $(this).hide();
-
-            $.ajax({
-                url: form.attr('action')
-                , type: 'POST'
-                , data: form.serialize()
-            });
-        });
-    });
-</script>
-
-    <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-xlarge" style="margin-top:20px; background: #ffebeb; ">
-        <b style="color:#000000"><i class="fa fa-table"></i> This Week Total: <span id="tasksTotal" style="color:#b80c3c;"> 0 </span> Tasks</b>
-    </footer>
-
-</html>
-
-<script type="text/javascript">
-
-$(function(){
-    let container = `<div id="container" style="width:220px;height: 300px"></div>`
-    $("#navbar").append(container)
-})
-
-</script>
