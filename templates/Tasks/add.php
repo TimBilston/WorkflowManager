@@ -27,12 +27,12 @@
                 <h2 class="tasks"><?= __('Add Task') ?></h2>
                 <?= $this->element('addTaskForm') ?>
 
-                <?php
-                    echo '<div class="input text">';
-                    echo '<label>Sub Task</label>';
-                    echo '<div id="z_js_wrap_sub_task_item"></div>';
-                    echo '</div>';
-                ?>
+<!--                --><?php
+//                    echo '<div class="input text">';
+//                    echo '<label>Sub Task</label>';
+//                    echo '<div id="z_js_wrap_sub_task_item"></div>';
+//                    echo '</div>';
+//                ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>
