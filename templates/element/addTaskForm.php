@@ -70,7 +70,7 @@ echo '</div>';
 //id for 'In Progress' is 1
 echo $this->Form->hidden('status_id', ['value' => 1]);
 
-echo $this->Form->button(__('Add SubTask'), ['type' => 'button', 'id' => 'add_sub_task']);
+//echo $this->Form->button(__('Add SubTask'), ['type' => 'button', 'id' => 'add_sub_task']);
 
 ?>
 
