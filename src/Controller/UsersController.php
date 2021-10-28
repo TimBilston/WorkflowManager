@@ -185,19 +185,20 @@ class UsersController extends AppController
         $this->autoRender = false;
 
         if ($this->request->is(['patch', 'post', 'get', 'put'])) {
+            $currentMonday = strtotime($id);
+            $currentMonday = gmdate("Y-m-d",$currentMonday);//converts from UNIX to same format as DB
 
-            //echo $id;
-            $Users = $this->Users->find()->all();
-            $Tasks = $this->Users->Tasks->find('all')->contain('Users');//this finds all tasks with correct date
+            //$Users = $this->Users->find()->all();
+            $Tasks = $this->Users->Tasks->find('all')->where(['Tasks.due_date' >= $currentMonday ,'Tasks.due_date' <= $currentMonday])->contain('Users');//this finds all tasks with correct date
             foreach ($Tasks as $task){//Initialises every task as an invisible card
                 ?>
-                    <li class="task-card" style = "display : none" id =<?=$task->id?>>
+                    <li class="task-card" id =<?=$task->id?>>
                         <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
                         <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
                         <p class ="person"><?=$task->user->id?></p>
                         <p class="desc" ><?=substr($task->description,0,20)?>...</p>
                     </li>
-
+                <div class = "modals" id="<?=$task->id?>" style ="display:none"><?=$this->render('viewTask', ['taskID' => $task->id])?></div>
                 <?php
             }
             exit;
