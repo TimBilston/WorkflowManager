@@ -340,7 +340,9 @@ class TasksController extends AppController
 
                 return $this->redirect(['controller' => 'pages', 'action' => 'display']);
             }
-            $this->Flash->error(__('The task could not be saved. Please, try again.'));
+            else {
+                $this->Flash->error(__('The task could not be saved. Please, try again.'));
+            }
         }
 
     }

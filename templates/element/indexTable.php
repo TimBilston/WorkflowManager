@@ -1,4 +1,4 @@
-<table>
+<table class="tasksTable">
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('id') ?></th>
@@ -43,3 +43,4 @@
     </div>
     </tbody>
 </table>
+

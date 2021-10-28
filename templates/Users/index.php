@@ -179,9 +179,6 @@ if ($this->Identity->isLoggedIn()) {
         <button onclick = "prevWeek()" style="margin: auto" class="employee_view"> > </button>
     </div>
 
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
-    <script src ="webroot/js/jquery-1.4.1.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
     <script>
         var Monday = "";
         var Tuesday = "";
@@ -769,8 +766,8 @@ if(isset($_GET['Employees'])) {
 </div>
 
 <script>
+    refresh();
     window.onload = function(){
-        refresh();
         //gets the current Monday date and converts into a readable format
         currentMonday = getMonday(new Date());
         changeDates(currentMonday);
@@ -788,7 +785,6 @@ if(isset($_GET['Employees'])) {
         }
         changeDates(currentMonday);
         checkKPIs();
-
     }
     function checkKPIs(){
         let value = document.getElementById('kpitoggle').getAttribute('value');
@@ -800,7 +796,7 @@ if(isset($_GET['Employees'])) {
         }
     }
 
-    function refresh(){
+    function refresh(){ //auto submits the selector. Bugs if left un-submitted
         const queryString = window.location.search;
         console.log(queryString);
         const urlParams = new URLSearchParams(queryString);
@@ -810,7 +806,23 @@ if(isset($_GET['Employees'])) {
         else{
             document.getElementById("Employeesform").submit();
         }
+    }
+</script>
 
+<div id="hiddenTasks"style="display: block"></div>
+<button id = ">button" onclick = "ajaxDatesChange(+7)"> > </button>
+<button id = "<button" onclick = "ajaxDatesChange(-7)"> < </button>
+
+<script>
+    function ajaxDatesChange(day) {//gets the new tasks for the new week
+        $("li").remove(".task-card"); //delete all current task cards
+        currentMonday.setDate(currentMonday.getDate() + day);//changes week based on what was passed in
+        $.get("users/changeDates/"+currentMonday, function (data, status) {//ajax sends to ChangeDates function, passes in currentMonday
+            alert("Data: " + data + "\nStatus: " + status);
+            //appendTasks to where they should go
+            $("#hiddenTasks").append(data);
+            //append Modals to tasks
+        });
     }
 </script>
 
