@@ -797,7 +797,6 @@ if(isset($_GET['Employees'])) {
                             document.getElementById(id).style.display = "block";
                             break;
                         default:
-
                     }
                 }
             }
@@ -816,4 +815,86 @@ if(isset($_GET['Employees'])) {
         }
     }
 </script>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id="@fat">Open modal for @fat</button>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel"></h1>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <aside class="column">
+                        <div class="side-nav">
+                            <h4 class="heading"><?= __('Actions') ?></h4>
+                            <?= $this->Html->link(__('Edit Task'), ['controller' => 'Tasks', 'action' => 'edit', $task->id], ['class' => 'side-nav-item']) ?>
+                            <!--<button class = "linkButton" onclick = "editForm()">Edit Task</button>-->
+                            <?= $this->Form->postLink(__('Delete Task'), ['controller' => 'Tasks', 'action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id), 'class' => 'side-nav-item']) ?>
+                        </div>
+                    </aside>
+                    <div class="column-responsive column-80">
+                        <div class="tasks view content"><!-- Echo view content for tasks-->
+                            <div class = "task-modal-content">
+                                <?= $this->Form->end() ?>
+                                <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'edit', $task->id]]); ?>
+                                <fieldset>
+                                    <div  class="desc"><h4>Description</h4></div>
+                                    <p id = "Mod-desc" class = "displayform"></p>
+                                    <div class="row" style="padding: 20px">
+
+                                        <div class = "date">
+                                            <div class="due_time"><h4>Due Date</h4></div>
+                                            <p id="Mod-due_date" class = "displayform"></p>
+                                        </div>
+                                    </div>
+                                    <div class ="row" style="margin-inline: auto;">
+                                        <div class =""><h4>Recurrence</h4></div>
+                                        <div class =""><h4>No of Recurrence</h4></div>
+                                    </div>
+                                    <div class="row" style="display: flex">
+                                        <p id="Mod-recurrence_type" class = "displayform" style="padding-left: 56px;"></p>
+                                        <p id="Mod-no_of_recurrence" class = "displayform" style="padding-left: 95px;"></p>
+                                    </div>
+                                    <div class ="employee"><h4>Assigned Employee</h4></div>
+                                    <p id="Mod-employee_name" class = "displayform"></p>
+
+                                    <div class="person"><h4>Client</h4></div>
+                                    <p id="Mod-client_name" class = "displayform"></p>
+
+                                    <div class="status"><h4>Status</h4></div>
+                                    <p id="Mod-status_title" class = "displayform"></p>
+
+                                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var taskID = button.data('id'); // Extract info from data-* attributes
+        $.get("users/getModal/"+taskID, function (data, status) {//ajax sends to getModal function, passes in TaskID
+            //return data from ajax call here
+            let taskDetails = JSON.parse(data);
+            console.log(taskDetails);
+            var modal = $('#exampleModal')
+            buildModal(modal,taskDetails);
+        });
+    })
+    function buildModal(modal,task){
+        //builds modal based on what is returned in ajax get
+        modal.find('.modal-title').text(task.title)
+        modal.find('.modal-body #Mod-desc').text(task.description);
+        modal.find('.modal-body #Mod-due_date').text(task.due_date);
+        modal.find('.modal-body #Mod-recurrence_type').text(task.recurrence.recurrence);
+        modal.find('.modal-body #Mod-no_of_recurrence').text(task.recurrence.no_of_recurrence);
+        modal.find('.modal-body #Mod-employee_name').text(task.user.name);
+        modal.find('.modal-body #Mod-client_name').text(task.client.name);
+        modal.find('.modal-body #Mod-status_title').text(task.status.name);
+    }
+</script>

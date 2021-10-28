@@ -197,12 +197,27 @@ class UsersController extends AppController
                         <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
                         <p class ="person"><?=$task->user->id?></p>
                         <p class="desc" ><?=substr($task->description,0,20)?>...</p>
+                        <button type="button" class="viewBtn" data-toggle="modal" data-target="#exampleModal" data-id="<?=$task->id?>">View</button>
                     </li>
-                <div class = "modals" id="<?=$task->id?>" style ="display:none"><?=$this->render('viewTask', ['taskID' => $task->id])?></div>
                 <?php
             }
             exit;
         }
     }
+    public function getModal($id = null){
+        $this->autoRender = false;
 
+        if ($this->request->is(['patch', 'post', 'get', 'put'])) {
+            $task = $this->Users->Tasks->find()->where(['Tasks.id' => $id]);
+            $task->contain(['Users']);
+            $task->contain(['Status']);
+            $task->contain(['Clients']);
+            $task->contain(['Recurrences']);
+            $task = $task->all();
+            $task = $task->first();
+
+            echo json_encode($task);
+            exit;
+        }
+    }
 }
