@@ -29,7 +29,11 @@ use Cake\Controller\Controller;
 
 class AppController extends Controller
 {
-
+    public function json($data){
+        $this->response->type('json');
+        $this->response->body(json_encode($data));
+        return $this->response;
+    }
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -58,11 +62,11 @@ class AppController extends Controller
         $this->loadComponent('Authentication.Authentication');
 
         $this->loadComponent('Authorization.Authorization');
-        $this->loadComponent('Modal');
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
-        //$this->loadComponent('FormProtection');
+       // $this->loadComponent('FormProtection');
     }
+
 }

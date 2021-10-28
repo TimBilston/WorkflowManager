@@ -66,7 +66,7 @@ class ClientsController extends AppController
         $departments = $this->Clients->Tasks->Departments->find('list', ['limit' => 200]);
         $clients = $this->Clients->find('list', ['limit' => 200]);
         $status = $this->Clients->Tasks->Status->find('list', ['limit' => 200]);
-        $this->set(compact('client', 'users', 'departments', 'clients', 'status'));
+        $this->set(compact('client', 'users','departments', 'clients', 'status'));
     }
 
     /**
@@ -180,4 +180,6 @@ class ClientsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
 }

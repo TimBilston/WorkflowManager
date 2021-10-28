@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c84860e00607f93b19a2f31b81586721",
+    "content-hash": "a1d11232887ae1a0ac34ef14dfa4b320",
     "packages": [
         {
             "name": "cakephp/authentication",
@@ -486,6 +486,60 @@
                 }
             ],
             "time": "2021-09-25T20:32:43+00:00"
+        },
+        {
+            "name": "dereuromark/cakephp-ajax",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dereuromark/cakephp-ajax.git",
+                "reference": "34f1c7572855b1dce333e55db581ed517e79c94d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-ajax/zipball/34f1c7572855b1dce333e55db581ed517e79c94d",
+                "reference": "34f1c7572855b1dce333e55db581ed517e79c94d",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^4.0.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "dereuromark/cakephp-tools": "^2.0.0",
+                "fig-r/psr2r-sniffer": "dev-master"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Ajax\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Scherer",
+                    "homepage": "https://www.dereuromark.de",
+                    "role": "Author"
+                }
+            ],
+            "description": "A CakePHP plugin that makes working with AJAX a piece of cake.",
+            "homepage": "https://github.com/dereuromark/cakephp-ajax",
+            "keywords": [
+                "ajax",
+                "asynchronous",
+                "cakephp",
+                "plugin",
+                "view"
+            ],
+            "support": {
+                "issues": "https://github.com/dereuromark/cakephp-ajax/issues",
+                "source": "https://github.com/dereuromark/cakephp-ajax"
+            },
+            "time": "2020-03-30T00:07:21+00:00"
         },
         {
             "name": "holt59/cakephp3-bootstrap-helpers",
@@ -6348,8 +6402,9 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

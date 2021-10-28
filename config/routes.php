@@ -23,7 +23,7 @@
 
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
-
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
 /*
  * The default class to use for all routes
  *
@@ -44,7 +44,10 @@ use Cake\Routing\RouteBuilder;
 /** @var \Cake\Routing\RouteBuilder $routes */
 $routes->setRouteClass(DashedRoute::class);
 
-$routes->scope('/', function (RouteBuilder $builder) {
+$routes->scope('/', function (RouteBuilder $builder){
+    $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
+        'httpOnly' => true,
+    ]));
     /*
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
