@@ -224,7 +224,7 @@ if (!empty($task->subtasks)) {
                     html = result.data.html;
                     $(document.body).append(result.data.modal);
                 } else {
-                    alert('数据加载失败，请稍后再试');
+                    alert('data load file, please try later');
                 }
             }
         });
