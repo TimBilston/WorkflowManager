@@ -367,7 +367,7 @@ class TasksController extends AppController
         $tasks = $this->Tasks->find('all')
             ->contain(['Users', 'Status', 'Clients', 'Subtasks'])
             ->where([
-                'tasks.employee_id' => $user_id,
+                'Tasks.employee_id' => $user_id,
                 'due_date >=' => $begin,
                 'due_date <=' => $end,
             ])->all();
