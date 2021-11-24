@@ -224,7 +224,7 @@ if (!empty($task->subtasks)) {
                     html = result.data.html;
                     $(document.body).append(result.data.modal);
                 } else {
-                    alert('data load file, please try later');
+                    alert('please try later');
                 }
             }
         });
