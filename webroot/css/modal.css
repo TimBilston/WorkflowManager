@@ -55,17 +55,17 @@
     font-size: 15px;
     color: #3a3a3a;
     background-color:#FFFFFF;
-    height: 2.5rem;
+    height: 3.8rem;
     line-height: 1.2rem;
     text-decoration: none;
     text-align: center;
     display: inline-block;
-    padding: 4px 8px;
+    padding: 4px 18px;
+    margin: 8px;
     border-radius: 4px;
     transition: all 0.1s linear;
     position: relative;
-    text-transform: capitalize;
-    float: right;
+    text-transform: uppercase;
 }
 .viewBtn:hover {
     color: #2287faa6;

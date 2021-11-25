@@ -458,7 +458,7 @@ if (!empty($task->subtasks)) {
                             clone.childNodes[x].setAttribute("id", "m" + tasks[i].id);//sets modal id
                         }
                     }
-                    clone.style.display = "flex";
+                    clone.style.display = "inline-block";
                     clone.style.flexDirection = "column";
                     clone.style.align = "center";
                     clone.style.flexWrap = "wrap";
