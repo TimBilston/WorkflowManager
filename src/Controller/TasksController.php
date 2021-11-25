@@ -409,6 +409,9 @@ class TasksController extends AppController
 
             $html .= '<div class="view_wrap"></div>';
 
+            $html .= '<div style="display:inline-block">';
+
+
             if ($task->status->name != 'Completed') {
                 $html .= $view->Form->postButton(__('Complete'),
                     ['controller' => 'tasks', 'action' => 'completeTask', $task->id], ['class' => 'submit_complete', 'type' => 'button']
@@ -418,6 +421,7 @@ class TasksController extends AppController
             $html .= '</li>';
 
             $modal .= '<div class = "modals" id="' . $task->id . '" style="display:none">' . $view->element('viewTask', ['taskID' => $task->id]) .  '</div>';
+            $html .= '</div>';
         }
 
         $result['data'] = [
