@@ -62,11 +62,7 @@ $client = $client->first();
     </div>
 </div>
 </div>
-<style>
-    .date{
-        margin: auto;
-    }
-</style>
+
 </html>
 <script>
     var myModal = document.getElementById('myModal')

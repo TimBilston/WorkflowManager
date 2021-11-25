@@ -22,28 +22,19 @@
     <div class="column-responsive column-80">
         <div class="tasks form content">
             <?= $this->Form->create($task) ?>
-
-            <fieldset>
-                <h2 class="tasks"><?= __('Add Task') ?></h2>
-                <?= $this->element('addTaskForm') ?>
-
-<!--                --><?php
-//                    echo '<div class="input text">';
-//                    echo '<label>Sub Task</label>';
-//                    echo '<div id="z_js_wrap_sub_task_item"></div>';
-//                    echo '</div>';
-//                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <div class="text-center">
+                <fieldset>
+                    <h2 class="tasks"><?= __('Add Task') ?></h2>
+                    <?= $this->element('addTaskForm') ?>
+                </fieldset>
+                <?= $this->Form->button(__('Submit')) ?>
+            </div>
             <?= $this->Form->end() ?>
         </div>
     </div>
 </div>
 
 <style>
-    .date{
-        margin: auto;
-    }
     .sub_task_content {
         margin-left: 10px;
     }
