@@ -346,4 +346,96 @@ class TasksController extends AppController
         }
 
     }
+
+    public function getTask()
+    {
+//        header('Content-type: application/json; charset=utf-8');
+        $result = ['code' => 200, 'message' => 'success', 'data' => []];
+
+        $params = $this->request->getQueryParams();
+        $begin = $params['begin'];
+        $end = $params['end'];
+        $user_id = $params['user_id'];
+
+        $begin = date('Y-m-d', strtotime($begin));
+        $end = date('Y-m-d', strtotime($end));
+
+        if (empty($begin) || empty($end) || empty($user_id)) {
+            $result['code'] = 40011;
+            $result['message'] = 'param error';
+            exit(json_encode($result));
+        }
+
+        $tasks = $this->Tasks->find('all')
+            ->contain(['Users', 'Status', 'Clients', 'Subtasks'])
+            ->where([
+                'Tasks.employee_id' => $user_id,
+                'due_date >=' => $begin,
+                'due_date <=' => $end,
+            ])->all();
+
+        $view = new \App\View\AppView();
+        $html = '';
+        $modal = '';
+        foreach ($tasks as $task) {
+            $subTasksCount = 0;
+            $completeCount = 0;
+            if (!empty($task->subtasks)) {
+                $subTasksCount = count($task->subtasks);
+                foreach ($task->subtasks as $v) {
+                    if ($v->is_complete) {
+                        $completeCount++;
+                    }
+                }
+            }
+
+            $clientName = 'No Client';
+            if ($task->client !== null) {
+                $clientName = 'Client: ' . $task->client->name;
+            }
+
+            if ($task->status->name == 'Completed') {
+                $bgColor = '#a0da92';
+            } else {
+                $bgColor = '';
+            }
+
+            $html .= '<li class="drag-item" id="' . $task->id . '" style="background-color: ' . $bgColor . '">' .
+                '<h1 title=' . $task->title . '>' . $task->title . '</h1>' .
+                '<p class="due_time" style="visibility: hidden; display: none">' . $task->due_date . '</p>' .
+                '<p class="person">' . $clientName . '</p>' .
+                '<p class="employee_id" style="visibility: hidden; display: none">' . $task->user->id . '</p>' .
+                '<p class="status" style="visibility: hidden; display: none">' . $task->status->name . '</p>' .
+                '<p class="task_process" style="visibility: hidden; display: none">' . $completeCount . '/' . $subTasksCount . '</p>';
+
+            $html .= '<div class="view_wrap"></div>';
+
+            $html .= '<div style="display:inline-block">';
+
+
+            if ($task->status->name != 'Completed') {
+                $html .= $view->Form->postButton(__('Complete'),
+                    ['controller' => 'tasks', 'action' => 'completeTask', $task->id], ['class' => 'submit_complete', 'type' => 'button']
+                );
+            }
+
+            $html .= '</li>';
+
+            $modal .= '<div class = "modals" id="' . $task->id . '" style="display:none">' . $view->element('viewTask', ['taskID' => $task->id]) .  '</div>';
+            $html .= '</div>';
+        }
+
+        $result['data'] = [
+            'tasks' => $tasks,
+            'html' => $html,
+            'modal' => $modal,
+        ];
+        exit(json_encode($result));
+    }
+
+
+
+
+
+
 }
