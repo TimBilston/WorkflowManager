@@ -23,7 +23,7 @@ body {
     max-width: 180px;
     background: #f9f9f9;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    padding: 0 10px 27px;
+    padding: 0 15px 0px;
     box-sizing: border-box;
     border-radius: 8px;
     font-weight: 600;
