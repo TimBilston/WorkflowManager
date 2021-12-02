@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\User;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
 use phpDocumentor\Reflection\Types\This;
 
@@ -14,6 +15,12 @@ use phpDocumentor\Reflection\Types\This;
  */
 class UsersController extends AppController
 {
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
@@ -167,5 +174,50 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    public function Dates(){
+        if ($this->request->is(['patch', 'post', 'get', 'put'])) {
+        //process the ajax request here
+            echo 'test';
+            exit;
+        }
+    }
+    public function changeDates($id = null){//Date is passed via ajax, Tasks are sent back for that specific day
+        $this->autoRender = false;
 
+        if ($this->request->is(['patch', 'post', 'get', 'put'])) {
+            $currentMonday = strtotime($id);
+            $currentMonday = gmdate("Y-m-d",$currentMonday);//converts from UNIX to same format as DB
+
+            //$Users = $this->Users->find()->all();
+            $Tasks = $this->Users->Tasks->find('all')->where(['Tasks.due_date' >= $currentMonday ,'Tasks.due_date' <= $currentMonday])->contain('Users');//this finds all tasks with correct date
+            foreach ($Tasks as $task){//Initialises every task as an invisible card
+                ?>
+                    <li class="task-card" id =<?=$task->id?>>
+                        <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
+                        <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
+                        <p class ="person"><?=$task->user->id?></p>
+                        <p class="desc" ><?=substr($task->description,0,20)?>...</p>
+                        <button type="button" class="viewBtn" data-toggle="modal" data-target="#exampleModal" data-id="<?=$task->id?>">View</button>
+                    </li>
+                <?php
+            }
+            exit;
+        }
+    }
+    public function getModal($id = null){
+        $this->autoRender = false;
+
+        if ($this->request->is(['patch', 'post', 'get', 'put'])) {
+            $task = $this->Users->Tasks->find()->where(['Tasks.id' => $id]);
+            $task->contain(['Users']);
+            $task->contain(['Status']);
+            $task->contain(['Clients']);
+            $task->contain(['Recurrences']);
+            $task = $task->all();
+            $task = $task->first();
+
+            echo json_encode($task);
+            exit;
+        }
+    }
 }

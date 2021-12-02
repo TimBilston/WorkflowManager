@@ -326,7 +326,7 @@ if (!empty($task->subtasks)) {
                             if (item.name == 'Completed') {
                                 item.value = $Completed
                             }
-                        })
+                        })FpO
                     } else if ($(element).find('.due_time').text() == Tuesday) {
                         $("#2").append(element);
                         $Completed += 1;

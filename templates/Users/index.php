@@ -32,15 +32,6 @@ if ($this->Identity->isLoggedIn()) {
     }
 </style>
 
-<div style="display:none">
-    <?php foreach ($users as $user): // THIS function appends the modals to the tasks. removed from the task creation because of bugs. (might be fixed now)
-        foreach ($user->tasks as $task):
-          if ((strtotime($task->due_date) > $minD && strtotime($task->due_date) < $maxD)):  //Only check for +/- 2months. To avoid excessive lag whilst dealing with most circumstances ?>
-              <div class = "modals" id="<?=$task->id?>" style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
-          <?php endif;
-         endforeach;
-    endforeach;?>
-</div>
 
 <?php
     $navData = Array();
@@ -173,15 +164,12 @@ if ($this->Identity->isLoggedIn()) {
 <div class="users index content" onload="document.Employees.submit()" style="width: 70vw">
 
     <div id = "headerMonths">
-        <button onclick = "nextWeek()" style="margin: auto" class="employee_view"> < </button>
+        <button id = 'BtnNxt' onclick = "nextWeek()" style="margin: auto" class="employee_view"> < </button>
         <h1 id="Month_Text"> August 2021 </h1>
         <!--<h1 id="misc"></h1> -->
-        <button onclick = "prevWeek()" style="margin: auto" class="employee_view"> > </button>
+        <button id = 'BtnLst' onclick = "prevWeek()" style="margin: auto" class="employee_view"> > </button>
     </div>
 
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
-    <script src ="webroot/js/jquery-1.4.1.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
     <script>
         var Monday = "";
         var Tuesday = "";
@@ -210,60 +198,6 @@ if ($this->Identity->isLoggedIn()) {
             var ddmm = result.toLocaleString('en-au').slice(0,5);
             return ddmm +  '/' + result.getFullYear().toString().slice(2);
         }
-        function doSomething() {
-            var thisMonday = currentMonday;
-            //compare dates and turn display to visible if good
-
-            var elements =  document.getElementsByClassName('task-card'); //Gets all hidden task card elements. Turns into an array so we can sort them
-            elements = Array.prototype.slice.call(elements, 0);
-            elements.sort(function(a, b){return a.id - b.id});
-            let names = document.getElementsByClassName('names');//get array of names that exist.
-            console.log(elements.length);
-            //const length = elements.length;
-            let MD = getDateString(thisMonday, 0);
-            let TuD = getDateString(thisMonday, 1);
-            let WD = getDateString(thisMonday, 2);
-            let ThD = getDateString(thisMonday, 3);
-            let FD = getDateString(thisMonday, 4);
-            for(let i = 0; i < elements.length; i++){
-                //set every element to invisible to start
-                elements[i].style.display = "none";
-            }
-            for(let j = 0; j < names.length; j++){
-                for (let i = 0; i < elements.length; i++) {
-                    elements.sort(function(a, b){return a.id - b.id}); //need to sort every iteration by id otherwise order gets messed up every .append()
-                    //for testing elements[i].innerHTML = "foo";
-                    if(elements[i].childNodes[5].innerText === names[j].id){
-                        let id = elements[i].id;
-                        //If task name is equal then check for dates and then display task
-                        switch (elements[i].childNodes[3].innerText){
-                            case MD:
-                                document.getElementById("M_TD " + names[j].id).append(elements[i]);
-                                document.getElementById(id).style.display = "block";
-                                break;
-                            case TuD:
-                                document.getElementById("Tu_TD " + names[j].id).append(elements[i]);
-                                document.getElementById(id).style.display = "block";
-                                break;
-                            case WD:
-                                document.getElementById("W_TD " + names[j].id).append(elements[i]);
-                                document.getElementById(id).style.display = "block";
-                                break;
-                            case ThD:
-                                document.getElementById("Th_TD " + names[j].id).append(elements[i]);
-                                document.getElementById(id).style.display = "block";
-                                break;
-                            case FD:
-                                document.getElementById("F_TD " + names[j].id).append(elements[i]);
-                                document.getElementById(id).style.display = "block";
-                                break;
-                            default:
-                                elements[i].style.display = "none";
-                        }
-                    }
-                }
-            }
-        }
 
         function changeDates(currentMonday) {
 
@@ -282,8 +216,6 @@ if ($this->Identity->isLoggedIn()) {
             document.getElementById('Wed').innerHTML = Wednesday;
             document.getElementById('Thu').innerHTML = Thursday;
             document.getElementById('Fri').innerHTML = Friday;
-
-            doSomething();
 
             if (document.getElementById('kpitoggle').getAttribute('value')=='true') {
                 var navData = <?php echo json_encode($navData) ?>; //change php env to js env
@@ -329,12 +261,14 @@ if ($this->Identity->isLoggedIn()) {
             }
         }
         function nextWeek(){
-            currentMonday.setDate(currentMonday.getDate() - 7);
-            changeDates(currentMonday);
+            if ($("#BtnNxt").prop("disabled") === false){
+                ajaxDatesChange(-7);
+            }
         }
         function prevWeek(){
-            currentMonday.setDate(currentMonday.getDate() + 7);
-            changeDates(currentMonday);
+            if ($("#BtnLst").prop("disabled")=== false){
+                ajaxDatesChange(+7);
+            }
         }
 
         function SetNewformatData(navData){
@@ -695,19 +629,8 @@ if ($this->Identity->isLoggedIn()) {
             <?php foreach ($users as $user):
                 //(if url param is set AND (its either blank or an employeeID)) OR if it isn't set
                 //Gets a specific employee ONLY, OR gets all employees if it set to 'blank' or not set
-                if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):
-                    foreach ($user->tasks as $task) :?>
-                        <?php
-                        if ((strtotime($task->due_date) > $minD && strtotime($task->due_date) < $maxD)): //Only check for +/- 2months. To avoid excessive lag whilst dealing with most circumstances ?>
-                            <!--Initialises every task as an invisible card?-->
-                            <li class="task-card" style = "display : none" id =<?=$task->id?>>
-                                <h4 style = "margin-bottom: 0rem"><?=$task->title?></h4>
-                                <p class="due_time"><?=date_format($task->due_date, "d/m/y")?></p>
-                                <p class ="person"><?=$user->id?></p>
-                                <p class="desc" ><?=substr($task->description,0,20)?>...</p>
-                            </li>
-                        <?php endif ?>
-                    <?php endforeach;?>
+                if((isset($_GET['Employees']) && ($_GET['Employees']==$user->id || $_GET['Employees']=="blank")) || isset($_GET['Employees'])==false):?>
+
                     <tr>
                         <td class = "names"  id = <?=$user->id?>><?= $this->Html->link(__(h(ucfirst($user->name)) . ' ' . $user->last_name[0]), ['action' => 'view', $user->id]) ?></td>
                         <td id = "M_TD <?=$user->id?>"></td>
@@ -770,25 +693,12 @@ if(isset($_GET['Employees'])) {
 
 <script>
     window.onload = function(){
-        refresh();
         //gets the current Monday date and converts into a readable format
+        refresh();
         currentMonday = getMonday(new Date());
-        changeDates(currentMonday);
-        doSomething();
-        //appends the modals to the taskcards
-        let tasks = document.getElementsByClassName("task-card");
-        let modals = document.getElementsByClassName("modals");
-        for(let i = 0; i <tasks.length; i++){
-            for (let j = 0; j <modals.length; j++){
-                if (tasks[i].id === modals[j].id){
-                    tasks[i].append(modals[j]);
-                    modals[j].style.display = "block";
-                }
-            }
-        }
-        changeDates(currentMonday);
         checkKPIs();
-
+        changeDates(currentMonday);
+        ajaxDatesChange(+0);
     }
     function checkKPIs(){
         let value = document.getElementById('kpitoggle').getAttribute('value');
@@ -799,10 +709,9 @@ if(isset($_GET['Employees'])) {
             document.getElementById('echarts').style.display = "none";
         }
     }
-
-    function refresh(){
+    function refresh(){ //auto submits the selector. Bugs if left un-submitted
         const queryString = window.location.search;
-        console.log(queryString);
+        //ajaxDatesChange(+0);
         const urlParams = new URLSearchParams(queryString);
         if (urlParams.has('Employees')){
 
@@ -810,7 +719,182 @@ if(isset($_GET['Employees'])) {
         else{
             document.getElementById("Employeesform").submit();
         }
-
     }
 </script>
 
+<div id="hiddenTasks"style="display: block"></div>
+
+
+<script>
+    function ajaxDatesChange(day) {//gets the new tasks for the new week
+        loading();
+        var s3 = performance.now();
+        console.log('getting tasks from ', currentMonday.getDate());
+        $("li").remove(".task-card"); //delete all current task cards
+        currentMonday.setDate(currentMonday.getDate() + day);//changes week based on what was passed in
+        let datetoParse = currentMonday.toDateString();
+        $.get("users/changeDates/"+datetoParse, function (data, status) {//ajax sends to ChangeDates function, passes in currentMonday
+            var e3 = performance.now();
+            console.log(`Getting Tasks took ${e3 - s3} milliseconds`)
+            $("#hiddenTasks").append(data);
+            changeDates(currentMonday);
+            appendTasks()//append Modals to tasks
+            finishLoading();
+        });
+    }
+    function loading(){
+        $("#BtnNxt").prop("disabled", true);
+        $("#BtnLst").prop("disabled", true);
+        $('#employeeTable').addClass('loading');
+    }
+    function finishLoading(){
+        $("#BtnNxt").prop("disabled", false);
+        $("#BtnLst").prop("disabled", false);
+        $('#employeeTable').removeClass('loading');
+    }
+    function appendTasks(){
+        var thisMonday = currentMonday;
+        //compare dates and turn display to visible if good
+
+        var elements =  document.getElementsByClassName('task-card'); //Gets all hidden task card elements. Turns into an array so we can sort them
+        elements = Array.prototype.slice.call(elements, 0);
+        elements.sort(function(a, b){return a.id - b.id});
+        let names = document.getElementsByClassName('names');//get array of names that exist.
+        console.log(elements.length);
+        //const length = elements.length;
+        let MD = getDateString(thisMonday, 0);
+        let TuD = getDateString(thisMonday, 1);
+        let WD = getDateString(thisMonday, 2);
+        let ThD = getDateString(thisMonday, 3);
+        let FD = getDateString(thisMonday, 4);
+        for(let j = 0; j < names.length; j++){
+            for (let i = 0; i < elements.length; i++) {
+          //      elements.sort(function(a, b){return a.id - b.id}); //need to sort every iteration by id otherwise order gets messed up every .append()
+                //for testing elements[i].innerHTML = "foo";
+
+                if(elements[i].childNodes[5].innerText === names[j].id){//Tasks.name === name on table
+                    let id = elements[i].id;
+                    //If task name is equal then check for dates and then display task
+                    switch (elements[i].childNodes[3].innerText){
+                        case MD:
+                            document.getElementById("M_TD " + names[j].id).append(elements[i]);
+                            document.getElementById(id).style.display = "block";
+                            break;
+                        case TuD:
+                            document.getElementById("Tu_TD " + names[j].id).append(elements[i]);
+                            document.getElementById(id).style.display = "block";
+                            break;
+                        case WD:
+                            document.getElementById("W_TD " + names[j].id).append(elements[i]);
+                            document.getElementById(id).style.display = "block";
+                            break;
+                        case ThD:
+                            document.getElementById("Th_TD " + names[j].id).append(elements[i]);
+                            document.getElementById(id).style.display = "block";
+                            break;
+                        case FD:
+                            document.getElementById("F_TD " + names[j].id).append(elements[i]);
+                            document.getElementById(id).style.display = "block";
+                            break;
+                        default:
+                    }
+                }
+            }
+        }
+    }
+    function appendModals(){
+        let tasks = document.getElementsByClassName("task-card");
+        let modals = document.getElementsByClassName("modals");
+        for(let i = 0; i <tasks.length; i++){
+            for (let j = 0; j <modals.length; j++){
+                if (tasks[i].id === modals[j].id){
+                    tasks[i].append(modals[j]);
+                    modals[j].style.display = "block";
+                }
+            }
+        }
+    }
+</script>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-id="@fat">Open modal for @fat</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel"></h1>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <aside class="column">
+                        <div class="side-nav">
+                            <h4 class="heading"><?= __('Actions') ?></h4>
+                            <?= $this->Html->link(__('Edit Task'), ['controller' => 'Tasks', 'action' => 'edit', $task->id], ['class' => 'side-nav-item']) ?>
+                            <!--<button class = "linkButton" onclick = "editForm()">Edit Task</button>-->
+                            <?= $this->Form->postLink(__('Delete Task'), ['controller' => 'Tasks', 'action' => 'delete', $task->id], ['confirm' => __('Are you sure you want to delete # {0}?', $task->id), 'class' => 'side-nav-item']) ?>
+                        </div>
+                    </aside>
+                    <div class="column-responsive column-80">
+                        <div class="tasks view content"><!-- Echo view content for tasks-->
+                            <div class = "task-modal-content">
+                                <?= $this->Form->end() ?>
+                                <?= $this->Form->create($task, ['url' => ['controller' => 'Tasks','action' => 'edit', $task->id]]); ?>
+                                <fieldset>
+                                    <div  class="desc"><h4>Description</h4></div>
+                                    <p id = "Mod-desc" class = "displayform"></p>
+                                    <div class="row" style="padding: 20px">
+
+                                        <div class = "date">
+                                            <div class="due_time"><h4>Due Date</h4></div>
+                                            <p id="Mod-due_date" class = "displayform"></p>
+                                        </div>
+                                    </div>
+                                    <div class ="row" style="margin-inline: auto;">
+                                        <div class =""><h4>Recurrence</h4></div>
+                                        <div class =""><h4>No of Recurrence</h4></div>
+                                    </div>
+                                    <div class="row" style="display: flex">
+                                        <p id="Mod-recurrence_type" class = "displayform" style="padding-left: 56px;"></p>
+                                        <p id="Mod-no_of_recurrence" class = "displayform" style="padding-left: 95px;"></p>
+                                    </div>
+                                    <div class ="employee"><h4>Assigned Employee</h4></div>
+                                    <p id="Mod-employee_name" class = "displayform"></p>
+
+                                    <div class="person"><h4>Client</h4></div>
+                                    <p id="Mod-client_name" class = "displayform"></p>
+
+                                    <div class="status"><h4>Status</h4></div>
+                                    <p id="Mod-status_title" class = "displayform"></p>
+
+                                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var taskID = button.data('id'); // Extract info from data-* attributes
+        $.get("users/getModal/"+taskID, function (data, status) {//ajax sends to getModal function, passes in TaskID
+            //return data from ajax call here
+            let taskDetails = JSON.parse(data);
+            console.log(taskDetails);
+            var modal = $('#exampleModal')
+            buildModal(modal,taskDetails);
+        });
+    })
+    function buildModal(modal,task){
+        //builds modal based on what is returned in ajax get
+        modal.find('.modal-title').text(task.title)
+        modal.find('.modal-body #Mod-desc').text(task.description);
+        modal.find('.modal-body #Mod-due_date').text(task.due_date);
+        modal.find('.modal-body #Mod-recurrence_type').text(task.recurrence.recurrence);
+        modal.find('.modal-body #Mod-no_of_recurrence').text(task.recurrence.no_of_recurrence);
+        modal.find('.modal-body #Mod-employee_name').text(task.user.name);
+        modal.find('.modal-body #Mod-client_name').text(task.client.name);
+        modal.find('.modal-body #Mod-status_title').text(task.status.name);
+    }
+</script>
