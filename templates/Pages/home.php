@@ -92,9 +92,8 @@ if (!empty($task->subtasks)) {
 $query = TableRegistry::getTableLocator()->get('Users')->find();// get all data from UserTable
 $query->contain(['Tasks']);
 foreach ($query as $user):
-    foreach ($user->tasks as $task):
-        ?>
-        <div class = "modals" id="<?=$task->id?>"style ="display:none"><?=$this->element('viewTask', ['taskID' => $task->id])?></div>
+    foreach ($user->tasks as $task):?>
+        <div class = "modals" id="<?=$task->id?>" style ="display:none"> <?=$this->element('viewTask', ['taskID' => $task->id])?></div>
     <?php endforeach;
 endforeach;?>
 
