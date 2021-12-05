@@ -9,14 +9,19 @@
  * @var \Cake\Collection\CollectionInterface|string[] $recurrences
  */
 ?>
+
 <?php
+// Tim check through this code again because it is making that page
+// not work********************************************************
+
 // Start a modal with a title, default value for 'close' is true
-echo $this->Modal->create("My Modal Form", ['id' => 'MyModal1', 'close' => false]) ;
+//echo $this->Modal->create("My Modal Form", ['id' => 'MyModal1', 'close' => false]) ;
 // Close the modal, output a footer with a 'close' button
-echo $this->Modal->end() ;
+//echo $this->Modal->end() ;
 // It is possible to specify custom buttons:
 
 ?>
+
 <div id="MyModal1" tabindex="-1" role="dialog" aria-hidden="true" aria-labbeledby="MyModal1Label" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
