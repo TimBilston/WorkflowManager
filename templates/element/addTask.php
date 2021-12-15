@@ -36,7 +36,7 @@ $client = $client->first();
                 <h2 class="modal-title">Add Task</h2>
             </div>
             <div class="modal-body">
-               <!-- GETS THE ADD TASK TEMPLATE ELEMENT templates/element/addTask -->
+                <!-- GETS THE ADD TASK TEMPLATE ELEMENT templates/element/addTask -->
                 <div class="column-responsive">
                     <div class="tasks form content">
 
@@ -53,20 +53,16 @@ $client = $client->first();
                         <?= $this->Form->end() ?>
 
                     </div>
-                <div class="modal-footer">
-                    <button type="button" data-toggle="modal" data-target="#taskModal">Close</button>
+                    <div class="modal-footer">
+                        <button type="button" data-toggle="modal" data-target="#taskModal">Close</button>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-<style>
-    .date{
-        margin: auto;
-    }
-</style>
+
 </html>
 <script>
     var myModal = document.getElementById('myModal')

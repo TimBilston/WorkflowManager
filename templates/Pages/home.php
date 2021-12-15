@@ -254,6 +254,7 @@ foreach ($allTasks as $task){
         $query->contain(['Clients']);
         $query->contain(['Subtasks']);
 
+
         foreach ($query as $task) {
             //creates each task and sets some info up
             $subTasksCount = 0;
@@ -281,10 +282,9 @@ foreach ($allTasks as $task){
             $html .= '<li class="drag-item" id="'.$task->id.'" style="background-color: ' . $bgColor . '">'.
                 '<h1 title='.$task->title.'>'.$task->title.'</h1>'.
                 '<p class="due_time" style="visibility: hidden; display: none">'.$task->due_date.'</p>'.
-                '<p class="desc" title='.$task->description.'>'.$task->description.'</p>'.
                 '<p class="person">'.$clientName.'</p>'.
                 '<p class="employee_id" style="visibility: hidden; display: none">'.$task->user->id.'</p>'.
-                '<p class="status">'.$task->status->name.'</p>'.
+                '<p class="status" style="visibility: hidden; display: none">'.$task->status->name.'</p>'.
                 '<p class="task_process" style="visibility: hidden; display: none">' . $completeCount . '/' . $subTasksCount . '</p>';
 
             if ($task->status->name != 'Completed') {
@@ -525,7 +525,7 @@ foreach ($allTasks as $task){
                             clone.childNodes[x].setAttribute("id","m"+tasks[i].id);//sets modal id
                         }
                     }
-                    clone.style.display = "flex";
+                    clone.style.display = "inline-block";
                     clone.style.flexDirection = "column";
                     clone.style.align = "center";
                     clone.style.flexWrap = "wrap";

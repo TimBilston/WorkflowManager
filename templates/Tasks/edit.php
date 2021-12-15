@@ -33,24 +33,27 @@
     <div class="column-responsive column-80">
         <div class="tasks form content">
             <?= $this->Form->create($task) ?>
-            <fieldset>
-                <legend><?= __('Edit Task') ?></legend>
-                <?php
-                    echo $this->Form->control('title', ['error' => false]);
+            <div class="text-center">
+                <fieldset>
+                    <legend><?= __('Edit Task') ?></legend>
+                    <?php
+
+                    echo $this->Form->control('title', ['error' => false, 'style' => 'width: 35%']);
                     echo $this->Form->error('title', ['class' => 'error-message']);
 
-                    echo $this->Form->control('description', ['error' => false]);
+                    echo $this->Form->control('description', ['error' => false, 'type' => 'textarea', 'style' => 'width: 40%']);
                     echo $this->Form->error('description', ['class' => 'error-message']);
 
-                    echo '<div class="row">';
-                        echo '<div class="marginText">';
-                            echo $this->Form->control('start_date', ['error' => false]);
-                        echo '</div>';
-                        echo '<div class="marginText">';
-                            echo $this->Form->control('due_date', ['error' => false]);
-                            echo $this->Form->error('due_date', ['class' => 'error-message']);
-                        echo '</div>';
+
+                    echo '<div class="row1">';
+                    echo $this->Form->control('start_date', ['error' => false]);
+
+                    echo $this->Form->control('due_date', ['error' => false]);
+                    echo $this->Form->error('due_date', ['class' => 'error-message']);
+
                     echo '</div>';
+
+                    echo '<div class="row1">';
                     echo $this->Form->control('employee_id', ['options' => $users]);
                     echo $this->Form->label('Repeat');
                     echo $this->Form->select('recurrence_type', [
@@ -62,45 +65,36 @@
                         'Annually' => 'Annually'
                     ]);
 
-                    echo $this->Form->control('no_of_recurrence', ['default' => 0, 'error' => false, 'class' => 'someClass']);
+                    echo $this->Form->control('no_of_recurrence', ['default' => 0, 'error' => false]);
                     echo $this->Form->error('no_of_recurrence', ['wrap' => 'label', null, 'class' => 'error-message']);
 
+                    echo '</div>';
+
+                    echo '<div class="row1">';
                     echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
                     echo $this->Form->control('status_id', ['options' => $status]);
-
-/*                    echo '<div class="input text">';
-                    echo '<label>Sub Task</label>';
-                    echo '<div id="z_js_wrap_sub_task_item">';
-
-                foreach ($subtasks as $k => $subTask) {
-                        $isCompleteChecked = $subTask->is_complete ? ' checked' : '';
-                        $isCompleteAdminChecked = $subTask->is_complete_admin ? ' checked' : '';
-                        echo '<div class="z_js_sub_task_item">';
-                        echo '<input class="z_js_sub_task_id" value="' . $subTask->id . '" name="sub_task_id[]" type="hidden" />';
-                        echo '<input class="z_js_sub_task_status" value="1" name="sub_task_status_' . $k . '"' . $isCompleteChecked . ' type="checkbox" />';
-                        echo '<span class="sub_task_content">' . $subTask->description . '</span>';
-                        echo '<input class="z_js_sub_task_content" name="sub_task_content[]" value="' . $subTask->description . '" type="hidden" />';
-                        echo '<input class="z_js_sub_task_status_admin" value="1" name="sub_task_status_admin_' . $k . '"' . $isCompleteAdminChecked . ' type="checkbox" style="display: none" />';
-                        echo '</div>';
-                    }
-
                     echo '</div>';
-                    echo '</div>';
-                    echo $this->Form->button(__('Edit SubTask'), ['type' => 'button', 'id' => 'add_sub_task']);*/
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+                    ?>
+                </fieldset>
+                <?= $this->Form->button(__('Submit')) ?>
+            </div>
             <?= $this->Form->end() ?>
         </div>
     </div>
 </div>
 
 <style>
-    .marginText{
-        margin: auto;
-    }
     .error-message {
         color: red;
+    }
+
+    .row1 {
+        display: inline-table;
+        align-content: center;
+        margin: 5px;
+        text-align: left;
+    }
+
 </style>
 
 <script>
