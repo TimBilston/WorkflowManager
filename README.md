@@ -25,7 +25,7 @@ Tasks could be assigned to a specific employee and linked to a client
 Users can view clients information and see a board of tasks displayed for the client
 Can add related tasks, directly from client screen
 
-KPIs were developed and displayedd based on user level. Relating to task completion % and late completion %. Allowed managers to track employee performance
+KPIs were developed and displayed based on user authentication level. Relating to task completion % and late completion %. Allowed managers to track employee performance
 
 ## Software Explanation
 CakePHP was used as the backend framework for this application
