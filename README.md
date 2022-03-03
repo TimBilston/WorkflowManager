@@ -28,8 +28,9 @@ Can add related tasks, directly from client screen
 KPIs were developed and displayed based on user authentication level. Relating to task completion % and late completion %. Allowed managers to track employee performance
 
 ## Software Explanation
+MVC software pattern was used to implement user interfaces, data, and controlling logic.
 CakePHP was used as the backend framework for this application
-A lot of the application was built with JQuery and PHP
+A lot of the application was built with JQuery and PHP. Ajax queries were made to the database to keep the application fast and responsive
 MySQL was used for the database
 
 ![image](https://user-images.githubusercontent.com/99526472/156484361-5a4435f0-91cf-485f-b4ff-e00f2d4c21e9.png)
