@@ -1,53 +1,36 @@
-# CakePHP Application Skeleton
+# CakePHP Application. Workflow Manager
 
-![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+A task management and workflow management application created for an small melbourne accounting firm
+Created as a part of FIT3048 at Monash University
 
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 4.x.
+## Explanation
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+#Users
+Users have the ability to view all their tasks on a week by week basis
+They can view other employees tasks in a trello style board and filter by employee
 
-## Installation
+Authentication used, Users with the level Manager and up can edit lower level employees profiles.
+Managers can add clients
 
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
+#Tasks
+Tasks could be created with basic information. Sub-tasks could then be linked to them and the tasks could be set to recur on a specified basis. (or infinitely)
+Tasks became overdue when the due date was passed.
+Tasks are displayed through a modal, that could be edited from the modal.
+Tasks could be assigned to a specific employee and linked to a client 
 
-If Composer is installed globally, run
+#Clients
+Users can view clients information and see a board of tasks displayed for the client
+Can add related tasks, directly from client screen
 
-```bash
-composer create-project --prefer-dist cakephp/app
-```
+KPIs were developed and displayedd based on user level. Relating to task completion % and late completion %. Allowed managers to track employee performance
 
-In case you want to use a custom app dir name (e.g. `/myapp/`):
+## Software Explanation
+CakePHP was used as the backend framework for this application
+A lot of the application was built with JQuery and PHP
+MySQL was used for the database
 
-```bash
-composer create-project --prefer-dist cakephp/app myapp
-```
-
-You can now either use your machine's webserver to view the default home page, or start
-up the built-in webserver with:
-
-```bash
-bin/cake server -p 8765
-```
-
-Then visit `http://localhost:8765` to see the welcome page.
-
-## Update
-
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
-
-## Configuration
-
-Read and edit the environment specific `config/app_local.php` and setup the 
-`'Datasources'` and any other configuration relevant for your application.
-Other environment agnostic settings can be changed in `config/app.php`.
-
-## Layout
-
-The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+![image](https://user-images.githubusercontent.com/99526472/156484361-5a4435f0-91cf-485f-b4ff-e00f2d4c21e9.png)
+![image](https://user-images.githubusercontent.com/99526472/156485823-12869122-0f95-41ea-bb5d-1e21e6e79d35.png)
+![image](https://user-images.githubusercontent.com/99526472/156486017-f7fd3786-18b7-4448-916a-00cc9cabf297.png)
+![image](https://user-images.githubusercontent.com/99526472/156486042-6d055a00-e51d-4082-ab72-80fcd9934c2a.png)
+![image](https://user-images.githubusercontent.com/99526472/156486069-ca6c7878-7196-4835-91f8-7e89f3b72f19.png)
