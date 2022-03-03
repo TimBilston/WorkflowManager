@@ -6,6 +6,7 @@ Created as a part of FIT3048 at Monash University
 ## Explanation
 
 #Users
+
 Users have the ability to view all their tasks on a week by week basis
 They can view other employees tasks in a trello style board and filter by employee
 
@@ -13,12 +14,14 @@ Authentication used, Users with the level Manager and up can edit lower level em
 Managers can add clients
 
 #Tasks
+
 Tasks could be created with basic information. Sub-tasks could then be linked to them and the tasks could be set to recur on a specified basis. (or infinitely)
 Tasks became overdue when the due date was passed.
 Tasks are displayed through a modal, that could be edited from the modal.
 Tasks could be assigned to a specific employee and linked to a client 
 
 #Clients
+
 Users can view clients information and see a board of tasks displayed for the client
 Can add related tasks, directly from client screen
 
